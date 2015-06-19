@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-18T15:59:18 -->
+<!-- 2015-06-19T10:00:48 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
 	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/profil_crosstab_files/main_jrxml"/>
@@ -1541,10 +1541,6 @@ WHERE     p.person_id = sr.person_id
 			<image hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
 				<reportElement x="470" y="0" width="85" height="100" uuid="6c0d3d2d-2351-4d77-9749-ae2e5b41aab6"/>
 				<imageExpression><![CDATA["//TINTINV1/photosdeseleves/" + $F{STUDENT_NO} + ".jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="-10" width="79" height="55" uuid="daf1da31-46a4-40ab-946a-0b9d40de0826"/>
-				<imageExpression><![CDATA["U:\\Profil_eleve\\JasperSoftWorkspace\\CSCFN_LOGO.png"]]></imageExpression>
 			</image>
 		</band>
 		<band height="9" splitType="Prevent">

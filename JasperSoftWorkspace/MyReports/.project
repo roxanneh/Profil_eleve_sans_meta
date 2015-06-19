@@ -30,62 +30,47 @@
 		<link>
 			<name>ABSENCES_SECONDAIRE.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/ABSENCES_SECONDAIRE.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/ABSENCES_SECONDAIRE.jasper</location>
 		</link>
 		<link>
 			<name>COMPETANCES.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/COMPETANCES.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/COMPETANCES.jasper</location>
 		</link>
 		<link>
 			<name>Historique_effectif.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/Historique_effectif.jasper</location>
-		</link>
-		<link>
-			<name>JasperReportsServer-1434375639612</name>
-			<type>2</type>
-			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1434375639612</location>
-		</link>
-		<link>
-			<name>JasperReportsServer-1434375641418</name>
-			<type>2</type>
-			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1434375641418</location>
-		</link>
-		<link>
-			<name>JasperReportsServer-1434469071808</name>
-			<type>2</type>
-			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1434469071808</location>
+			<location>U:/JaspersoftWorkspace/MyReports/Historique_effectif.jasper</location>
 		</link>
 		<link>
 			<name>Rendement_elementaire_HH.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/Rendement_elementaire_HH.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/Rendement_elementaire_HH.jasper</location>
 		</link>
 		<link>
 			<name>absences_élémentaire.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/absences_élémentaire.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/absences_élémentaire.jasper</location>
 		</link>
 		<link>
 			<name>competances_sec.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/competances_sec.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/competances_sec.jasper</location>
 		</link>
 		<link>
 			<name>condition_obtention.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/condition_obtention.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/condition_obtention.jasper</location>
 		</link>
 		<link>
 			<name>gbplus.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/gbplus.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/gbplus.jasper</location>
 		</link>
 		<link>
 			<name>groupes.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/groupes.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/groupes.jasper</location>
 		</link>
 		<link>
 			<name>profil_test.jasper</name>
@@ -95,17 +80,17 @@
 		<link>
 			<name>rendement_elementaire.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/rendement_elementaire.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/rendement_elementaire.jasper</location>
 		</link>
 		<link>
 			<name>rendement_secondaire.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/rendement_secondaire.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/rendement_secondaire.jasper</location>
 		</link>
 		<link>
 			<name>rendement_secondaire_HH.jasper</name>
 			<type>1</type>
-			<location>U:/JasperSoftWorkspace/MyReports/rendement_secondaire_HH.jasper</location>
+			<location>U:/JaspersoftWorkspace/MyReports/rendement_secondaire_HH.jasper</location>
 		</link>
 	</linkedResources>
 </projectDescription>
