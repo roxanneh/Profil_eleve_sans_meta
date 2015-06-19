@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-18T15:15:20 -->
+<!-- 2015-06-19T15:06:13 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rendement_elementaire_HH" pageWidth="550" pageHeight="800" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="63ecc8d1-bd18-4707-9916-88a98b61e69f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="FIA">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_FIA_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_FIA_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -19,6 +23,10 @@
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_ORG_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
@@ -27,6 +35,10 @@
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_COL_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_COL_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -39,6 +51,10 @@
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_REG_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
@@ -47,6 +63,10 @@
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_AUT_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_AUT_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -59,6 +79,10 @@
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_INI_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
@@ -67,6 +91,10 @@
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_FRA_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_FRA_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -79,6 +107,10 @@
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_DEV_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
@@ -87,6 +119,10 @@
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_INFO_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_INFO_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -99,6 +135,10 @@
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_COOP_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
@@ -107,6 +147,10 @@
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_PART_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_PART_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -119,6 +163,10 @@
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_RES_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
@@ -127,6 +175,10 @@
 		<conditionalStyle>
 			<conditionExpression><![CDATA[EXACT($F{HH_OBJ_I},"N")]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{HH_OBJ_I},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>

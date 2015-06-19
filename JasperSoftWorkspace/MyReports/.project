@@ -40,17 +40,17 @@
 		<link>
 			<name>Historique_effectif.jasper</name>
 			<type>1</type>
-			<location>U:/JaspersoftWorkspace/MyReports/Historique_effectif.jasper</location>
+			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/Historique_effectif.jasper</location>
 		</link>
 		<link>
-			<name>JasperReportsServer-1434722256157</name>
+			<name>JasperReportsServer-1434725609069</name>
 			<type>2</type>
-			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1434722256157</location>
+			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1434725609069</location>
 		</link>
 		<link>
-			<name>Rendement_elementaire_HH.jasper</name>
-			<type>1</type>
-			<location>U:/JaspersoftWorkspace/MyReports/Rendement_elementaire_HH.jasper</location>
+			<name>JasperReportsServer-1434740600160</name>
+			<type>2</type>
+			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1434740600160</location>
 		</link>
 		<link>
 			<name>absences_élémentaire.jasper</name>
@@ -76,11 +76,6 @@
 			<name>groupes.jasper</name>
 			<type>1</type>
 			<location>U:/JaspersoftWorkspace/MyReports/groupes.jasper</location>
-		</link>
-		<link>
-			<name>profil_test.jasper</name>
-			<type>1</type>
-			<location>U:/Documents/MyReports/profil_test.jasper</location>
 		</link>
 		<link>
 			<name>rendement_elementaire.jasper</name>
