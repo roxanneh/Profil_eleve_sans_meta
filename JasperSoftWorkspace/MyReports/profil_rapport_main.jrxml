@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-19T15:01:29 -->
+<!-- 2015-06-19T16:25:11 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -29,906 +29,15 @@
 			<style mode="Opaque" forecolor="#FFFFFF" backcolor="#801614"/>
 		</conditionalStyle>
 	</style>
-	<style name="Crosstab_CH" mode="Opaque" backcolor="#E8E8E8">
+	<style name="Style1" mode="Opaque" forecolor="#000000" backcolor="#FFFFFF">
 		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
+			<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
+			<bottomPen lineWidth="0.1" lineColor="#A3A3A3"/>
+			<rightPen lineWidth="0.1" lineColor="#A3A3A3"/>
 		</box>
 	</style>
-	<style name="Crosstab_CG" mode="Opaque" backcolor="#E8E8E8">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CT" mode="Opaque" backcolor="#737A80">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 1_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 1_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 1_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 1_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 2_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 2_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 2_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 2_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CH" mode="Opaque" backcolor="#FFE8BF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CG" mode="Opaque" backcolor="#FFF6E6">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CT" mode="Opaque" backcolor="#BF9C60">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 4_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 4_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 4_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 4_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 5_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 5_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 5_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 5_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 6_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 6_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 6_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 6_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 7_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 7_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 7_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 7_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 8_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 8_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 8_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 8_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 9_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 9_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 9_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 9_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 10_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 10_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 10_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 10_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 11_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 11_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 11_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 11_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 12_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 12_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 12_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 12_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 13_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 13_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 13_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 13_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 14_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 14_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 14_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 14_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 15_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 15_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 15_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 15_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 16_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 16_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 16_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 16_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 17_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 17_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 17_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 17_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 18_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 18_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 21_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 18_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 18_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 19_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 19_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 19_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 19_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 20_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 20_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 20_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 20_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 21_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 21_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 21_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 22_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 22_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 22_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 22_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 23_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 23_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 23_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 23_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 24_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 24_CG" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 24_CT" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 24_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
+	<style name="Style2"/>
 	<subDataset name="Dataset1" uuid="4d18a449-776b-4420-87f3-8013066b04ac">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
@@ -1567,7 +676,7 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["rendement_elementaire.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50" splitType="Prevent">
+		<band height="52" splitType="Prevent">
 			<staticText>
 				<reportElement x="12" y="5" width="380" height="20" uuid="925a53fd-029b-4047-9ec8-04617cf63963"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -1592,7 +701,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SUBJECT_DESCRIPTION_F}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab 23_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<box>
@@ -1614,7 +723,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="1b46f1cc-f9cb-485f-b525-975806f6ffc9"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="1b46f1cc-f9cb-485f-b525-975806f6ffc9"/>
 								<text><![CDATA[Total SUBJECT_DESCRIPTION_F1]]></text>
 							</staticText>
 						</cellContents>
@@ -1625,7 +734,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 23_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<box>
 								<topPen lineWidth="0.2"/>
@@ -1646,7 +755,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="d526e817-0696-4ccd-8a69-0b803ba3ac2c"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="d526e817-0696-4ccd-8a69-0b803ba3ac2c"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
@@ -1657,7 +766,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_CODE}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 23_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<box>
 								<topPen lineWidth="0.2"/>
@@ -1679,7 +788,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="5d244cc5-5a46-420e-8ec1-3dd4aa73e870"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="5d244cc5-5a46-420e-8ec1-3dd4aa73e870"/>
 								<text><![CDATA[Total SCHOOL_CODE1]]></text>
 							</staticText>
 						</cellContents>
@@ -1690,7 +799,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{REPORT_PERIOD}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 23_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<box>
 								<topPen lineWidth="0.2"/>
@@ -1710,7 +819,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="36ea49fb-18ac-47b3-968d-b5d100415d72"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="36ea49fb-18ac-47b3-968d-b5d100415d72"/>
 								<text><![CDATA[Total REPORT_PERIOD1]]></text>
 							</staticText>
 						</cellContents>
@@ -1720,7 +829,7 @@ WHERE     p.person_id = sr.person_id
 					<measureExpression><![CDATA[$F{MARK}]]></measureExpression>
 				</measure>
 				<crosstabCell width="20" height="20">
-					<cellContents mode="Opaque" style="Crosstab 23_CD">
+					<cellContents mode="Opaque">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<box>
@@ -1745,7 +854,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab 23_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="293d154a-5a45-4efd-b921-ff9dd513d6dc"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1753,7 +862,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab 23_CG">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="6ce9498e-4dcb-4c37-961e-b7ef4f5651af"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1761,7 +870,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="REPORT_PERIOD1">
-					<cellContents mode="Opaque" style="Crosstab 23_CG">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="31c2a98a-9d5d-4734-b920-499bb67e148c"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1769,7 +878,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SUBJECT_DESCRIPTION_F1">
-					<cellContents mode="Opaque" style="Crosstab 23_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="86800c18-9707-4ab6-9cc0-df82b946526d"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1777,7 +886,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SUBJECT_DESCRIPTION_F1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab 23_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="d4be7920-c601-46cc-a92b-9f4b3c03503a"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1785,7 +894,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SUBJECT_DESCRIPTION_F1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab 23_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="48632fba-1286-40ce-a8eb-65dc423b365a"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1793,7 +902,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SUBJECT_DESCRIPTION_F1" columnTotalGroup="REPORT_PERIOD1">
-					<cellContents mode="Opaque" style="Crosstab 23_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="77a0867b-7a5c-4537-b1d0-87c905fe0dbe"/>
 							<textFieldExpression><![CDATA[$V{MARK_MEASURE1}]]></textFieldExpression>
@@ -1915,7 +1024,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{DESCRIPTION_F}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
 							<textField>
 								<reportElement x="0" y="0" width="90" height="20" uuid="e11bc8f8-36c5-476d-a651-2375d5710add">
 									<property name="local_mesure_unitwidth" value="pixel"/>
@@ -1931,7 +1040,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="510aeb0b-1bba-46a1-88f1-150ad5303acf"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="510aeb0b-1bba-46a1-88f1-150ad5303acf"/>
 								<text><![CDATA[Total DESCRIPTION_F1]]></text>
 							</staticText>
 						</cellContents>
@@ -1942,7 +1051,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
 							<textField>
 								<reportElement mode="Opaque" x="0" y="0" width="60" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="94212cd6-d00d-4137-8373-6ca519b3ebad"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -1955,7 +1064,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="124016e0-c9d3-459d-8f2f-3001539fb2ef"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="124016e0-c9d3-459d-8f2f-3001539fb2ef"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
@@ -1965,7 +1074,7 @@ WHERE     p.person_id = sr.person_id
 					<measureExpression><![CDATA[$F{NVL(SCC.EARNED_CREDIT_VALUE,'0')}]]></measureExpression>
 				</measure>
 				<crosstabCell width="60" height="20">
-					<cellContents mode="Opaque" style="Crosstab_CD">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" uuid="f6b42b91-0c2c-4ca5-9909-38bd5bece15a"/>
 							<box>
@@ -1982,7 +1091,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="bfa97900-76f8-473d-b00b-9a21ae6fe0ca"/>
 							<textFieldExpression><![CDATA[$V{NVL(SCC.EARNED_CREDIT_VALUE,'0')_MEASURE1}]]></textFieldExpression>
@@ -1990,7 +1099,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="DESCRIPTION_F1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="ddb14413-a177-4a69-95a9-46f0b4ea5eb5"/>
 							<textFieldExpression><![CDATA[$V{NVL(SCC.EARNED_CREDIT_VALUE,'0')_MEASURE1}]]></textFieldExpression>
@@ -1998,7 +1107,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="DESCRIPTION_F1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="bce20a26-b8b2-4154-a92f-d1acd928bf9d"/>
 							<textFieldExpression><![CDATA[$V{NVL(SCC.EARNED_CREDIT_VALUE,'0')_MEASURE1}]]></textFieldExpression>
@@ -2053,7 +1162,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab 21_CH">
+						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<box>
 								<topPen lineWidth="0.2"/>
@@ -2062,7 +1171,7 @@ WHERE     p.person_id = sr.person_id
 								<rightPen lineWidth="0.2"/>
 							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" uuid="29ff5149-c7a0-4d67-9f55-25838907741c"/>
+								<reportElement style="Style1" mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="29ff5149-c7a0-4d67-9f55-25838907741c"/>
 								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
 							</textField>
@@ -2071,18 +1180,18 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="972444d1-a716-426f-b73d-914c91a311bf"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="972444d1-a716-426f-b73d-914c91a311bf"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="NUM1" height="0">
+				<columnGroup name="NUM1" height="0" totalPosition="End">
 					<bucket class="java.math.BigDecimal">
 						<bucketExpression><![CDATA[$F{NUM}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 21_CH">
+						<cellContents mode="Opaque" style="Style2">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
 								<reportElement x="0" y="0" width="50" height="0" uuid="e59f9a9d-8176-43ca-a926-cc667113b52d">
@@ -2094,10 +1203,42 @@ WHERE     p.person_id = sr.person_id
 						</cellContents>
 					</crosstabColumnHeader>
 					<crosstabTotalColumnHeader>
-						<cellContents>
+						<cellContents style="Style2">
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="a4147dbf-fb2c-47d6-9380-76b1ba279c7d"/>
+								<reportElement x="-5" y="0" width="0" height="0" uuid="a4147dbf-fb2c-47d6-9380-76b1ba279c7d"/>
 								<text><![CDATA[Total NUM1]]></text>
+							</staticText>
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" uuid="cf32bf9c-ac37-432f-abf1-15d1c1749ec1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="10"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+							<staticText>
+								<reportElement mode="Opaque" x="26" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="2eae041a-330f-4f9f-b721-7e14cf81ddc1"/>
+								<box>
+									<topPen lineWidth="0.1"/>
+									<leftPen lineWidth="0.1"/>
+									<bottomPen lineWidth="0.1"/>
+									<rightPen lineWidth="0.1"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[A]]></text>
+							</staticText>
+							<staticText>
+								<reportElement mode="Opaque" x="1" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="d071ddc3-e773-4642-8ae1-38613e7620d8"/>
+								<box>
+									<topPen lineWidth="0.1"/>
+									<leftPen lineWidth="0.1"/>
+									<bottomPen lineWidth="0.1"/>
+									<rightPen lineWidth="0.1"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[R]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalColumnHeader>
@@ -2107,7 +1248,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{MNTH}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 21_CH">
+						<cellContents mode="Opaque" style="Style2">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<box>
@@ -2118,7 +1259,9 @@ WHERE     p.person_id = sr.person_id
 							</box>
 							<textField>
 								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" uuid="4346481d-5e6f-4d86-9442-cbee45cafea8"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$V{MNTH1}]]></textFieldExpression>
 							</textField>
 							<staticText>
@@ -2150,7 +1293,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="4fe71e35-fbff-4713-9754-ed2bf46125bb"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="4fe71e35-fbff-4713-9754-ed2bf46125bb"/>
 								<text><![CDATA[Total MNTH1]]></text>
 							</staticText>
 						</cellContents>
@@ -2163,9 +1306,9 @@ WHERE     p.person_id = sr.person_id
 					<measureExpression><![CDATA[$F{A}]]></measureExpression>
 				</measure>
 				<crosstabCell width="50" height="20">
-					<cellContents mode="Opaque" style="Crosstab 21_CD">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="25" height="20" uuid="379c4393-dc8c-4687-8528-4810534466dd"/>
+							<reportElement style="Style1" mode="Transparent" x="0" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="379c4393-dc8c-4687-8528-4810534466dd"/>
 							<box>
 								<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 								<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -2176,14 +1319,14 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="25" y="0" width="25" height="20" uuid="13bfc3c1-ad43-4a82-8280-9bacdadc1b28">
+							<reportElement style="Style1" mode="Transparent" x="25" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="13bfc3c1-ad43-4a82-8280-9bacdadc1b28">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
 								<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 								<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
 								<bottomPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<rightPen lineWidth="0.1" lineColor="#A3A3A3"/>
+								<rightPen lineWidth="0.3" lineColor="#A3A3A3"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font isBold="true"/>
@@ -2192,58 +1335,83 @@ WHERE     p.person_id = sr.person_id
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab 21_CT">
+				<crosstabCell width="51" height="20" columnTotalGroup="NUM1">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="a0f2a66c-21f2-4445-be91-6d70761cdf02"/>
+							<reportElement key="" style="Style1" mode="Transparent" x="0" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a0f2a66c-21f2-4445-be91-6d70761cdf02"/>
+							<box>
+								<leftPen lineWidth="0.3"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="9a67c7b9-9485-45f9-ab33-ea5b87497e56"/>
+							<reportElement style="Style1" mode="Transparent" x="25" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9a67c7b9-9485-45f9-ab33-ea5b87497e56"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab 21_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="0a846ec1-2375-40d7-8368-81aaa9d2ba1b"/>
+							<reportElement x="0" y="0" width="30" height="20" uuid="0a846ec1-2375-40d7-8368-81aaa9d2ba1b">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="186c2588-c968-453b-a6ae-9e8f17b9d98e"/>
+							<reportElement x="30" y="0" width="30" height="20" uuid="186c2588-c968-453b-a6ae-9e8f17b9d98e">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab 21_CT">
+				<crosstabCell width="50" height="20" rowTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="aac8ef73-9074-44eb-8805-67707c881409"/>
+							<reportElement x="0" y="0" width="25" height="20" forecolor="#FFFFFF" uuid="aac8ef73-9074-44eb-8805-67707c881409">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="f9c4dd89-7bf8-41b5-acd4-7a449d78250f"/>
+							<reportElement x="25" y="0" width="25" height="20" forecolor="#FFFFFF" uuid="f9c4dd89-7bf8-41b5-acd4-7a449d78250f">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab 21_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="31c92f69-99f5-4b44-856b-121a97341116"/>
+							<reportElement x="0" y="0" width="30" height="20" forecolor="#FFFFFF" uuid="31c92f69-99f5-4b44-856b-121a97341116"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="b9f70d4d-7b37-4afe-aae1-b96a344c9a19"/>
+							<reportElement x="30" y="0" width="30" height="20" forecolor="#FFFFFF" uuid="b9f70d4d-7b37-4afe-aae1-b96a344c9a19"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab 21_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="ca4d91ce-d4a2-4046-b432-cc2d4046b1b5"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
@@ -2289,7 +1457,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab 19_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<box>
 								<topPen lineWidth="0.2"/>
@@ -2307,7 +1475,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="fdb62b8a-4411-4f62-b303-a0139e87c9fb"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="fdb62b8a-4411-4f62-b303-a0139e87c9fb"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
@@ -2318,7 +1486,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{NUM}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 19_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<box>
 								<topPen lineWidth="0.2"/>
@@ -2341,7 +1509,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="530d5655-2cab-4cda-b8c4-db03356fbd06"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="530d5655-2cab-4cda-b8c4-db03356fbd06"/>
 								<text><![CDATA[Total NUM1]]></text>
 							</staticText>
 						</cellContents>
@@ -2352,7 +1520,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{MNTH}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab 19_CH">
+						<cellContents mode="Opaque">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<box>
@@ -2399,7 +1567,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="509060fc-b1aa-4d66-a9bb-2c6439ddc9f1"/>
+								<reportElement x="0" y="0" width="0" height="0" uuid="509060fc-b1aa-4d66-a9bb-2c6439ddc9f1"/>
 								<text><![CDATA[Total MNTH1]]></text>
 							</staticText>
 						</cellContents>
@@ -2412,7 +1580,7 @@ WHERE     p.person_id = sr.person_id
 					<measureExpression><![CDATA[$F{A}]]></measureExpression>
 				</measure>
 				<crosstabCell width="50" height="20">
-					<cellContents mode="Opaque" style="Crosstab 19_CD">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="25" height="20" uuid="5f3052a5-9bb2-4b8e-a3e9-7931b5ff1f53"/>
 							<box>
@@ -2442,7 +1610,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab 19_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="bb355eac-a664-4f7b-9c4e-6d4f50860a3f"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -2454,7 +1622,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab 19_CG">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" uuid="1283c9bf-3577-40f1-8d82-607b91d31ced"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -2466,7 +1634,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab 19_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="bc86cb1f-2dc2-4896-b251-80bd31aee956"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -2478,7 +1646,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab 19_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="8ec05ad4-037a-4afc-be17-ccc9b66e1f18"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -2490,7 +1658,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab 19_CT">
+					<cellContents mode="Opaque">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="c413d017-63d3-4cb3-a7db-efc23524f79d"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
