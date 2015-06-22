@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-22T14:31:17 -->
+<!-- 2015-06-22T15:59:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -38,6 +38,87 @@
 		</box>
 	</style>
 	<style name="Style2"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<subDataset name="Dataset1" uuid="4d18a449-776b-4420-87f3-8013066b04ac">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
@@ -78,7 +159,7 @@ attendance_code,
        SUM(CASE WHEN ATTENDANCE_CODE = 'L' THEN 1 END) as L, 
        SUM(CASE WHEN ATTENDANCE_CODE IN ('A', 'E', 'G', 'N')
                 THEN 
-                   round(1/nullif(gcc, 0), 2) 
+                   round(1/(case when gcc = 0 then  1 else gcc end), 2)
                 END) as A --Le nullif est pour satisfaire Jaspersoft Studio qui se 
                                                                                      --pleignait qu'il y avait une division par zéro. La division
                                                                                      --détermine le poid de chaque absence. Par exemple, un élève 
@@ -239,73 +320,6 @@ ORDER BY SCSA.SCHOOL_YEAR, SCSA.COURSE_CODE, SCSA.REPORT_PERIOD]]>
 		<field name="REPORT_PERIOD" class="java.lang.String"/>
 		<field name="SUBJECT_DESCRIPTION_F" class="java.lang.String"/>
 		<field name="MARK" class="java.lang.String"/>
-	</subDataset>
-	<subDataset name="Dataset2" uuid="b88872f6-27ca-44b4-94d2-41c7e4c26a54">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString>
-			<![CDATA[select school_year, MNTH,
-
-case when trim(mnth) IN ('sep', 'sept.') then 0 
-when trim(mnth)  in ('oct', 'oct.') then 1 
-when trim(mnth)  in ('nov', 'nov.') then 2
-when trim(mnth)  in ('dec', 'déc.') then 3
-when trim(mnth)  in ('jan', 'janv.') then 4
-when trim(mnth)  in ('feb', 'févr.') then 5
-when trim(mnth)  in ('mar', 'mars') then 6
-when trim(mnth)  in ('apr', 'avr.') then 7
-when trim(mnth)  in ('may', 'mai') then 8
-when trim(mnth)  in ('jun', 'juin') then 9
-when trim(mnth)  in ('jul', 'juil.') then 10
-else 11
-end as NUM, 
-
-attendance_code,
-
-       SUM(CASE WHEN ATTENDANCE_CODE = 'L' THEN 1 END) as L, 
-       SUM(CASE WHEN ATTENDANCE_CODE = 'A' 
-                THEN 
-                   round(1/nullif(gcc, 0), 2) 
-                END) as A --Le nullif est pour satisfaire Jaspersoft Studio qui se 
-                                                                                     --pleignait qu'il y avait une division par zéro. La division
-                                                                                     --détermine le poid de chaque absence. Par exemple, un élève 
-                                                                                     --qui prend 4 cours aura un poid d'absence de 0,25. tandis 
-                                                                                     --que l'élève qui en prend 5 aura un poid de 0,2. Une absence
-                                                                                     --est égale à une journée complète de cours manqués. 
-
-from (
-SELECT PA.SCHOOL_YEAR, TO_CHAR(CALENDAR_DATE, 'mon') MNTH, --Conversion de la date de l'absence à un mois
-       ATTENDANCE_CODE,
-       
-       PKG_PROFILE_ÉLÈVE.GET_COURSE_COUNT(PA.SCHOOL_YEAR,   $P{ACCOUNT_ID} ,  --Cette fonction retourne le nombre de cours dans lequel
-                   (case when (TO_DATE(PA.CALENDAR_DATE, 'DD/MM/YYYY') BETWEEN--     un élève est inscrit qui doit prendre l'assiduité.
-                               TO_DATE(SS.SEMESTER_START, 'DD/MM/YYYY') AND  --Ce Case statement détermine, d'après la date de l'absence, 
-                               TO_DATE(SS.SEMESTER_END, 'DD/MM/YYYY'))       --     le semestre courrant.
-                         then SS.SEMESTER
-                   end)) as gcc
-                     
-       
-FROM PERIOD_ATTENDANCE PA, SCHOOL_SEMESTERS SS
-
-WHERE PERSON_ID =   $P{ACCOUNT_ID}  --Paramêtre dans Jaspersoft studio
-AND PA.SCHOOL_CODE IN ('ESF', 'ESA', 'ESE')--On compte seulement les absences prises durant le séjour secondaire
-AND SS.SCHOOL_CODE = PA.SCHOOL_CODE
-AND SS.SCHOOL_YEAR = PA.SCHOOL_YEAR
-AND CLASS_CODE IS NOT NULL --Dans le cas des absences secondaire, s'il y a une absence qui n'a pas de Class_Code associé, ce n'est pas une absence valide
-AND ATTENDANCE_CODE NOT IN ('N', 'E', 'G') --On ne compte pas les absences "Justifié". "Jour avec pas d'enseignement" ou "Intempéries"
-AND PA.SCHOOL_YEAR_TRACK = SS.SCHOOL_YEAR_TRACK
-AND CALENDAR_DATE BETWEEN SS.SEMESTER_START AND SS.SEMESTER_END --Ceci est pour prévenir que le Case ci-dessus retourne des rangées vides
-AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCUEIL', 'ACC.', 'FOYER') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-)
-group by attendance_code, school_year, mnth, gcc
-order by mnth asc]]>
-		</queryString>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="MNTH" class="java.lang.String"/>
-		<field name="NUM" class="java.math.BigDecimal"/>
-		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
-		<field name="L" class="java.math.BigDecimal"/>
-		<field name="A" class="java.math.BigDecimal"/>
 	</subDataset>
 	<parameter name="STUDENT" class="java.lang.String"/>
 	<queryString language="SQL">
@@ -1674,10 +1688,10 @@ WHERE     p.person_id = sr.person_id
 						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="L_MEASURE1" class="java.math.BigDecimal" calculation="Highest">
+				<measure name="L_MEASURE1" class="java.math.BigDecimal" calculation="Sum">
 					<measureExpression><![CDATA[$F{L}]]></measureExpression>
 				</measure>
-				<measure name="A_MEASURE1" class="java.math.BigDecimal" calculation="Sum">
+				<measure name="A_MEASURE1" class="java.math.BigDecimal" calculation="Highest">
 					<measureExpression><![CDATA[$F{A}]]></measureExpression>
 				</measure>
 				<crosstabCell width="50" height="20">
