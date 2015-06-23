@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-11T15:49:01 -->
+<!-- 2015-06-23T11:28:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Historique_effectif" pageWidth="430" pageHeight="802" columnWidth="430" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="bc5b7572-a901-4604-aa63-2e4d2cdc6dc9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -11,9 +11,13 @@
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select distinct p.preferred_name_upper, se.school_year "Incriptions année scolaire", sc.school_name "École", 
-       PKG_PROFILE_ÉLÈVE.GET_START_DATE(SE.PERSON_ID, SE.SCHOOL_YEAR, SC.SCHOOL_CODE) AS "Date d'arrivé", 
-       PKG_PROFILE_ÉLÈVE.GET_DEPARTURE_DATE(SE.PERSON_ID, SE.SCHOOL_YEAR, SC.SCHOOL_CODE) AS "Date de demit"
+		<![CDATA[select distinct p.preferred_name_upper, se.school_year,
+       
+       regexp_replace(se.school_year, '(\w{4})(\w{4})', '\1-\2')  "Incriptions année scolaire", 
+       
+       sc.school_name "École",
+       to_char(PKG_PROFILE_ÉLÈVE.GET_START_DATE(SE.PERSON_ID, SE.SCHOOL_YEAR, SC.SCHOOL_CODE), 'dd/MON/yyyy') AS "Date d'arrivé", 
+       to_char(PKG_PROFILE_ÉLÈVE.GET_DEPARTURE_DATE(SE.PERSON_ID, SE.SCHOOL_YEAR, SC.SCHOOL_CODE), 'dd/MON/yyyy') AS "Date de demit"
 
 from Student_enrolments se, schools sc, persons p
 
@@ -26,6 +30,7 @@ and se.active_flag = 'x'
 order by se.school_year DESC]]>
 	</queryString>
 	<field name="PREFERRED_NAME_UPPER" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
 	<field name="Incriptions année scolaire" class="java.lang.String"/>
 	<field name="École" class="java.lang.String"/>
 	<field name="Date d&apos;arrivé" class="java.lang.String"/>

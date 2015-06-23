@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-23T10:41:32 -->
+<!-- 2015-06-23T11:27:53 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -1061,7 +1061,7 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["competances_sec.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="70" splitType="Prevent">
+		<band height="65" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 			<subreport>
@@ -1076,7 +1076,7 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["condition_obtention.jasper"]]></subreportExpression>
 			</subreport>
 			<crosstab>
-				<reportElement x="197" y="60" width="362" height="10" uuid="3aa49df2-f85e-49b0-b594-c915ca2fd978"/>
+				<reportElement x="197" y="60" width="362" height="3" uuid="3aa49df2-f85e-49b0-b594-c915ca2fd978"/>
 				<crosstabDataset>
 					<dataset>
 						<datasetRun subDataset="Dataset1" uuid="5c32d5df-f4e4-4cf7-9d95-fbdad0fc36d3">
@@ -1197,9 +1197,8 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["gbplus.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50" splitType="Prevent">
+		<band height="75" splitType="Prevent">
 			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<staticText>
 				<reportElement x="0" y="11" width="340" height="20" uuid="47176475-95a3-4caa-b0c7-be3ebedce8cc"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -1208,7 +1207,7 @@ WHERE     p.person_id = sr.person_id
 				<text><![CDATA[Assiduité par mois - élémentaire]]></text>
 			</staticText>
 			<crosstab horizontalPosition="Center">
-				<reportElement x="-12" y="40" width="578" height="3" uuid="a868ab8d-9468-481e-800f-78f11feccb5d"/>
+				<reportElement x="-9" y="67" width="578" height="3" uuid="a868ab8d-9468-481e-800f-78f11feccb5d"/>
 				<crosstabDataset>
 					<dataset>
 						<datasetRun subDataset="Dataset2" uuid="addf12f8-6270-4aeb-bada-3cbc2985a583">
@@ -1537,8 +1536,15 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 			</crosstab>
+			<staticText>
+				<reportElement x="-8" y="36" width="513" height="26" uuid="09c174c3-41a3-4201-815b-74fbc87b2c08"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[À noter que une (1) absence équivau une journée complète d'absence et que les décimales compte comme une période d'assiduité manquée. Par exemple, s'il y a 2 périodes d'assiduité pour une école, 1 = deux périodes manquées et 1.5 = trois périodes manquées.]]></text>
+			</staticText>
 		</band>
-		<band height="50" splitType="Prevent">
+		<band height="80" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 			<staticText>
@@ -1551,7 +1557,7 @@ WHERE     p.person_id = sr.person_id
 				<text><![CDATA[Assiduité par mois - secondaire]]></text>
 			</staticText>
 			<crosstab horizontalPosition="Center">
-				<reportElement x="-9" y="40" width="578" height="3" uuid="fcf92d69-cbf1-4225-93df-80ba787e8c4b"/>
+				<reportElement x="-8" y="73" width="578" height="3" uuid="fcf92d69-cbf1-4225-93df-80ba787e8c4b"/>
 				<crosstabDataset>
 					<dataset>
 						<datasetRun subDataset="Dataset3" uuid="78420eca-bc39-4551-8712-e040d4b3c2cd">
@@ -1854,6 +1860,13 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 			</crosstab>
+			<staticText>
+				<reportElement x="-8" y="36" width="468" height="36" uuid="3efae4d5-c34c-40f8-aec9-aab6e68cac66"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[À noter que une (1) absence équivau une journée complète d'absence et que les décimales compte comme une période manquée. Donc, si l'élève prend 4 cours, 1 = quatre périodes manquées et 0.25 = une période manquée. Si l'élève prend 5 cours, 1 = cinq périodes manquées et 0.2 = une période manquée.]]></text>
+			</staticText>
 		</band>
 		<band height="9" splitType="Prevent">
 			<property name="local_mesure_unitheight" value="pixel"/>
