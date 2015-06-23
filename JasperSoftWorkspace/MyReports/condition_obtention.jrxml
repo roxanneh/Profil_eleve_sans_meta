@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-11T15:50:07 -->
+<!-- 2015-06-23T09:53:05 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="condition_obtention" pageWidth="360" pageHeight="802" columnWidth="360" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b2c83ab3-280d-4e46-b6b1-493d5ba621b6">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="ex">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{Exigences du diplôme}, "Optionnels")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#FFFFFF" backcolor="#149966" fontName="Tahoma" isBold="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($F{Exigences du diplôme}, "Obligatoires")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#FFFFFF" backcolor="#149966" fontName="Tahoma" isBold="true"/>
+		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E8E8E8"/>
@@ -109,7 +123,7 @@ ORDER BY
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement style="Everything else" x="0" y="0" width="100" height="20" uuid="b53a181d-ed0e-4c1a-b80a-71eecb392380"/>
+				<reportElement style="ex" x="0" y="0" width="100" height="20" uuid="b53a181d-ed0e-4c1a-b80a-71eecb392380"/>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 					<topPen lineWidth="0.1"/>
 					<leftPen lineWidth="0.1"/>
@@ -122,7 +136,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{Exigences du diplôme}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Everything else" x="100" y="0" width="40" height="20" uuid="00d93b56-473f-4835-b0a0-61d77490ffb4"/>
+				<reportElement style="ex" x="100" y="0" width="40" height="20" uuid="00d93b56-473f-4835-b0a0-61d77490ffb4"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -135,7 +149,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{Total des crédits requis}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Everything else" x="140" y="0" width="40" height="20" uuid="d71c8dc5-433f-42c3-b6bb-353e084a2e14"/>
+				<reportElement style="ex" x="140" y="0" width="40" height="20" uuid="d71c8dc5-433f-42c3-b6bb-353e084a2e14"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>

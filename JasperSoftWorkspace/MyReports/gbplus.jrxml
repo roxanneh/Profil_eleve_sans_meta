@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-17T11:32:53 -->
+<!-- 2015-06-23T09:19:53 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gbplus" pageWidth="560" pageHeight="802" columnWidth="560" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eec60813-ba1e-4c27-b088-cbc86a0be5e0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="default" isDefault="true" hTextAlign="Center" vTextAlign="Middle" fontName="Tahoma" fontSize="8">
@@ -23,7 +23,7 @@
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT 
-
+sr.school_code,
 res.resultat_id "ID",
 res.evaluation_date "Date d'évaluation",
 res.niveau "Niveau"  ,
@@ -56,13 +56,16 @@ round(((                                                                        
 PKG_PROFILE_ÉLÈVE.GBP_GET_RECS(RES.RESULTAT_ID) AS "Recommendations"
 
 
-FROM ATELIER.GBP_RESULTATS   res
+FROM ATELIER.GBP_RESULTATS   res, student_registrations sr 
 
-
-WHERE res.person_id =  $P{ACCOUNT_ID} -- Paramêtre dans jaspersoft studio
-AND RES.TEXTE_ID <> 0
+WHERE res.person_id =  $P{ACCOUNT_ID}  -- Paramêtre dans jaspersoft studio
+--AND RES.TEXTE_ID <> 0
+AND sr.person_id = res.person_id 
+AND sr.school_year = res.school_year
+and sr.status_indicator_code = 'Active'
 ORDER BY  res.evaluation_date DESC]]>
 	</queryString>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
 	<field name="ID" class="java.math.BigDecimal"/>
 	<field name="Date d&apos;évaluation" class="java.sql.Timestamp"/>
 	<field name="Niveau" class="java.math.BigDecimal"/>
@@ -84,123 +87,6 @@ ORDER BY  res.evaluation_date DESC]]>
 	<columnHeader>
 		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="40" width="50" height="30" uuid="9935ed22-c1f2-449a-bd5e-f359ea72d0a9"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Date d'évaluation]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="230" y="40" width="30" height="30" uuid="11515b06-020a-4d54-a238-314d807778c1"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Taux de précision]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="200" y="40" width="30" height="30" uuid="020ebe0b-f01d-435c-8e03-114d216db0fc"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[V]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="110" y="40" width="30" height="30" uuid="4e938b4f-31e3-4715-8c75-97a9b70f3c34"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[AC]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="50" y="40" width="30" height="30" uuid="e6bfc25f-4a70-4973-bd3c-06fa7b3c2dee"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Niveau]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="170" y="40" width="30" height="30" uuid="1bf870a1-c2ff-4482-bbfd-76e0fd7c2d2f"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[ST]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="260" y="40" width="50" height="30" uuid="81230ad6-6b25-43af-9a74-f6c181d2af94"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Niveau de lecture]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="140" y="40" width="30" height="30" uuid="66d10418-ebd2-46fe-8517-27c7f579f2bf"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[S]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="80" y="40" width="30" height="30" uuid="7560d582-0bae-4fba-afdf-a27f788ba665"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Mépris]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="0" y="20" width="340" height="20" uuid="fc6f3d75-6bb5-415e-9404-9e2902a76b3e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
@@ -208,7 +94,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<text><![CDATA[GB+]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="40" width="30" height="30" uuid="ed728294-c10f-4722-8515-e2927e4b15cd"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="40" width="35" height="30" uuid="f96ba52a-ecce-4d79-b25a-6caf96d84897"/>
 				<box>
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -218,20 +104,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Comp. Litérale]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="400" y="40" width="40" height="30" uuid="8d2b2a3f-319a-4e65-8603-3fe599663c2f"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="5"/>
-				</textElement>
-				<text><![CDATA[Degré de compréhension]]></text>
+				<text><![CDATA[École]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="440" y="40" width="120" height="30" uuid="929b1a67-e8d8-445a-b225-735e0a996151"/>
@@ -247,6 +120,32 @@ ORDER BY  res.evaluation_date DESC]]>
 				<text><![CDATA[Recommendations]]></text>
 			</staticText>
 			<staticText>
+				<reportElement x="205" y="40" width="25" height="30" uuid="020ebe0b-f01d-435c-8e03-114d216db0fc"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[V]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="40" width="30" height="30" uuid="ed728294-c10f-4722-8515-e2927e4b15cd"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Comp. Litérale]]></text>
+			</staticText>
+			<staticText>
 				<reportElement x="370" y="40" width="30" height="30" uuid="3c4900d1-b00c-4376-8ed1-7810648087c0"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.2"/>
@@ -258,6 +157,127 @@ ORDER BY  res.evaluation_date DESC]]>
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Rappel du texte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="40" width="25" height="30" uuid="66d10418-ebd2-46fe-8517-27c7f579f2bf"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="40" width="25" height="30" uuid="4e938b4f-31e3-4715-8c75-97a9b70f3c34"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[AC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="40" width="50" height="30" uuid="81230ad6-6b25-43af-9a74-f6c181d2af94"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Niveau de lecture]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="40" width="25" height="30" uuid="1bf870a1-c2ff-4482-bbfd-76e0fd7c2d2f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[ST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="40" width="25" height="30" uuid="7560d582-0bae-4fba-afdf-a27f788ba665"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Mépris]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="40" width="30" height="30" uuid="e6bfc25f-4a70-4973-bd3c-06fa7b3c2dee"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Niveau]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="40" width="30" height="30" uuid="11515b06-020a-4d54-a238-314d807778c1"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Taux de précision]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="40" width="40" height="30" uuid="9935ed22-c1f2-449a-bd5e-f359ea72d0a9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Date d'évaluation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="40" width="40" height="30" uuid="8d2b2a3f-319a-4e65-8603-3fe599663c2f"/>
+				<box>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="5"/>
+				</textElement>
+				<text><![CDATA[Degré de compréhension]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="340" y="40" width="30" height="30" uuid="04ea0037-05c9-4f74-a2d1-c49998ef977a"/>
@@ -277,7 +297,7 @@ ORDER BY  res.evaluation_date DESC]]>
 	<detail>
 		<band height="30" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="dd/MMM/yyyy" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="50" height="30" uuid="0473bbfc-2430-4ff9-8065-1671deae0a22"/>
+				<reportElement stretchType="RelativeToTallestObject" x="35" y="0" width="40" height="30" uuid="0473bbfc-2430-4ff9-8065-1671deae0a22"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -290,7 +310,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{Date d'évaluation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="50" y="0" width="30" height="30" uuid="c0b4bcc6-ea67-4014-8b89-56fd3cee0e29"/>
+				<reportElement stretchType="RelativeToTallestObject" x="75" y="0" width="30" height="30" uuid="c0b4bcc6-ea67-4014-8b89-56fd3cee0e29"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -303,7 +323,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{Niveau}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="80" y="0" width="30" height="30" uuid="abaa870e-8d8b-4474-ab68-156c66cd4234"/>
+				<reportElement stretchType="RelativeToTallestObject" x="105" y="0" width="25" height="30" uuid="abaa870e-8d8b-4474-ab68-156c66cd4234"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -316,7 +336,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{ERR}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="110" y="0" width="30" height="30" uuid="33024e8a-9018-4938-9599-c6217fee7422"/>
+				<reportElement stretchType="RelativeToTallestObject" x="130" y="0" width="25" height="30" uuid="33024e8a-9018-4938-9599-c6217fee7422"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -329,7 +349,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{AC}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="140" y="0" width="30" height="30" uuid="fc74987e-0480-4304-b908-3b4206bba092"/>
+				<reportElement stretchType="RelativeToTallestObject" x="155" y="0" width="25" height="30" uuid="fc74987e-0480-4304-b908-3b4206bba092"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -342,7 +362,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{ERR_S}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="170" y="0" width="30" height="30" uuid="7355e9bd-0698-4682-b031-102ff63c1957"/>
+				<reportElement stretchType="RelativeToTallestObject" x="180" y="0" width="25" height="30" uuid="7355e9bd-0698-4682-b031-102ff63c1957"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -355,7 +375,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{ERR_ST}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="200" y="0" width="30" height="30" uuid="ef699c24-1c2e-46a0-aba8-e3d752dba9df"/>
+				<reportElement stretchType="RelativeToTallestObject" x="205" y="0" width="25" height="30" uuid="ef699c24-1c2e-46a0-aba8-e3d752dba9df"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -457,6 +477,21 @@ ORDER BY  res.evaluation_date DESC]]>
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Degré de compréhension}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="35" height="30" uuid="c19d58e2-6b5c-4616-8630-a11cb3248928">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.1" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.1" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SCHOOL_CODE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
