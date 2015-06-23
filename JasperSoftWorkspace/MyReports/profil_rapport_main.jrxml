@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-23T10:14:34 -->
+<!-- 2015-06-23T10:40:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -35,124 +35,6 @@
 			<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
 			<bottomPen lineWidth="0.1" lineColor="#A3A3A3"/>
 			<rightPen lineWidth="0.1" lineColor="#A3A3A3"/>
-		</box>
-	</style>
-	<style name="Style2"/>
-	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 2_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 2_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CH" mode="Opaque" backcolor="#C3CFD9">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CG" mode="Opaque" backcolor="#E6F3FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CT" mode="Opaque" backcolor="#737A80">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<subDataset name="Dataset1" uuid="4d18a449-776b-4420-87f3-8013066b04ac">
@@ -237,101 +119,6 @@ order by mnth asc]]>
 		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
 		<field name="L" class="java.math.BigDecimal"/>
 		<field name="A" class="java.math.BigDecimal"/>
-	</subDataset>
-	<subDataset name="Dataset18" uuid="170c60da-645e-4343-bd8b-9779b8a68310">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString>
-			<![CDATA[select school_year, school_code, mnth, calendar_date, attendance_code, a, l, 
-
-        case when trim(mnth) IN ('sep', 'sept.') then 0 
-             when trim(mnth)  in ('oct', 'oct.') then 1 
-             when trim(mnth)  in ('nov', 'nov.') then 2
-             when trim(mnth)  in ('dec', 'déc.') then 3
-             when trim(mnth)  in ('jan', 'janv.') then 4
-             when trim(mnth)  in ('feb', 'févr.') then 5
-             when trim(mnth)  in ('mar', 'mars') then 6
-             when trim(mnth)  in ('apr', 'avr.') then 7
-             when trim(mnth)  in ('may', 'mai') then 8
-             when trim(mnth)  in ('jun', 'juin') then 9
-             when trim(mnth)  in ('jul', 'juil.') then 10
-             else 11
-             end as NUM
-             
-from 
-(select  SCHOOL_YEAR, SCHOOL_CODE, to_char(calendar_date, 'mon') MNTH, calendar_date, ATTENDANCE_CODE,
-    
---Nous faison un pivot sur les mois
---donc, un crosstab qui contient des colonnes de mois et des rangées par année scolaire
---Les absences sont divisés par le nombre de fois par jour que l'on prend les absences
---Par exemple, à la pluspart des écoles élémentaire, les profs prennent les absences
---2 fois par jour. Donc, une absence est égale à 1/2.
---De cette façon un élève manquera "une journée complête" lorsqu'il ou elle recoit 2 absences dans une journée
---Dans le cas de CDJ post-2012, les absences sont prises 6 fois par jours.  
-           SUM(CASE WHEN ATTENDANCE_CODE = 'L' THEN 1 END) as L, 
-           SUM(CASE WHEN ATTENDANCE_CODE = 'A' 
-                    AND SCHOOL_CODE NOT IN ('CDJ', 'EJE') 
-                    THEN 1/2                  --ÉCOLES ÉLÉMENTAIRES QUI NE SONT PAS CDJ PRENNENT LES ABSENCES À CHAQUE (2) PÉRIODE
-                    
-                	WHEN ATTENDANCE_CODE = 'A' 
-                    AND SCHOOL_CODE IN ('CDJ') 
-                    AND CALENDAR_DATE < TO_DATE('30/06/2012', 'DD/MM/YYYY') 
-                    THEN 1/2                  --AVANT LE CHANGEMENT DES PÉRIODE À CDJ, EN 2012, CDJ PRENNAIT LES ABSENCES À CHAQUE (2) PÉRIODE 
-                    
-               		WHEN ATTENDANCE_CODE = 'A'
-                    AND SCHOOL_CODE IN ('CDJ')
-                    AND CALENDAR_DATE > TO_DATE('30/06/2012', 'DD/MM/YYYY') 
-                    THEN ROUND(1/6, 2)      --APRÈS LE CHANGEMENT DES PÉRIODES À CDJ, EN 2012, CDJ PRENNENT MAINTENT L'ABSENCE À CHAQUE (6) PÉRIODE
-                    
-                    WHEN ATTENDANCE_CODE = 'A'
-                    AND SCHOOL_CODE IN ('EJE')
-                    AND CALENDAR_DATE BETWEEN TO_DATE('01/09/2004', 'DD/MM/YYYY') AND TO_DATE('30/06/2005', 'DD/MM/YYYY')
-                    THEN 1/2
-                    
-                    WHEN ATTENDANCE_CODE = 'A'
-                    AND SCHOOL_CODE IN ('EJE')
-                    AND CALENDAR_DATE BETWEEN TO_DATE('01/09/2005', 'DD/MM/YYYY') AND TO_DATE('30/06/2006', 'DD/MM/YYYY')
-                    THEN 1/4
-                    
-                    WHEN ATTENDANCE_CODE = 'A'
-                    AND SCHOOL_CODE IN ('EJE')
-                    AND CALENDAR_DATE BETWEEN TO_DATE('01/09/2006', 'DD/MM/YYYY') AND TO_DATE('30/06/2007', 'DD/MM/YYYY')
-                    THEN ROUND(1/5, 2)
-                    
-                    WHEN ATTENDANCE_CODE = 'A'
-                    AND SCHOOL_CODE IN ('EJE')
-                    AND CALENDAR_DATE BETWEEN TO_DATE('01/09/2007', 'DD/MM/YYYY') AND TO_DATE('30/06/2009', 'DD/MM/YYYY')
-                    THEN ROUND(1/6, 2)
-                    
-                    WHEN ATTENDANCE_CODE = 'A'
-                    AND SCHOOL_CODE IN ('EJE')
-                    AND CALENDAR_DATE BETWEEN TO_DATE('01/09/2009', 'DD/MM/YYYY') AND TO_DATE('30/06/2010', 'DD/MM/YYYY')
-                    THEN 1/2
-           END) as A
-    
-           
-FROM PERIOD_ATTENDANCE
-
-WHERE PERSON_ID =  $P{ACCOUNT_ID}  --Paramêtre dans Jaspersoft Studio
-
-AND SCHOOL_CODE NOT IN ('ESF', 'ESA', 'ESE')  --On compte seulement les absences prises durant le séjour élémentaire
-AND ATTENDANCE_CODE NOT IN ('N', 'E', 'G') --On ne compte pas les absences "Justifié". "Jour avec pas d'enseignement" ou "Intempéries"
-AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-
- group by SCHOOL_YEAR, 
-        SCHOOL_CODE, 
-        CALENDAR_DATE, 
-        ATTENDANCE_CODE
-        )]]>
-		</queryString>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="SCHOOL_CODE" class="java.lang.String"/>
-		<field name="MNTH" class="java.lang.String"/>
-		<field name="CALENDAR_DATE" class="java.sql.Timestamp"/>
-		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
-		<field name="A" class="java.math.BigDecimal"/>
-		<field name="L" class="java.math.BigDecimal"/>
-		<field name="NUM" class="java.math.BigDecimal"/>
 	</subDataset>
 	<subDataset name="Dataset19" uuid="ec6f1e13-3844-4544-a412-53f5e7bdcbda">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
@@ -452,6 +239,74 @@ AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne c
 		<field name="A" class="java.math.BigDecimal"/>
 		<field name="L" class="java.math.BigDecimal"/>
 		<field name="NUM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="Dataset3" uuid="5f4804dd-784d-46a1-abb6-787183dc5088">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select school_year, MNTH, school_code,
+
+case when trim(mnth) IN ('sep', 'sept.') then 0 
+when trim(mnth)  in ('oct', 'oct.') then 1 
+when trim(mnth)  in ('nov', 'nov.') then 2
+when trim(mnth)  in ('dec', 'déc.') then 3
+when trim(mnth)  in ('jan', 'janv.') then 4
+when trim(mnth)  in ('feb', 'févr.') then 5
+when trim(mnth)  in ('mar', 'mars') then 6
+when trim(mnth)  in ('apr', 'avr.') then 7
+when trim(mnth)  in ('may', 'mai') then 8
+when trim(mnth)  in ('jun', 'juin') then 9
+when trim(mnth)  in ('jul', 'juil.') then 10
+else 11
+end as NUM, 
+
+attendance_code,
+
+       SUM(CASE WHEN ATTENDANCE_CODE = 'L' THEN 1 END) as L, 
+       SUM(CASE WHEN ATTENDANCE_CODE IN ('A', 'E', 'G', 'N')
+                THEN 
+                   round(1/gcc, 2)
+                END) as A --Le nullif est pour satisfaire Jaspersoft Studio qui se 
+                                                                                     --pleignait qu'il y avait une division par zéro. La division
+                                                                                     --détermine le poid de chaque absence. Par exemple, un élève 
+                                                                                     --qui prend 4 cours aura un poid d'absence de 0,25. tandis 
+                                                                                     --que l'élève qui en prend 5 aura un poid de 0,2. Une absence
+                                                                                     --est égale à une journée complète de cours manqués. 
+
+from (
+SELECT PA.SCHOOL_YEAR, TO_CHAR(CALENDAR_DATE, 'mon') MNTH, --Conversion de la date de l'absence à un mois
+       ATTENDANCE_CODE, pa. school_code, 
+       
+       PKG_PROFILE_ÉLÈVE.GET_COURSE_COUNT(PA.SCHOOL_YEAR,  $P{ACCOUNT_ID}  ,  --Cette fonction retourne le nombre de cours dans lequel
+                   (case when (PA.CALENDAR_DATE BETWEEN--     un élève est inscrit qui doit prendre l'assiduité.
+                               SS.SEMESTER_START AND  --Ce Case statement détermine, d'après la date de l'absence, 
+                               SS.SEMESTER_END)       --     le semestre courrant.
+                         then SS.SEMESTER
+                   end)) as gcc
+                     
+       
+FROM PERIOD_ATTENDANCE PA, SCHOOL_SEMESTERS SS
+
+WHERE PERSON_ID =  $P{ACCOUNT_ID}  --Paramêtre dans Jaspersoft studio
+AND PA.SCHOOL_CODE IN ('ESF', 'ESA', 'ESE')--On compte seulement les absences prises durant le séjour secondaire
+AND SS.SCHOOL_CODE = PA.SCHOOL_CODE
+AND SS.SCHOOL_YEAR = PA.SCHOOL_YEAR
+AND CLASS_CODE IS NOT NULL --Dans le cas des absences secondaire, s'il y a une absence qui n'a pas de Class_Code associé, ce n'est pas une absence valide
+--AND ATTENDANCE_CODE NOT IN ('N', 'E', 'G') --On ne compte pas les absences "Justifié". "Jour avec pas d'enseignement" ou "Intempéries"
+AND PA.SCHOOL_YEAR_TRACK = SS.SCHOOL_YEAR_TRACK
+AND CALENDAR_DATE BETWEEN SS.SEMESTER_START AND SS.SEMESTER_END --Ceci est pour prévenir que le Case ci-dessus retourne des rangées vides
+AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCUEIL', 'ACC.', 'FOYER') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
+)
+group by attendance_code, school_year, mnth, gcc, school_code
+order by mnth asc]]>
+		</queryString>
+		<field name="SCHOOL_YEAR" class="java.lang.String"/>
+		<field name="MNTH" class="java.lang.String"/>
+		<field name="SCHOOL_CODE" class="java.lang.String"/>
+		<field name="NUM" class="java.math.BigDecimal"/>
+		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
+		<field name="L" class="java.math.BigDecimal"/>
+		<field name="A" class="java.math.BigDecimal"/>
 	</subDataset>
 	<parameter name="STUDENT" class="java.lang.String"/>
 	<queryString language="SQL">
@@ -1342,7 +1197,7 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["gbplus.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="292" splitType="Prevent">
+		<band height="50" splitType="Prevent">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<staticText>
@@ -1353,320 +1208,7 @@ WHERE     p.person_id = sr.person_id
 				<text><![CDATA[Assiduité par mois - élémentaire]]></text>
 			</staticText>
 			<crosstab horizontalPosition="Center">
-				<reportElement positionType="Float" x="-10" y="40" width="580" height="3" uuid="7093965c-9086-46d2-970c-6a21491113fb"/>
-				<box>
-					<topPen lineWidth="0.0" lineColor="#A3A3A3"/>
-					<leftPen lineWidth="0.0" lineColor="#A3A3A3"/>
-					<bottomPen lineWidth="0.0" lineColor="#A3A3A3"/>
-					<rightPen lineWidth="0.0" lineColor="#A3A3A3"/>
-				</box>
-				<crosstabDataset>
-					<dataset>
-						<datasetRun subDataset="Dataset18" uuid="12cfe724-4a2a-4049-93e5-3c83cf0cced7">
-							<datasetParameter name="ACCOUNT_ID">
-								<datasetParameterExpression><![CDATA[$F{PERSON_ID}]]></datasetParameterExpression>
-							</datasetParameter>
-							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-						</datasetRun>
-					</dataset>
-				</crosstabDataset>
-				<rowGroup name="SCHOOL_YEAR1" width="50">
-					<bucket order="Descending" class="java.lang.String">
-						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
-					</bucket>
-					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Style1">
-							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							<box>
-								<topPen lineWidth="0.2"/>
-								<leftPen lineWidth="0.2"/>
-								<bottomPen lineWidth="0.2"/>
-								<rightPen lineWidth="0.2"/>
-							</box>
-							<textField>
-								<reportElement style="Style1" mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="29ff5149-c7a0-4d67-9f55-25838907741c"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
-							</textField>
-						</cellContents>
-					</crosstabRowHeader>
-					<crosstabTotalRowHeader>
-						<cellContents>
-							<staticText>
-								<reportElement x="0" y="0" width="0" height="0" uuid="972444d1-a716-426f-b73d-914c91a311bf"/>
-								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
-							</staticText>
-						</cellContents>
-					</crosstabTotalRowHeader>
-				</rowGroup>
-				<columnGroup name="NUM1" height="0" totalPosition="End">
-					<bucket class="java.math.BigDecimal">
-						<bucketExpression><![CDATA[$F{NUM}]]></bucketExpression>
-					</bucket>
-					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Style2">
-							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							<textField>
-								<reportElement x="0" y="0" width="50" height="0" uuid="e59f9a9d-8176-43ca-a926-cc667113b52d">
-									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								</reportElement>
-								<textFieldExpression><![CDATA[$V{NUM1}]]></textFieldExpression>
-							</textField>
-						</cellContents>
-					</crosstabColumnHeader>
-					<crosstabTotalColumnHeader>
-						<cellContents style="Style2">
-							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							<staticText>
-								<reportElement x="-5" y="0" width="0" height="0" uuid="a4147dbf-fb2c-47d6-9380-76b1ba279c7d"/>
-								<text><![CDATA[Total NUM1]]></text>
-							</staticText>
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" uuid="cf32bf9c-ac37-432f-abf1-15d1c1749ec1">
-									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								</reportElement>
-								<box>
-									<topPen lineWidth="0.1"/>
-									<leftPen lineWidth="0.1"/>
-									<bottomPen lineWidth="0.1"/>
-									<rightPen lineWidth="0.1"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="8"/>
-								</textElement>
-								<text><![CDATA[Total]]></text>
-							</staticText>
-							<staticText>
-								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="2eae041a-330f-4f9f-b721-7e14cf81ddc1">
-									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-								</reportElement>
-								<box>
-									<topPen lineWidth="0.1"/>
-									<leftPen lineWidth="0.1"/>
-									<bottomPen lineWidth="0.1"/>
-									<rightPen lineWidth="0.1"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="10" isBold="true"/>
-								</textElement>
-								<text><![CDATA[A]]></text>
-							</staticText>
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="d071ddc3-e773-4642-8ae1-38613e7620d8">
-									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-								</reportElement>
-								<box>
-									<topPen lineWidth="0.1"/>
-									<leftPen lineWidth="0.1"/>
-									<bottomPen lineWidth="0.1"/>
-									<rightPen lineWidth="0.1"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma"/>
-								</textElement>
-								<text><![CDATA[R]]></text>
-							</staticText>
-						</cellContents>
-					</crosstabTotalColumnHeader>
-				</columnGroup>
-				<columnGroup name="MNTH1" height="40">
-					<bucket class="java.lang.String">
-						<bucketExpression><![CDATA[$F{MNTH}]]></bucketExpression>
-					</bucket>
-					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Style2">
-							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							<box>
-								<topPen lineWidth="0.2"/>
-								<leftPen lineWidth="0.2"/>
-								<bottomPen lineWidth="0.2"/>
-								<rightPen lineWidth="0.2"/>
-							</box>
-							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" uuid="4346481d-5e6f-4d86-9442-cbee45cafea8"/>
-								<box>
-									<topPen lineWidth="0.1"/>
-									<leftPen lineWidth="0.1"/>
-									<bottomPen lineWidth="0.1"/>
-									<rightPen lineWidth="0.1"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{MNTH1}]]></textFieldExpression>
-							</textField>
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="8fdd6d7f-9089-41e6-8f89-48ad1081af52"/>
-								<box>
-									<topPen lineWidth="0.1"/>
-									<leftPen lineWidth="0.1"/>
-									<bottomPen lineWidth="0.1"/>
-									<rightPen lineWidth="0.1"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma"/>
-								</textElement>
-								<text><![CDATA[R]]></text>
-							</staticText>
-							<staticText>
-								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="3565a901-d55f-4699-aec5-13ce53bcfb0e"/>
-								<box>
-									<topPen lineWidth="0.1"/>
-									<leftPen lineWidth="0.1"/>
-									<bottomPen lineWidth="0.1"/>
-									<rightPen lineWidth="0.1"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" isBold="true"/>
-								</textElement>
-								<text><![CDATA[A]]></text>
-							</staticText>
-						</cellContents>
-					</crosstabColumnHeader>
-					<crosstabTotalColumnHeader>
-						<cellContents>
-							<staticText>
-								<reportElement x="0" y="0" width="0" height="0" uuid="4fe71e35-fbff-4713-9754-ed2bf46125bb"/>
-								<text><![CDATA[Total MNTH1]]></text>
-							</staticText>
-						</cellContents>
-					</crosstabTotalColumnHeader>
-				</columnGroup>
-				<measure name="L_MEASURE1" class="java.math.BigDecimal" calculation="Sum">
-					<measureExpression><![CDATA[$F{L}]]></measureExpression>
-				</measure>
-				<measure name="A_MEASURE1" class="java.math.BigDecimal" calculation="Sum">
-					<measureExpression><![CDATA[$F{A}]]></measureExpression>
-				</measure>
-				<crosstabCell width="50" height="20">
-					<cellContents mode="Opaque" style="Style1">
-						<textField>
-							<reportElement style="Style1" mode="Transparent" x="0" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="379c4393-dc8c-4687-8528-4810534466dd"/>
-							<box>
-								<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<bottomPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<rightPen lineWidth="0.1" lineColor="#A3A3A3"/>
-							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Tahoma" size="8"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement style="Style1" mode="Transparent" x="25" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="13bfc3c1-ad43-4a82-8280-9bacdadc1b28">
-								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							</reportElement>
-							<box>
-								<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<bottomPen lineWidth="0.1" lineColor="#A3A3A3"/>
-								<rightPen lineWidth="0.3" lineColor="#A3A3A3"/>
-							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Tahoma" size="8" isBold="true"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Style1">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<textField>
-							<reportElement key="" style="Style1" mode="Transparent" x="0" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a0f2a66c-21f2-4445-be91-6d70761cdf02"/>
-							<box>
-								<leftPen lineWidth="0.3"/>
-							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Tahoma" size="8"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement style="Style1" mode="Transparent" x="25" y="0" width="25" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9a67c7b9-9485-45f9-ab33-ea5b87497e56">
-								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Tahoma" size="8" isBold="true"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque">
-						<textField>
-							<reportElement x="0" y="0" width="30" height="20" uuid="0a846ec1-2375-40d7-8368-81aaa9d2ba1b">
-								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="30" y="0" width="30" height="20" uuid="186c2588-c968-453b-a6ae-9e8f17b9d98e">
-								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="50" height="20" rowTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<textField>
-							<reportElement x="0" y="0" width="25" height="20" forecolor="#FFFFFF" uuid="aac8ef73-9074-44eb-8805-67707c881409">
-								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="25" y="0" width="25" height="20" forecolor="#FFFFFF" uuid="f9c4dd89-7bf8-41b5-acd4-7a449d78250f">
-								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque">
-						<textField>
-							<reportElement x="0" y="0" width="30" height="20" forecolor="#FFFFFF" uuid="31c92f69-99f5-4b44-856b-121a97341116"/>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="30" y="0" width="30" height="20" forecolor="#FFFFFF" uuid="b9f70d4d-7b37-4afe-aae1-b96a344c9a19"/>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque">
-						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="ca4d91ce-d4a2-4046-b432-cc2d4046b1b5"/>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="8111f547-8551-4ba2-96c8-04f7ccb89018"/>
-							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
-			</crosstab>
-			<crosstab horizontalPosition="Center">
-				<reportElement x="-8" y="250" width="578" height="3" uuid="a868ab8d-9468-481e-800f-78f11feccb5d"/>
+				<reportElement x="-12" y="40" width="578" height="3" uuid="a868ab8d-9468-481e-800f-78f11feccb5d"/>
 				<crosstabDataset>
 					<dataset>
 						<datasetRun subDataset="Dataset2" uuid="addf12f8-6270-4aeb-bada-3cbc2985a583">
@@ -1682,7 +1224,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque" style="Style1">
 							<textField>
 								<reportElement x="0" y="0" width="40" height="20" uuid="e2479148-d781-409e-82bf-451f535fd2f7"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -1706,7 +1248,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{SCHOOL_CODE}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque" style="Style1">
 							<textField>
 								<reportElement x="0" y="0" width="30" height="20" uuid="2d5959ff-1f45-4568-9040-238eb333b036"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -1730,7 +1272,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{NUM}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
 								<reportElement x="0" y="0" width="50" height="0" uuid="b2c232c9-2e9c-4749-94cc-e298523e106e">
@@ -1744,9 +1286,9 @@ WHERE     p.person_id = sr.person_id
 						</cellContents>
 					</crosstabColumnHeader>
 					<crosstabTotalColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CT">
+						<cellContents mode="Opaque" style="Style1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="20" forecolor="#FFFFFF" uuid="c6294407-33b0-409b-a674-962fbba8e7d6"/>
+								<reportElement x="0" y="0" width="50" height="20" forecolor="#000000" uuid="c6294407-33b0-409b-a674-962fbba8e7d6"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
@@ -1788,7 +1330,7 @@ WHERE     p.person_id = sr.person_id
 						<bucketExpression><![CDATA[$F{MNTH}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
 								<reportElement x="0" y="0" width="50" height="20" uuid="01d16cc7-28f8-4807-ab8e-93c5d3065304"/>
@@ -1843,7 +1385,7 @@ WHERE     p.person_id = sr.person_id
 					<measureExpression><![CDATA[$F{A}]]></measureExpression>
 				</measure>
 				<crosstabCell width="50" height="20">
-					<cellContents mode="Opaque" style="Crosstab_CD">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="25" height="20" uuid="917eb2df-0597-4bc5-b055-60bdef0c5ea0">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -1877,9 +1419,9 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="25" height="20" forecolor="#FFFFFF" uuid="78a72a7b-c94a-47ec-903e-190fc777bbaf">
+							<reportElement x="0" y="0" width="25" height="20" forecolor="#000000" uuid="78a72a7b-c94a-47ec-903e-190fc777bbaf">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1894,7 +1436,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="25" y="0" width="25" height="20" forecolor="#FFFFFF" uuid="f4a29f8e-84ab-45fe-952f-9a9cfb9620b1">
+							<reportElement x="25" y="0" width="25" height="20" forecolor="#000000" uuid="f4a29f8e-84ab-45fe-952f-9a9cfb9620b1">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1911,7 +1453,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" uuid="121d5ca1-65b1-418d-8ae3-fd39fc202fb4"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1923,7 +1465,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="d17e97ff-c73d-4643-8061-097f24e6b482"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1935,7 +1477,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="63741b4f-4156-477b-a31d-155cf4984439"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1947,7 +1489,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="28032e30-d5c6-4212-a387-62f8af653334"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1959,7 +1501,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" uuid="001d98be-2c11-497d-b190-bc2e4cb8e745"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1971,7 +1513,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="NUM1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="779ed529-0252-448c-b375-1c4242ec0d20"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1983,7 +1525,7 @@ WHERE     p.person_id = sr.person_id
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="MNTH1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque" style="Style1">
 						<textField>
 							<reportElement x="0" y="0" width="60" height="10" uuid="92f39322-06a3-4a78-93ca-33b3122abb40"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
@@ -1996,7 +1538,7 @@ WHERE     p.person_id = sr.person_id
 				</crosstabCell>
 			</crosstab>
 		</band>
-		<band height="51" splitType="Prevent">
+		<band height="306" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 			<staticText>
@@ -2301,6 +1843,310 @@ WHERE     p.person_id = sr.person_id
 						</textField>
 						<textField>
 							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="04f85092-94b3-44e6-b406-cb88f7f05684"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<crosstab horizontalPosition="Center">
+				<reportElement x="-10" y="269" width="578" height="10" uuid="fcf92d69-cbf1-4225-93df-80ba787e8c4b"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="Dataset3" uuid="78420eca-bc39-4551-8712-e040d4b3c2cd">
+							<datasetParameter name="ACCOUNT_ID">
+								<datasetParameterExpression><![CDATA[$F{PERSON_ID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<rowGroup name="SCHOOL_YEAR1" width="40">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Style1">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="20" uuid="787d8bc7-d241-4939-806d-4080e3fe32f1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="cec7b304-587f-41fa-b6ac-ce39305c2f89"/>
+								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="SCHOOL_CODE1" width="30">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{SCHOOL_CODE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Style1">
+							<textField>
+								<reportElement x="0" y="0" width="30" height="20" uuid="fde67e9e-3ff2-4b98-93f7-ef81118a12a8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SCHOOL_CODE1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="86a6e490-d865-41c2-999e-446a60330016"/>
+								<text><![CDATA[Total SCHOOL_CODE1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="NUM1" height="0" totalPosition="End">
+					<bucket class="java.math.BigDecimal">
+						<bucketExpression><![CDATA[$F{NUM}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Style1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="0" uuid="559dc491-afbc-4f1a-a825-513aab16d5bb"/>
+								<textFieldExpression><![CDATA[$V{NUM1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Style1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="20" forecolor="#000000" uuid="17670af8-8246-48b5-98b9-a177bcd450be">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+							<staticText>
+								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="02456c68-c450-4f28-83b1-4791509b2fd8">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.1"/>
+									<leftPen lineWidth="0.1"/>
+									<bottomPen lineWidth="0.1"/>
+									<rightPen lineWidth="0.1"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[A]]></text>
+							</staticText>
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="842c551f-e99b-49f7-8486-5bb19a063c6a"/>
+								<box>
+									<topPen lineWidth="0.1"/>
+									<leftPen lineWidth="0.1"/>
+									<bottomPen lineWidth="0.1"/>
+									<rightPen lineWidth="0.1"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[R]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="MNTH1" height="40">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{MNTH}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Style1">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="27b577ab-811c-4cb4-964c-abd67c18be2d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MNTH1}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="6dc97f7e-dd02-4939-b32b-ee8ddbf4b971">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.1"/>
+									<leftPen lineWidth="0.1"/>
+									<bottomPen lineWidth="0.1"/>
+									<rightPen lineWidth="0.1"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[A]]></text>
+							</staticText>
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="1f802063-153d-43d4-98e0-3db50026df27"/>
+								<box>
+									<topPen lineWidth="0.1"/>
+									<leftPen lineWidth="0.1"/>
+									<bottomPen lineWidth="0.1"/>
+									<rightPen lineWidth="0.1"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[R]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="e4daccdb-36ea-4f0d-be0a-5453a913a094"/>
+								<text><![CDATA[Total MNTH1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="L_MEASURE1" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{L}]]></measureExpression>
+				</measure>
+				<measure name="A_MEASURE1" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{A}]]></measureExpression>
+				</measure>
+				<crosstabCell width="50" height="20">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="25" height="20" uuid="8f8e4e5a-a721-4cb6-9bae-8cdfdf066bac">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="25" y="0" width="25" height="20" uuid="fd1f9e7c-6501-4a27-9418-0d11d49daca9"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="25" height="20" forecolor="#000000" uuid="6322e963-7a49-4312-a386-e21b43193273">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="25" y="0" width="25" height="20" forecolor="#000000" uuid="069baf73-bc87-48cb-b696-89f8697b7ba6">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="2fb0fcd2-2cb9-4309-a68e-0d9a198988a0"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="a8f573eb-3e6e-4c04-9a5d-677ef92e91f8"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="6f9cba5b-a7c9-422a-a7ac-10f514999b51"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="7c58943d-dab1-43c1-a288-8aeada003e69"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="f978118b-dee8-4f69-b63e-908f8738c158"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="f5a2ca55-0acf-40b5-8fe3-364bcc44ad76"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="59fb72d8-bb4b-4e7a-8d39-1c9f2f9659b3"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="32f0447e-bf77-4713-9697-ed502765933f"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="9db63fde-afcb-4cb6-8039-7e0a30fe2e22"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="372fdfe5-a0a8-4e77-a166-83a3eaf9d391"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="NUM1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="4ad0eb42-8acf-4b58-83d1-011129a8ad52"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="8c679a60-766b-44c6-990c-0da789623e01"/>
+							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="MNTH1">
+					<cellContents mode="Opaque" style="Style1">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="22865482-85ad-49ca-8759-831dcebb0948"/>
+							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="146c4970-355b-4f5d-9c48-39f3a9fee50f"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
