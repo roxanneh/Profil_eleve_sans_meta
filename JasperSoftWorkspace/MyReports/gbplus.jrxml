@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-23T09:19:53 -->
+<!-- 2015-06-24T16:05:43 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gbplus" pageWidth="560" pageHeight="802" columnWidth="560" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eec60813-ba1e-4c27-b088-cbc86a0be5e0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="default" isDefault="true" hTextAlign="Center" vTextAlign="Middle" fontName="Tahoma" fontSize="8">
@@ -13,7 +13,7 @@
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{NIVEAU DE LECTURE}.matches( "FACILE" )]]></conditionExpression>
-			<style mode="Opaque" backcolor="#D5F2BB" fill="Solid" fontName="Tahoma" fontSize="8"/>
+			<style mode="Opaque" backcolor="#B4E38D" fill="Solid" fontName="Tahoma" fontSize="8"/>
 		</conditionalStyle>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{NIVEAU DE LECTURE}.matches( "INSTRUCTIF" )]]></conditionExpression>
@@ -68,13 +68,13 @@ ORDER BY  res.evaluation_date DESC]]>
 	<field name="SCHOOL_CODE" class="java.lang.String"/>
 	<field name="ID" class="java.math.BigDecimal"/>
 	<field name="Date d&apos;évaluation" class="java.sql.Timestamp"/>
-	<field name="Niveau" class="java.math.BigDecimal"/>
+	<field name="Niveau" class="java.lang.Integer"/>
 	<field name="ERR" class="java.lang.String"/>
 	<field name="AC" class="java.lang.String"/>
 	<field name="ERR_S" class="java.lang.String"/>
 	<field name="ERR_ST" class="java.lang.String"/>
 	<field name="ERR_V" class="java.lang.String"/>
-	<field name="PERCENT" class="java.lang.String"/>
+	<field name="PERCENT" class="java.math.BigDecimal"/>
 	<field name="NIVEAU DE LECTURE" class="java.lang.String"/>
 	<field name="Comp. Litérale" class="java.lang.String"/>
 	<field name="Comp. Déductive" class="java.lang.String"/>
@@ -117,7 +117,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Recommendations]]></text>
+				<text><![CDATA[Recommandations]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="205" y="40" width="25" height="30" uuid="020ebe0b-f01d-435c-8e03-114d216db0fc"/>
@@ -398,7 +398,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PERCENT}+'%']]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PERCENT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Niveau" stretchType="RelativeToTallestObject" x="260" y="0" width="50" height="30" uuid="da1944ce-a920-4a35-913a-b43291acbf94"/>
@@ -409,7 +409,7 @@ ORDER BY  res.evaluation_date DESC]]>
 					<rightPen lineWidth="0.1" lineColor="#A3A3A3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NIVEAU DE LECTURE}]]></textFieldExpression>
 			</textField>
@@ -495,4 +495,122 @@ ORDER BY  res.evaluation_date DESC]]>
 			</textField>
 		</band>
 	</detail>
+	<summary>
+		<band height="589">
+			<timeSeriesChart>
+				<chart evaluationTime="Report">
+					<reportElement x="70" y="50" width="420" height="200" uuid="87205a63-76ef-49e8-a4ea-52801cc97a7b"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset>
+					<timeSeries>
+						<seriesExpression><![CDATA["Niveau de lecture"]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{Date d'évaluation}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{Niveau}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowLines="true" isShowShapes="true">
+					<plot>
+						<seriesColor seriesOrder="0" color="#B4E38D"/>
+					</plot>
+					<timeAxisFormat>
+						<axisFormat/>
+					</timeAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<meterChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="0" y="320" width="280" height="220" uuid="23b7a47e-aa4d-42d1-85b1-1c3cf3788954"/>
+					<chartTitle position="Bottom">
+						<font fontName="Tahoma" size="8"/>
+						<titleExpression><![CDATA["Taux de pécision"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<valueDataset>
+					<dataset resetType="Report"/>
+					<valueExpression><![CDATA[$F{PERCENT}]]></valueExpression>
+				</valueDataset>
+				<meterPlot shape="chord" units="%" tickInterval="5.0" meterColor="rgba(212, 212, 212, 0.019607844)" needleColor="#000000" tickColor="#5E5E5E">
+					<plot/>
+					<valueDisplay color="#000000">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</valueDisplay>
+					<dataRange>
+						<lowExpression><![CDATA[1]]></lowExpression>
+						<highExpression><![CDATA[100]]></highExpression>
+					</dataRange>
+					<meterInterval label="L'élève dépend fortement des indices pour décoder les mots" color="#C76563" alpha="1.0">
+						<dataRange>
+							<lowExpression><![CDATA[0]]></lowExpression>
+							<highExpression><![CDATA[33]]></highExpression>
+						</dataRange>
+					</meterInterval>
+					<meterInterval label="L'élève se débrouille à l'aide des indices pour décoder les mots" color="#EDC77B" alpha="1.0">
+						<dataRange>
+							<lowExpression><![CDATA[33]]></lowExpression>
+							<highExpression><![CDATA[66]]></highExpression>
+						</dataRange>
+					</meterInterval>
+					<meterInterval label="L'élève a rarement besoin d'indices pour décoder les mots" color="#B4E38D" alpha="1.0">
+						<dataRange>
+							<lowExpression><![CDATA[66]]></lowExpression>
+							<highExpression><![CDATA[100]]></highExpression>
+						</dataRange>
+					</meterInterval>
+				</meterPlot>
+			</meterChart>
+			<meterChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="280" y="320" width="280" height="220" uuid="79f5eb86-34b7-4096-aa1c-17e72080717b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<chartTitle position="Bottom">
+						<font fontName="Tahoma" size="8"/>
+						<titleExpression><![CDATA["Degré de compréhension"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<valueDataset>
+					<dataset resetType="Report"/>
+					<valueExpression><![CDATA[$F{Degré de compréhension}]]></valueExpression>
+				</valueDataset>
+				<meterPlot units="%" tickInterval="5.0" meterColor="rgba(212, 212, 212, 0.019607844)" needleColor="#000000" tickColor="#5E5E5E">
+					<plot/>
+					<valueDisplay color="#000000">
+						<font fontName="Tahoma" size="11" isBold="true"/>
+					</valueDisplay>
+					<dataRange>
+						<lowExpression><![CDATA[1]]></lowExpression>
+						<highExpression><![CDATA[100]]></highExpression>
+					</dataRange>
+					<meterInterval label="Interval Name" color="#C76563" alpha="1.0">
+						<dataRange>
+							<lowExpression><![CDATA[0]]></lowExpression>
+							<highExpression><![CDATA[33]]></highExpression>
+						</dataRange>
+					</meterInterval>
+					<meterInterval label="Interval Name" color="#EDC77B" alpha="1.0">
+						<dataRange>
+							<lowExpression><![CDATA[33]]></lowExpression>
+							<highExpression><![CDATA[66]]></highExpression>
+						</dataRange>
+					</meterInterval>
+					<meterInterval label="Interval Name" color="#B4E38D" alpha="1.0">
+						<dataRange>
+							<lowExpression><![CDATA[66]]></lowExpression>
+							<highExpression><![CDATA[100]]></highExpression>
+						</dataRange>
+					</meterInterval>
+				</meterPlot>
+			</meterChart>
+		</band>
+	</summary>
 </jasperReport>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-23T16:16:23 -->
+<!-- 2015-06-24T15:38:49 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -342,7 +342,7 @@ ORDER BY sort_order]]>
        P.LEGAL_SURNAME,
        STATUS_INDICATORS.STATUS_INDICATOR_CODE_F,
        P.GENDER,
-       P.BIRTH_DATE,
+       TO_CHAR(P.BIRTH_DATE, 'dd/mon/yyyy') as birth_date,
        status_in_canada.FULL_NAME_F,
        LANGUAGES.LANGUAGE_NAME_F,
        PROGRAMS.PROGRAM_NAME_F,
@@ -386,8 +386,8 @@ ORDER BY sort_order]]>
        PKG_PROFILE_ÉLÈVE.GET_PEI(p.person_id) as PEI,
        PKG_PROFILE_ÉLÈVE.GET_ANOMALIE(p.person_id)as ANOMALIE,
        PKG_PROFILE_ÉLÈVE.GET_ALF(p.person_id, sr.school_code, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate)) as ALF,
-       PKG_RAPPORT_REND_CYCLE_PREP.GET_YTD_ABS(p.person_id, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate), SYSDATE) as STU_ABS,
-       PKG_RAPPORT_REND_CYCLE_PREP.GET_YTD_LATES(p.person_id, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate), SYSDATE) as STU_LATES
+       PKG_PROFILE_ÉLÈVE.GET_YTD_ABS(p.person_id, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate), SYSDATE, GRADE) as STU_ABS,
+       PKG_PROFILE_ÉLÈVE.GET_YTD_LATES(p.person_id, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate), SYSDATE) as STU_LATES
   FROM persons p,
        Student_registrations SR,
        student_programs,
@@ -429,7 +429,7 @@ WHERE     p.person_id = sr.person_id
 	<field name="LEGAL_SURNAME" class="java.lang.String"/>
 	<field name="STATUS_INDICATOR_CODE_F" class="java.lang.String"/>
 	<field name="GENDER" class="java.lang.String"/>
-	<field name="BIRTH_DATE" class="java.sql.Timestamp"/>
+	<field name="BIRTH_DATE" class="java.lang.String"/>
 	<field name="FULL_NAME_F" class="java.lang.String"/>
 	<field name="LANGUAGE_NAME_F" class="java.lang.String"/>
 	<field name="PROGRAM_NAME_F" class="java.lang.String"/>
@@ -475,163 +475,163 @@ WHERE     p.person_id = sr.person_id
 	<detail>
 		<band height="132" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="62" y="77" width="158" height="10" uuid="49e46753-d259-4ed3-8b4e-516b5d21a58f"/>
+				<reportElement x="58" y="77" width="158" height="10" uuid="49e46753-d259-4ed3-8b4e-516b5d21a58f"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SCHOOL_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-8" y="77" width="60" height="10" uuid="3e436bb3-b0ec-4653-b862-c3f626eda47d"/>
+				<reportElement x="-4" y="77" width="52" height="10" uuid="3e436bb3-b0ec-4653-b862-c3f626eda47d"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[École]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="62" y="87" width="118" height="10" uuid="bb0a1f43-ca41-4208-986b-5ad7b4c730fe"/>
+				<reportElement x="58" y="87" width="118" height="10" uuid="bb0a1f43-ca41-4208-986b-5ad7b4c730fe"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-8" y="87" width="60" height="10" uuid="1491f22b-4039-4869-86ad-02e192d86039"/>
+				<reportElement x="-4" y="87" width="52" height="10" uuid="1491f22b-4039-4869-86ad-02e192d86039"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Année d'étude]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="62" y="97" width="118" height="10" uuid="cbd02c23-d1fc-410b-a68b-9af4335b7ae2"/>
+				<reportElement x="58" y="97" width="118" height="10" uuid="cbd02c23-d1fc-410b-a68b-9af4335b7ae2"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_CODE(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-8" y="97" width="60" height="10" uuid="317de9f2-1369-4228-be07-f63d75f9b1aa"/>
+				<reportElement x="-4" y="97" width="52" height="10" uuid="317de9f2-1369-4228-be07-f63d75f9b1aa"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Classe-foyer]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="59" y="107" width="134" height="10" uuid="9820572e-0369-4183-a7bc-6681feb4d795"/>
+				<reportElement x="55" y="107" width="134" height="10" uuid="9820572e-0369-4183-a7bc-6681feb4d795"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.GET_TEACHER_NAME(PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_TEACHER(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE))}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-8" y="107" width="60" height="10" uuid="18b3f3ac-8730-48b6-a180-22ea12f300c8"/>
+				<reportElement x="-4" y="107" width="52" height="10" uuid="18b3f3ac-8730-48b6-a180-22ea12f300c8"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Enseignant - e]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="62" y="117" width="118" height="10" uuid="293e4948-8d1e-4af8-add1-7cf4bdd91506"/>
+				<reportElement x="58" y="117" width="118" height="10" uuid="293e4948-8d1e-4af8-add1-7cf4bdd91506"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PROGRAM_NAME_F}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-8" y="117" width="60" height="10" uuid="ef316ed9-ebf6-4991-aedb-e18c8d624d0d"/>
+				<reportElement x="-4" y="117" width="52" height="10" uuid="ef316ed9-ebf6-4991-aedb-e18c8d624d0d"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Programme]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="247" y="77" width="80" height="10" uuid="d063703e-2947-46f1-9719-1534b63fedf6"/>
+				<reportElement x="243" y="77" width="80" height="10" uuid="d063703e-2947-46f1-9719-1534b63fedf6"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{GENDER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="177" y="77" width="60" height="10" uuid="953ca6ed-955e-4124-9305-d324618207aa"/>
+				<reportElement x="173" y="77" width="60" height="10" uuid="953ca6ed-955e-4124-9305-d324618207aa"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Sexe]]></text>
 			</staticText>
 			<textField pattern="dd/mm/yyyy" isBlankWhenNull="true">
-				<reportElement x="247" y="87" width="80" height="10" uuid="54392141-7f43-4d52-90ce-501b13bdc667"/>
+				<reportElement x="243" y="87" width="80" height="10" uuid="54392141-7f43-4d52-90ce-501b13bdc667"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BIRTH_DATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="177" y="87" width="60" height="10" uuid="241fe9a2-5f81-4868-9ffd-f3826e30b31d"/>
+				<reportElement x="173" y="87" width="60" height="10" uuid="241fe9a2-5f81-4868-9ffd-f3826e30b31d"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Date de naissance]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="247" y="117" width="94" height="10" uuid="1baf2056-2c4b-4133-ba37-3708f0cca1b6"/>
+				<reportElement x="243" y="117" width="94" height="10" uuid="1baf2056-2c4b-4133-ba37-3708f0cca1b6"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.GET_PERSON_PHONE_HOME(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="177" y="117" width="60" height="10" uuid="0c93bfb6-2877-41fb-a1f6-750a55de368f"/>
+				<reportElement x="173" y="117" width="60" height="10" uuid="0c93bfb6-2877-41fb-a1f6-750a55de368f"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Numéro de téléphone]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="77" width="50" height="10" uuid="ca4046e7-76af-4fa8-9b81-92bfb18d31a8"/>
+				<reportElement x="417" y="77" width="33" height="10" uuid="ca4046e7-76af-4fa8-9b81-92bfb18d31a8"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ALF}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="351" y="77" width="50" height="10" uuid="a7fb25b2-4920-45b7-91c1-9fcca3c7f75f"/>
+				<reportElement x="357" y="77" width="50" height="10" uuid="a7fb25b2-4920-45b7-91c1-9fcca3c7f75f"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ALF]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="87" width="50" height="10" uuid="79f76f6d-04f5-4fc3-9943-bce68804c641"/>
+				<reportElement x="417" y="87" width="33" height="10" uuid="79f76f6d-04f5-4fc3-9943-bce68804c641"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PEI}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="351" y="87" width="50" height="10" uuid="e624785d-ce71-4b04-9794-833ea04cf8b2"/>
+				<reportElement x="357" y="87" width="50" height="10" uuid="e624785d-ce71-4b04-9794-833ea04cf8b2"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[PEI]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="97" width="50" height="10" uuid="239251db-d220-428b-aa47-52e3460d635b"/>
+				<reportElement x="417" y="97" width="33" height="10" uuid="239251db-d220-428b-aa47-52e3460d635b"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ANOMALIE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="351" y="97" width="50" height="10" uuid="6f2bf58e-4807-419f-aeaa-3778baf01cf6"/>
+				<reportElement x="357" y="97" width="50" height="10" uuid="6f2bf58e-4807-419f-aeaa-3778baf01cf6"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ANOMALIE]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="520" y="107" width="35" height="10" uuid="5a1dfaff-9238-4f36-8a8d-551e6cf2d530"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{STUDENT_NO}]]></textFieldExpression>
 			</textField>
@@ -641,14 +641,14 @@ WHERE     p.person_id = sr.person_id
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Numéro de l'élève]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="520" y="117" width="35" height="10" uuid="2d40b766-5119-42cd-92fd-bb55813d71e1"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OEN_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -658,7 +658,7 @@ WHERE     p.person_id = sr.person_id
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[NISO]]></text>
 			</staticText>
@@ -672,46 +672,39 @@ WHERE     p.person_id = sr.person_id
 				</graphicElement>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="247" y="97" width="114" height="10" uuid="28b45b7a-3d90-4e15-bb0f-ae176c9830f0"/>
+				<reportElement x="243" y="97" width="114" height="10" uuid="28b45b7a-3d90-4e15-bb0f-ae176c9830f0"/>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_1(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="191" y="97" width="46" height="10" uuid="fbfb6752-f036-470a-ac77-02732a329080"/>
+				<reportElement x="187" y="97" width="46" height="10" uuid="fbfb6752-f036-470a-ac77-02732a329080"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="6" isBold="false"/>
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Adresse 1]]></text>
+				<text><![CDATA[Adresse]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="247" y="107" width="94" height="10" uuid="76294c38-f058-4c8d-98b5-ba1d51150a42"/>
+				<reportElement x="243" y="107" width="94" height="10" uuid="76294c38-f058-4c8d-98b5-ba1d51150a42"/>
 				<textElement textAlignment="Left">
-					<font size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_2(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="190" y="107" width="47" height="10" uuid="44f20969-c2b1-4645-851e-2116981e9151"/>
-				<textElement textAlignment="Right">
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[Adresse 2]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="117" width="50" height="10" uuid="b8cf2fa8-2922-4186-8ab4-d0270c6ed305"/>
+				<reportElement x="417" y="117" width="33" height="10" uuid="b8cf2fa8-2922-4186-8ab4-d0270c6ed305"/>
 				<textElement textAlignment="Left">
-					<font size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{STU_ABS}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="320" y="117" width="81" height="10" uuid="305cd49b-1d57-405c-ae13-cb3aec5efce3"/>
+				<reportElement x="316" y="117" width="91" height="10" uuid="305cd49b-1d57-405c-ae13-cb3aec5efce3"/>
 				<textElement textAlignment="Right">
-					<font size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Absences/Jours de classe]]></text>
+				<text><![CDATA[Absences cumulées pour l'année]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="40" y="45" width="100" height="20" forecolor="#007549" uuid="705a0194-c868-4f46-bda5-7ddf00057825"/>
@@ -738,18 +731,18 @@ WHERE     p.person_id = sr.person_id
 				</graphicElement>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="411" y="107" width="50" height="10" uuid="487206a8-667d-4a3e-9e66-4872dc32d94d"/>
+				<reportElement x="417" y="107" width="33" height="10" uuid="487206a8-667d-4a3e-9e66-4872dc32d94d"/>
 				<textElement textAlignment="Left">
-					<font size="6" isBold="true"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{STU_LATES}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="320" y="107" width="81" height="10" uuid="33a9fb10-1abc-42e5-af4d-98b2c9137144"/>
+				<reportElement x="326" y="107" width="81" height="10" uuid="33a9fb10-1abc-42e5-af4d-98b2c9137144"/>
 				<textElement textAlignment="Right">
-					<font size="6"/>
+					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Retards/Jours de classe]]></text>
+				<text><![CDATA[Retards cumulés pour l'année]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
 				<reportElement x="470" y="0" width="85" height="100" uuid="6c0d3d2d-2351-4d77-9749-ae2e5b41aab6"/>
@@ -909,7 +902,7 @@ WHERE     p.person_id = sr.person_id
 					</crosstabTotalColumnHeader>
 				</columnGroup>
 				<columnGroup name="REPORT_PERIOD1" height="20" headerPosition="Center">
-					<bucket order="Descending" class="java.lang.String">
+					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{REPORT_PERIOD}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
@@ -1496,7 +1489,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="25" height="20" forecolor="#000000" uuid="78a72a7b-c94a-47ec-903e-190fc777bbaf">
+							<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#000000" backcolor="#CAE6DC" uuid="78a72a7b-c94a-47ec-903e-190fc777bbaf">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1511,7 +1504,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="25" y="0" width="25" height="20" forecolor="#000000" uuid="f4a29f8e-84ab-45fe-952f-9a9cfb9620b1">
+							<reportElement mode="Opaque" x="25" y="0" width="25" height="20" forecolor="#000000" backcolor="#CAE6DC" uuid="f4a29f8e-84ab-45fe-952f-9a9cfb9620b1">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1840,7 +1833,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="25" height="20" forecolor="#000000" uuid="6322e963-7a49-4312-a386-e21b43193273">
+							<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#000000" backcolor="#CAE6DC" uuid="6322e963-7a49-4312-a386-e21b43193273">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -1857,7 +1850,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="25" y="0" width="25" height="20" forecolor="#000000" uuid="069baf73-bc87-48cb-b696-89f8697b7ba6">
+							<reportElement mode="Opaque" x="25" y="0" width="25" height="20" forecolor="#000000" backcolor="#CAE6DC" uuid="069baf73-bc87-48cb-b696-89f8697b7ba6">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
