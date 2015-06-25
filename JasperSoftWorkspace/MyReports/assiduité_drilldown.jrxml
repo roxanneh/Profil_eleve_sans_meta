@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-25T12:01:01 -->
+<!-- 2015-06-25T16:25:53 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="assiduité_drilldown" pageWidth="520" pageHeight="842" columnWidth="480" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="407e382e-16a5-4fb8-99e2-e34f6574374e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -8,24 +8,40 @@
 	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/assiduite_drilldown_files/main_jrxml"/>
 	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/assiduite_drilldown"/>
 	<parameter name="SCHOOL_YEAR" class="java.lang.String"/>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<parameter name="MONTH" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT pa.SCHOOL_CODE, 
+		<![CDATA[SELECT pa.SCHOOL_CODE, p.preferred_surname, p.preferred_first_name,
         to_char(CALENDAR_DATE, 'dd/mon/yyyy') as calendar_date, pa.attendance_from_time, pa.attendance_to_time, 
        pa.school_period, pa.reason_code, ac.ATTENDANCE_CODE_DESC_F as attendance_code, pa.explanation
        
-FROM PERIOD_ATTENDANCE pa, attendance_codes ac
+FROM PERIOD_ATTENDANCE pa, attendance_codes ac, persons p
 
-WHERE PERSON_ID =   '000132781'
-
+WHERE pa.PERSON_ID = $P{ACCOUNT_ID} 
+and p.person_id = pa.person_id
 AND SCHOOL_CODE NOT IN ('ESF', 'ESA', 'ESE')  --On compte seulement les absences prises durant le séjour élémentaire
 --AND ATTENDANCE_CODE NOT IN ('N', 'E', 'G') --On ne compte pas les absences "Justifié". "Jour avec pas d'enseignement" ou "Intempéries"
 AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-and school_year =  $P{SCHOOL_YEAR} 
+and school_year =  $P{SCHOOL_YEAR}  
 and pa.attendance_code = ac.attendance_code
 and pa.attendance_code <> 'L'
+and lower(trim(to_char(calendar_date, 'mon'))) like  case 
+																				when $P{MONTH} = 'jan' then 'janv.'
+																				when $P{MONTH} = 'feb' then 'févr.' 
+																				when $P{MONTH} = 'mar' then 'mars' 
+																				when $P{MONTH} = 'apr' then 'avr.' 
+																				when $P{MONTH} = 'may' then 'mai' 
+																				when $P{MONTH} = 'jun' then 'juin' 
+																				when $P{MONTH} = 'sep' then 'sept.' 
+																				when $P{MONTH} = 'oct' then 'oct.' 
+																				when $P{MONTH} = 'nov' then 'nov.' 
+																				when $P{MONTH} = 'dec' then 'déc.' 
+																				else $P{MONTH} end
 order by calendar_date desc, school_period asc]]>
 	</queryString>
 	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="PREFERRED_SURNAME" class="java.lang.String"/>
+	<field name="PREFERRED_FIRST_NAME" class="java.lang.String"/>
 	<field name="CALENDAR_DATE" class="java.lang.String"/>
 	<field name="ATTENDANCE_FROM_TIME" class="java.lang.String"/>
 	<field name="ATTENDANCE_TO_TIME" class="java.lang.String"/>
@@ -55,12 +71,19 @@ order by calendar_date desc, school_period asc]]>
 	<title>
 		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="260" height="30" uuid="5ece957a-a4da-4170-9d76-538f55218d66"/>
+				<reportElement x="0" y="0" width="170" height="30" uuid="5ece957a-a4da-4170-9d76-538f55218d66"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Détail sur l'assiduité]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="290" y="0" width="190" height="30" forecolor="#9E9E9E" uuid="40f7eeb1-e237-462d-9493-64b94eb65156"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PREFERRED_SURNAME}+ ", " + $F{PREFERRED_FIRST_NAME}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>
