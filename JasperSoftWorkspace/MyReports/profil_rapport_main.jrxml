@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-24T15:38:49 -->
+<!-- 2015-06-25T10:06:00 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -1266,7 +1266,7 @@ WHERE     p.person_id = sr.person_id
 				</crosstabCell>
 			</crosstab>
 		</band>
-		<band height="70" splitType="Prevent">
+		<band height="75" splitType="Prevent">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<staticText>
 				<reportElement x="0" y="11" width="340" height="20" uuid="47176475-95a3-4caa-b0c7-be3ebedce8cc"/>
@@ -1469,7 +1469,7 @@ WHERE     p.person_id = sr.person_id
 							</textElement>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField hyperlinkType="ReportExecution">
 							<reportElement x="25" y="0" width="25" height="20" uuid="1871db80-2704-429d-88d3-f2f0f217f77a">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
@@ -1483,6 +1483,12 @@ WHERE     p.person_id = sr.person_id
 								<font fontName="Tahoma" size="8" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+							<hyperlinkParameter name="SCHOOL_YEAR">
+								<hyperlinkParameterExpression><![CDATA[$V{SCHOOL_YEAR1}]]></hyperlinkParameterExpression>
+							</hyperlinkParameter>
+							<hyperlinkParameter name="_REPORT">
+								<hyperlinkParameterExpression><![CDATA["/assuidité_drilldown"]]></hyperlinkParameterExpression>
+							</hyperlinkParameter>
 						</textField>
 					</cellContents>
 				</crosstabCell>

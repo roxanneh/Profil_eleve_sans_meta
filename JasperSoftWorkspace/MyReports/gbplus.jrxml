@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-24T16:05:43 -->
+<!-- 2015-06-24T16:22:44 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gbplus" pageWidth="560" pageHeight="802" columnWidth="560" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eec60813-ba1e-4c27-b088-cbc86a0be5e0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="default" isDefault="true" hTextAlign="Center" vTextAlign="Middle" fontName="Tahoma" fontSize="8">
@@ -81,6 +81,14 @@ ORDER BY  res.evaluation_date DESC]]>
 	<field name="Rappel du texte" class="java.lang.String"/>
 	<field name="Degré de compréhension" class="java.math.BigDecimal"/>
 	<field name="Recommendations" class="java.lang.String"/>
+	<variable name="Average degré de comp" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[$F{Degré de compréhension}]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{Degré de compréhension}]]></initialValueExpression>
+	</variable>
+	<variable name="Average taux de pré" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[$F{PERCENT}]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{PERCENT}]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -513,7 +521,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				</timeSeriesDataset>
 				<timeSeriesPlot isShowLines="true" isShowShapes="true">
 					<plot>
-						<seriesColor seriesOrder="0" color="#B4E38D"/>
+						<seriesColor seriesOrder="0" color="#91BA72"/>
 					</plot>
 					<timeAxisFormat>
 						<axisFormat/>
@@ -525,17 +533,17 @@ ORDER BY  res.evaluation_date DESC]]>
 			</timeSeriesChart>
 			<meterChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="0" y="320" width="280" height="220" uuid="23b7a47e-aa4d-42d1-85b1-1c3cf3788954"/>
+					<reportElement x="0" y="320" width="280" height="220" uuid="26c50836-dce3-4ffd-a9ce-17a1f4920140"/>
 					<chartTitle position="Bottom">
 						<font fontName="Tahoma" size="8"/>
-						<titleExpression><![CDATA["Taux de pécision"]]></titleExpression>
+						<titleExpression><![CDATA["Moyenne des taux de pécision"]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<valueDataset>
 					<dataset resetType="Report"/>
-					<valueExpression><![CDATA[$F{PERCENT}]]></valueExpression>
+					<valueExpression><![CDATA[$V{Average taux de pré}]]></valueExpression>
 				</valueDataset>
 				<meterPlot shape="chord" units="%" tickInterval="5.0" meterColor="rgba(212, 212, 212, 0.019607844)" needleColor="#000000" tickColor="#5E5E5E">
 					<plot/>
@@ -568,19 +576,19 @@ ORDER BY  res.evaluation_date DESC]]>
 			</meterChart>
 			<meterChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="280" y="320" width="280" height="220" uuid="79f5eb86-34b7-4096-aa1c-17e72080717b">
+					<reportElement x="280" y="320" width="280" height="220" uuid="b7709384-677c-47c9-ab6e-ecaaf5aa7fbe">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<chartTitle position="Bottom">
 						<font fontName="Tahoma" size="8"/>
-						<titleExpression><![CDATA["Degré de compréhension"]]></titleExpression>
+						<titleExpression><![CDATA["Moyenne des degrés de compréhension"]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<valueDataset>
 					<dataset resetType="Report"/>
-					<valueExpression><![CDATA[$F{Degré de compréhension}]]></valueExpression>
+					<valueExpression><![CDATA[$V{Average degré de comp}]]></valueExpression>
 				</valueDataset>
 				<meterPlot units="%" tickInterval="5.0" meterColor="rgba(212, 212, 212, 0.019607844)" needleColor="#000000" tickColor="#5E5E5E">
 					<plot/>
