@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-25T10:06:00 -->
+<!-- 2015-06-25T13:55:40 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -1050,7 +1050,7 @@ WHERE     p.person_id = sr.person_id
 					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["gbplus.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["gbp.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="9" splitType="Prevent">
@@ -1268,13 +1268,6 @@ WHERE     p.person_id = sr.person_id
 		</band>
 		<band height="75" splitType="Prevent">
 			<property name="local_mesure_unitheight" value="pixel"/>
-			<staticText>
-				<reportElement x="0" y="11" width="340" height="20" uuid="47176475-95a3-4caa-b0c7-be3ebedce8cc"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Assiduité par mois - élémentaire]]></text>
-			</staticText>
 			<crosstab horizontalPosition="Center">
 				<reportElement x="-9" y="67" width="578" height="3" uuid="a868ab8d-9468-481e-800f-78f11feccb5d"/>
 				<crosstabDataset>
@@ -1483,11 +1476,11 @@ WHERE     p.person_id = sr.person_id
 								<font fontName="Tahoma" size="8" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+							<hyperlinkParameter name="_report">
+								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_drilldown"]]></hyperlinkParameterExpression>
+							</hyperlinkParameter>
 							<hyperlinkParameter name="SCHOOL_YEAR">
 								<hyperlinkParameterExpression><![CDATA[$V{SCHOOL_YEAR1}]]></hyperlinkParameterExpression>
-							</hyperlinkParameter>
-							<hyperlinkParameter name="_REPORT">
-								<hyperlinkParameterExpression><![CDATA["/assuidité_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 						</textField>
 					</cellContents>
@@ -1617,6 +1610,13 @@ WHERE     p.person_id = sr.person_id
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<text><![CDATA[À noter que une (1) absence équivau une journée complète d'absence et que les décimales compte comme une période d'assiduité manquée. Par exemple, s'il y a 2 périodes d'assiduité pour une école, 1 = deux périodes manquées et 1.5 = trois périodes manquées.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="11" width="250" height="20" uuid="f40562a1-f6e0-4285-940d-eb3153106d06"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA["Assiduité par mois - élémentaire"]]></text>
 			</staticText>
 		</band>
 		<band height="80" splitType="Prevent">
