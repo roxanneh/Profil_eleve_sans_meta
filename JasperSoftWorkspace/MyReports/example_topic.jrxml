@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-29T14:55:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="example_topic" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94f1cdab-0d4e-48fb-9839-0bdf60983b73">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<queryString>
+		<![CDATA[select * from period_attendance where school_year = pkg_profile_élève.get_school_year(sysdate)]]>
+	</queryString>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR_TRACK" class="java.lang.String"/>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="CALENDAR_DATE" class="java.sql.Timestamp"/>
+	<field name="ATTENDANCE_FROM_TIME" class="java.lang.String"/>
+	<field name="ATTENDANCE_TO_TIME" class="java.lang.String"/>
+	<field name="SCHOOL_PERIOD" class="java.lang.String"/>
+	<field name="SCHOOL_TIMELINE_CODE" class="java.lang.String"/>
+	<field name="REASON_CODE" class="java.lang.String"/>
+	<field name="ATTENDANCE_CODE" class="java.lang.String"/>
+	<field name="GUARDIAN_CONTACT_FLAG" class="java.lang.String"/>
+	<field name="NOTE_RECEIVED_FLAG" class="java.lang.String"/>
+	<field name="EXPLANATION" class="java.lang.String"/>
+	<field name="CLASS_CODE" class="java.lang.String"/>
+	<field name="MUST_SEE_FLAG" class="java.lang.String"/>
+	<field name="LAST_UPDATE_FUNCTION" class="java.lang.String"/>
+	<field name="LAST_UPDATE_DATE_TIME" class="java.sql.Timestamp"/>
+	<field name="LAST_UPDATE_UID" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
