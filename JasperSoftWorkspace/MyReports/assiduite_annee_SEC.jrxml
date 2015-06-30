@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-29T13:45:52 -->
+<!-- 2015-06-30T08:49:32 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ASSID_ANNÉE_SEC" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="079e2feb-d896-4097-a030-afb567c240d6">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -66,11 +66,11 @@ order by to_date(calendar_date, 'dd/mm/yyyy') desc, school_period asc]]>
 				<textFieldExpression><![CDATA[$F{PREFERRED_SURNAME}+ ", " + $F{PREFERRED_FIRST_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="335" height="30" uuid="41110a79-da13-4bab-b79c-9e0ff8d5e4ea"/>
+				<reportElement x="0" y="0" width="200" height="30" uuid="41110a79-da13-4bab-b79c-9e0ff8d5e4ea"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Détail sur l'assiduité - retards au secondaire]]></text>
+				<text><![CDATA[Détail sur l'assiduité annuel]]></text>
 			</staticText>
 		</band>
 	</title>

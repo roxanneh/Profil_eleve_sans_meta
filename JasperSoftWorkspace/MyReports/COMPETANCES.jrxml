@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-24T14:09:33 -->
+<!-- 2015-06-30T13:22:05 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="COMPETANCES" pageWidth="320" pageHeight="802" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a347432e-175b-4753-b578-d19c0bda5c45">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -286,10 +286,11 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 	<group name="Group1" keepTogether="true">
 		<groupExpression><![CDATA[$F{M_ANNEESCOLAIRE}]]></groupExpression>
 		<groupHeader>
-			<band height="15">
+			<band height="30">
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				<textField>
-					<reportElement key="" mode="Opaque" x="0" y="0" width="320" height="15" forecolor="#FFFFFF" backcolor="#149966" uuid="a6a5eaaa-0b13-4056-bd0b-62840bf9ecdd">
+					<reportElement key="" mode="Opaque" x="0" y="0" width="320" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="a6a5eaaa-0b13-4056-bd0b-62840bf9ecdd">
 						<property name="local_mesure_unitheight" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
@@ -300,7 +301,7 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 						<rightPen lineWidth="0.2"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Tahoma" size="8" isBold="false"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{M_ANNEESCOLAIRE}]]></textFieldExpression>
 				</textField>
@@ -615,7 +616,7 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MOY_MA}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
 				<reportElement style="Everything else" x="0" y="0" width="90" height="20" uuid="3518d7e8-ea91-4110-8f8f-983888acfc4f"/>
 				<box leftPadding="5" rightPadding="5">
 					<topPen lineWidth="0.2"/>
@@ -627,6 +628,18 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{STRAND_DESCRIPTION_F}]]></textFieldExpression>
+				<hyperlinkParameter name="_report">
+					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/competence_drilldown_ele"]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="ACCOUNT_ID">
+					<hyperlinkParameterExpression><![CDATA[$F{M_MEMBRE_ID}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="STRAND">
+					<hyperlinkParameterExpression><![CDATA[SUBSTITUTE(LOWER($F{STRAND_DESCRIPTION_F}), "é", "e")]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="SCHOOL_YEAR">
+					<hyperlinkParameterExpression><![CDATA[$F{M_ANNEESCOLAIRE}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
 			</textField>
 			<textField>
 				<reportElement x="90" y="0" width="30" height="20" uuid="975ca3ec-b9a4-4b72-b278-b30191e8c37c"/>

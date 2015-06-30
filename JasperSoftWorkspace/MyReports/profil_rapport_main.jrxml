@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-29T13:20:32 -->
+<!-- 2015-06-30T12:27:10 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -258,8 +258,8 @@ AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne c
 		<field name="MNTH" class="java.lang.String"/>
 		<field name="CALENDAR_DATE" class="java.sql.Timestamp"/>
 		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
-		<field name="A" class="java.math.BigDecimal"/>
-		<field name="L" class="java.math.BigDecimal"/>
+		<field name="A" class="java.lang.Double"/>
+		<field name="L" class="java.lang.Double"/>
 		<field name="PERSON_ID" class="java.lang.String"/>
 		<field name="NUM" class="java.math.BigDecimal"/>
 	</subDataset>
@@ -329,8 +329,8 @@ order by mnth asc]]>
 		<field name="PERSON_ID" class="java.lang.String"/>
 		<field name="NUM" class="java.math.BigDecimal"/>
 		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
-		<field name="L" class="java.math.BigDecimal"/>
-		<field name="A" class="java.math.BigDecimal"/>
+		<field name="L" class="java.lang.Double"/>
+		<field name="A" class="java.lang.Double"/>
 	</subDataset>
 	<parameter name="STUDENT" class="java.lang.String"/>
 	<queryString language="SQL">
@@ -1298,7 +1298,7 @@ WHERE     p.person_id = sr.person_id
 					</bucket>
 					<crosstabRowHeader>
 						<cellContents mode="Opaque" style="Style1">
-							<textField>
+							<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
 								<reportElement x="0" y="0" width="40" height="20" uuid="cc014e6a-b6f7-4ffe-a295-2aa325c3c43e"/>
 								<box>
 									<topPen lineWidth="0.1"/>
@@ -1310,6 +1310,16 @@ WHERE     p.person_id = sr.person_id
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
+								<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences et des retards de l'élève pour l'année choisie"]]></hyperlinkTooltipExpression>
+								<hyperlinkParameter name="_report">
+									<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_annee_ele"]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="ACCOUNT_ID">
+									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="SCHOOL_YEAR">
+									<hyperlinkParameterExpression><![CDATA[$V{SCHOOL_YEAR1}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
@@ -1486,6 +1496,7 @@ WHERE     p.person_id = sr.person_id
 								<font fontName="Tahoma" size="8"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des retards de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
 								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/ret_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
@@ -1513,6 +1524,7 @@ WHERE     p.person_id = sr.person_id
 								<font fontName="Tahoma" size="8" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
 								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
@@ -1725,8 +1737,9 @@ WHERE     p.person_id = sr.person_id
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
+								<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences et des retards de l'élève pour l'année choisie"]]></hyperlinkTooltipExpression>
 								<hyperlinkParameter name="_report">
-									<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_annee_SEC"]]></hyperlinkParameterExpression>
+									<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_annee_sec"]]></hyperlinkParameterExpression>
 								</hyperlinkParameter>
 								<hyperlinkParameter name="ACCOUNT_ID">
 									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
@@ -1909,6 +1922,7 @@ WHERE     p.person_id = sr.person_id
 								<font fontName="Tahoma" size="8"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
+							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des retards de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
 								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/ret_sec_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
@@ -1936,6 +1950,7 @@ WHERE     p.person_id = sr.person_id
 								<font fontName="Tahoma" size="8" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
+							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
 								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_sec_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>

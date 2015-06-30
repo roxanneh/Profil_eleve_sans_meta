@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-30T15:46:32 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="competence_drilldown_sec" pageWidth="460" pageHeight="802" columnWidth="460" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="468a8c4e-1bc7-4937-8c3a-31eb12b1995d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/competence_drilldown_sec_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/competence_drilldown_sec"/>
+	<style name="Everything else">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="cc" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND(INTEGER_VALUE($F{CC}) < 70 , INTEGER_VALUE($F{CC}) > 59)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND( INTEGER_VALUE($F{CC}) < 60 , INTEGER_VALUE($F{CC}) > 49 )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[INTEGER_VALUE($F{CC}) < 50]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="hp" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND(INTEGER_VALUE($F{HP}) < 70 , INTEGER_VALUE($F{HP}) > 59)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND( INTEGER_VALUE($F{HP}) < 60 , INTEGER_VALUE($F{HP}) > 49 )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[INTEGER_VALUE($F{HP}) < 50]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="com" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND( INTEGER_VALUE($F{COM}) < 70 , INTEGER_VALUE($F{COM}) > 59 )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND( INTEGER_VALUE($F{COM}) < 60 , INTEGER_VALUE($F{COM}) > 49 )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[INTEGER_VALUE($F{COM}) < 50]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="ma" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND( INTEGER_VALUE($F{MA}) < 70 , INTEGER_VALUE($F{MA}) > 59 )]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND(INTEGER_VALUE($F{MA}) < 60, INTEGER_VALUE($F{MA}) > 49)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[INTEGER_VALUE($F{MA}) < 50]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<parameter name="SCHOOL_YEAR" class="java.lang.String"/>
+	<parameter name="COURSE_CODE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select N_EVALUATION_ID, 
+       e_ecole, e_anneescolaire, to_char(e_date, 'dd') || '/' || trim(to_char(e_date, 'month')) || '/' || to_char(e_date, 'yyyy') e_date, e_description, E_CODECOURS,
+       n_comp1_note as CC,  
+       n_comp2_note as HP,
+       n_comp3_note as COM,
+       n_comp4_note as MA,
+       N_ABS
+       
+       
+from sp_notes, sp_evaluations
+
+where n_evaluation_id = e_evaluation_id
+and n_membre_id = $P{ACCOUNT_ID} 
+and e_anneescolaire =  $P{SCHOOL_YEAR} 
+and e_codecours =  $P{COURSE_CODE} 
+order by to_date(e_date, 'dd/mm/yyyy') desc]]>
+	</queryString>
+	<field name="N_EVALUATION_ID" class="java.math.BigDecimal"/>
+	<field name="E_ECOLE" class="java.lang.String"/>
+	<field name="E_ANNEESCOLAIRE" class="java.lang.String"/>
+	<field name="E_DATE" class="java.lang.String"/>
+	<field name="E_DESCRIPTION" class="java.lang.String"/>
+	<field name="E_CODECOURS" class="java.lang.String"/>
+	<field name="CC" class="java.lang.String"/>
+	<field name="HP" class="java.lang.String"/>
+	<field name="COM" class="java.lang.String"/>
+	<field name="MA" class="java.lang.String"/>
+	<field name="N_ABS" class="java.lang.String"/>
+	<group name="Group1" keepTogether="true">
+		<groupExpression><![CDATA[$F{E_CODECOURS}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="460" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="a892a50e-efbf-45b7-adb5-3878a60530e0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{E_CODECOURS}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="E_ANNEESCOLAIRE">
+		<groupExpression><![CDATA[$F{E_ANNEESCOLAIRE}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="460" height="30" forecolor="#FFFFFF" backcolor="#9BCCB8" uuid="dd06d932-55c3-4f36-b588-5d407ac81b84"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{E_ANNEESCOLAIRE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="17" width="270" height="20" uuid="272d19cf-118f-4fd5-ba64-7beffa3678aa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Détail des compétences secondaire]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="60" height="30" uuid="9f0802f4-034b-4043-bccf-68160ed7b46b"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[École]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="0" width="80" height="30" uuid="7da28b1e-cdc7-48b4-bee5-cfda2e174608"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Date de l'évaluation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="0" width="120" height="30" uuid="90297876-1d5c-413c-9134-1b5e69532cc8"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Description de l'évaluation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="0" width="40" height="30" uuid="f949cc92-4c06-4cef-a125-364c260c9256"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="40" height="30" uuid="266a1ce9-378f-42f6-93af-5b8d7070feed"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[HP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="0" width="40" height="30" uuid="a5b4cb2a-1a31-4997-9964-23dc478fcef6"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[COM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="40" height="30" uuid="fdd4a3c6-32ed-4d0a-a475-a9c256e5f7f6"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="40" height="30" uuid="d93af828-a3a0-4ca3-9f3a-308a60228bb0"/>
+				<box padding="4">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Absent?]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement style="Everything else" x="0" y="0" width="60" height="30" uuid="10bc4ef9-f433-4dfa-bcd5-6e170bbd58c5"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{E_ECOLE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Everything else" x="60" y="0" width="80" height="30" uuid="8d926839-a45b-4638-aa80-76534269c251"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{E_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Everything else" x="140" y="0" width="120" height="30" uuid="09993221-2a86-4ed7-88a0-4e7d9dff17d0"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{E_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="cc" x="260" y="0" width="40" height="30" uuid="9fc38189-b4f6-426d-a176-006d207b5fba"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="hp" x="300" y="0" width="40" height="30" uuid="6d0661f6-e5d7-4bb6-a2f3-3b225ae64225"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HP}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="com" x="340" y="0" width="40" height="30" uuid="5617a0ae-b4f7-4b89-a3de-2277e06eba1d"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="ma" x="380" y="0" width="40" height="30" uuid="843b207a-6794-486f-ba45-22b9c11c4f17"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Everything else" x="420" y="0" width="40" height="30" uuid="38e8bba7-200f-4c24-affa-00c54fe967e9"/>
+				<box padding="4">
+					<topPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.2" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.2" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{N_ABS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-17T08:38:54 -->
+<!-- 2015-06-30T15:38:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="competances_sec" pageWidth="270" pageHeight="802" columnWidth="270" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="540d7451-c853-487a-a9d7-6d01b3671025">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -83,7 +83,7 @@
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select E_ECOLE, E_ANNEESCOLAIRE, E_CODECOURS, SEMESTER,
+		<![CDATA[select E_ECOLE, E_ANNEESCOLAIRE, E_CODECOURS, SEMESTER, N_MEMBRE_ID,
 PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_SEC(N_MEMBRE_ID, E_ECOLE, E_ANNEESCOLAIRE, E_PERIODE_REF, E_CODECOURS, E_CLASSE_CODE, '1', E_STRAND_CODE) AS CC,
 PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_SEC(N_MEMBRE_ID, E_ECOLE, E_ANNEESCOLAIRE, E_PERIODE_REF, E_CODECOURS, E_CLASSE_CODE, '2', E_STRAND_CODE) AS HP,
 PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_SEC(N_MEMBRE_ID, E_ECOLE, E_ANNEESCOLAIRE, E_PERIODE_REF, E_CODECOURS, E_CLASSE_CODE, '3', E_STRAND_CODE) AS COM,
@@ -102,11 +102,12 @@ ORDER BY E_ANNEESCOLAIRE DESC, SEMESTER ASC, E_CODECOURS ASC]]>
 	<field name="E_ECOLE" class="java.lang.String"/>
 	<field name="E_ANNEESCOLAIRE" class="java.lang.String"/>
 	<field name="E_CODECOURS" class="java.lang.String"/>
+	<field name="SEMESTER" class="java.lang.String"/>
+	<field name="N_MEMBRE_ID" class="java.lang.String"/>
 	<field name="CC" class="java.math.BigDecimal"/>
 	<field name="HP" class="java.math.BigDecimal"/>
 	<field name="COM" class="java.math.BigDecimal"/>
 	<field name="MA" class="java.math.BigDecimal"/>
-	<field name="SEMESTER" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{E_ANNEESCOLAIRE}]]></groupExpression>
 		<groupHeader>
@@ -223,7 +224,7 @@ ORDER BY E_ANNEESCOLAIRE DESC, SEMESTER ASC, E_CODECOURS ASC]]>
 	</columnHeader>
 	<detail>
 		<band height="25" splitType="Stretch">
-			<textField isBlankWhenNull="true">
+			<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
 				<reportElement style="Everything else" x="0" y="0" width="60" height="25" uuid="4235bb17-7693-44fc-8924-8e41947d9b11">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -238,6 +239,18 @@ ORDER BY E_ANNEESCOLAIRE DESC, SEMESTER ASC, E_CODECOURS ASC]]>
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{E_CODECOURS}]]></textFieldExpression>
+				<hyperlinkParameter name="_report">
+					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/competence_drilldown_sec"]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="ACCOUNT_ID">
+					<hyperlinkParameterExpression><![CDATA[$F{N_MEMBRE_ID}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="SCHOOL_YEAR">
+					<hyperlinkParameterExpression><![CDATA[$F{E_ANNEESCOLAIRE}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="COURSE_CODE">
+					<hyperlinkParameterExpression><![CDATA[$F{E_CODECOURS}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="cc" x="90" y="0" width="40" height="25" uuid="633a9a01-a5d2-4b81-a71d-3fde3bed51cd">
