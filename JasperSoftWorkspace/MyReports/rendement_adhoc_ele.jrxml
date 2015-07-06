@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-07-06T09:09:21 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rendement_adhoc_ele" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4fdceafd-e8b5-4b93-9746-b67b1e2fd3b6">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  distinct
+        sr.school_code,
+        sr.school_year, 
+        csa.report_period,
+		sr.grade,
+    
+    PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_ABS(sr.person_id, sr.school_year, sr.school_code, csa.report_period ) as ABS,
+    PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_LATES(sr.person_id, sr.school_year, sr.school_code,  csa.report_period ) as LATES,
+
+
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'003' ) NOTE_COM,
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'002' ) NOTE_ECR, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'001' ) NOTE_LEC, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'020' ) NOTE_NUM, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'021' ) NOTE_MES, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'024' ) NOTE_TRA,
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'023' ) NOTE_MOD, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'022' ) NOTE_GEO,
+    PKG_PROFILE_ÉLÈVE. GET_RAPPORT_P(p.PERSON_ID, sr.school_code, sr.school_year, '009') FRA_P,
+    PKG_PROFILE_ÉLÈVE.GET_RAPPORT_P(p.PERSON_ID, sr.school_code, sr.school_year, '9999000000030' ) MATH_P
+
+from persons p, student_registrations sr, STUDENT_COURSE_STRAND_ACHIEVE CSA
+
+where p.person_id = sr.person_id
+and csa.person_id = p.person_id
+and csa.school_code = sr.school_code
+and csa.school_year = sr.school_year
+and csa.grade = sr.grade
+and csa.strand_code IN ('003', '002', '001', '020', '021', '024', '023', '022')
+and p.person_id =  $P{ACCOUNT_ID} 
+and sr.school_code NOT IN ('ESA', 'ESE', 'ESF') 
+and sr.grade NOT IN ('JK', 'SK')
+order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
+	</queryString>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="REPORT_PERIOD" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="ABS" class="java.lang.String"/>
+	<field name="LATES" class="java.lang.String"/>
+	<field name="NOTE_COM" class="java.lang.String"/>
+	<field name="NOTE_ECR" class="java.lang.String"/>
+	<field name="NOTE_LEC" class="java.lang.String"/>
+	<field name="NOTE_NUM" class="java.lang.String"/>
+	<field name="NOTE_MES" class="java.lang.String"/>
+	<field name="NOTE_TRA" class="java.lang.String"/>
+	<field name="NOTE_MOD" class="java.lang.String"/>
+	<field name="NOTE_GEO" class="java.lang.String"/>
+	<field name="FRA_P" class="java.math.BigDecimal"/>
+	<field name="MATH_P" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
