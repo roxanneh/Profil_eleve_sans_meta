@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-24T14:13:19 -->
+<!-- 2015-07-20T12:00:32 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rend_sub_test" pageWidth="470" pageHeight="800" columnWidth="470" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0d03c9f6-dfcd-46cc-b430-70282fd38f40">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -289,8 +289,8 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 	<field name="NOTE_TRA" class="java.lang.String"/>
 	<field name="NOTE_MOD" class="java.lang.String"/>
 	<field name="NOTE_GEO" class="java.lang.String"/>
-	<field name="FRA_P" class="java.lang.Integer"/>
-	<field name="MATH_P" class="java.lang.Integer"/>
+	<field name="FRA_P" class="java.math.BigDecimal"/>
+	<field name="MATH_P" class="java.math.BigDecimal"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{SCHOOL_YEAR}]]></groupExpression>
 		<groupHeader>
