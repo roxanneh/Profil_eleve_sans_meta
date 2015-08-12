@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-30T15:46:32 -->
+<!-- 2015-07-24T14:35:15 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="competence_drilldown_sec" pageWidth="460" pageHeight="802" columnWidth="460" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="468a8c4e-1bc7-4937-8c3a-31eb12b1995d">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -90,7 +90,7 @@
 	<parameter name="COURSE_CODE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select N_EVALUATION_ID, 
-       e_ecole, e_anneescolaire, to_char(e_date, 'dd') || '/' || trim(to_char(e_date, 'month')) || '/' || to_char(e_date, 'yyyy') e_date, e_description, E_CODECOURS,
+       e_ecole, regexp_replace(e_anneescolaire, '(\w{4})(\w{4})', '\1-\2') e_anneescolaire, to_char(e_date, 'dd') || '/' || trim(to_char(e_date, 'month')) || '/' || to_char(e_date, 'yyyy') e_date, e_description, E_CODECOURS,
        n_comp1_note as CC,  
        n_comp2_note as HP,
        n_comp3_note as COM,
@@ -102,7 +102,7 @@ from sp_notes, sp_evaluations
 
 where n_evaluation_id = e_evaluation_id
 and n_membre_id = $P{ACCOUNT_ID} 
-and e_anneescolaire =  $P{SCHOOL_YEAR} 
+and e_anneescolaire = replace($P{SCHOOL_YEAR}, '-')
 and e_codecours =  $P{COURSE_CODE} 
 order by to_date(e_date, 'dd/mm/yyyy') desc]]>
 	</queryString>

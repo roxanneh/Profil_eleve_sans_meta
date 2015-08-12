@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-08-05T15:05:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hh_horizontal" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="208b9413-b5c4-45d3-8d73-b1210388cc7d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<style name="FIA">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_FIA_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_FIA_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="ORG">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_ORG_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_ORG_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="COL">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_COL_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_COL_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="REG">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_REG_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_REG_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="AUT">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_AUT_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_AUT_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="INI">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_INI_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_INI_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="FRA">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_FRA_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_FRA_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="DEV">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_DEV_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_DEV_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="INFO">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_INFO_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_INFO_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="COOP">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_COOP_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_COOP_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="PART">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_PART_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_PART_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="RES">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_RES_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_RES_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<style name="OBJ">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_OBJ_I_MEASURE1},"N")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{HH_OBJ_I_MEASURE1},"S")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  regexp_replace(sa.school_year, '(\w{4})(\w{4})', '\1-\2') school_year , sa.report_period, P.PERSON_ID,
+
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_USE_OF_ORAL_FRE' ) HH_FRA_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_RESPONSIBILITY' ) HH_FIA_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_ORGANIZATION' ) HH_ORG_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_INDEPENDENT_WORK' ) HH_AUT_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_COLLABORATION' ) HH_COL_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_INITIATIVE' ) HH_INI_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_SELF_REGULATION' ) HH_REG_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_HOMEWORK_COMPLETION' ) HH_DEV_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_USE_OF_INFORMATION' ) HH_INFO_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_COOPERATION_WITH_OTHERS' ) HH_COOP_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_CLASS_PARTICIPATION' ) HH_PART_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_PROBLEM_SOLVING' ) HH_RES_I,
+PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_GOAL_SETTING' ) HH_OBJ_I
+
+from persons p, student_registrations sr, student_achievement sa
+where p.person_id = sr.person_id
+and p.person_id =  $P{ACCOUNT_ID} 
+and sr.person_id = sa.person_id
+and sr.school_code = sa.school_code
+and sr.school_code NOT IN ('ESA', 'ESE', 'ESF') 
+and sr.grade NOT IN ('JK', 'SK')
+and sr.school_year = sa.school_year
+order by sr.school_year DESC,  sa.report_period asc]]>
+	</queryString>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="REPORT_PERIOD" class="java.lang.String"/>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="HH_FRA_I" class="java.lang.String"/>
+	<field name="HH_FIA_I" class="java.lang.String"/>
+	<field name="HH_ORG_I" class="java.lang.String"/>
+	<field name="HH_AUT_I" class="java.lang.String"/>
+	<field name="HH_COL_I" class="java.lang.String"/>
+	<field name="HH_INI_I" class="java.lang.String"/>
+	<field name="HH_REG_I" class="java.lang.String"/>
+	<field name="HH_DEV_I" class="java.lang.String"/>
+	<field name="HH_INFO_I" class="java.lang.String"/>
+	<field name="HH_COOP_I" class="java.lang.String"/>
+	<field name="HH_PART_I" class="java.lang.String"/>
+	<field name="HH_RES_I" class="java.lang.String"/>
+	<field name="HH_OBJ_I" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch"/>
+	</title>
+	<summary>
+		<band height="300" splitType="Stretch">
+			<crosstab horizontalPosition="Center">
+				<reportElement x="0" y="0" width="572" height="300" uuid="6ed8870e-3c0d-4749-a423-68e82edb9434"/>
+				<rowGroup name="PERSON_ID1" width="70">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{PERSON_ID}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="20" uuid="c03b7f9d-b579-4494-bf7d-04921df6323b">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Fiabilité]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="70" height="20" uuid="2555bb9d-c41c-44c3-9a6f-30214ae135ba">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Sens de l'organisation]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="40" width="70" height="20" uuid="16abd402-f656-4413-b4ad-a67c37753f5d"/>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Esprit de colaboration]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="60" width="70" height="20" uuid="27498f28-1d7e-4b34-9eee-83dc9929415e">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Autorégulation]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="80" width="70" height="20" uuid="0bca8a12-6b85-4356-a430-75eebaebb05a"/>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Autonomie]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="100" width="70" height="20" uuid="e4f2985b-ffe3-4dbe-8d93-be8374940d39"/>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Sens de l'initiative]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="120" width="70" height="20" uuid="6a3b8ffd-8969-4f7f-9df5-28f0ae8d7818"/>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Utilisation du français oral]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="140" width="70" height="20" uuid="62e6a4e8-2bc1-46d7-b3bf-dae83478f90a"/>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Remise des travaux et des devoirs]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="160" width="70" height="20" uuid="6a65e3b3-0d68-4e7b-954c-4b6be05e0f1d"/>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Utilisation de l'information]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="180" width="70" height="20" uuid="339345c8-f1c0-4457-b7e3-b825fb37a0bb">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Coopération avec les autres]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="200" width="70" height="20" uuid="67554b63-2dc9-497d-8eb1-2c5a659a653c">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Participation en classe]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="220" width="70" height="20" uuid="9983bba8-5093-4457-996d-1275195fd1b2">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Habileté à résoudre des problèmes]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="240" width="70" height="20" uuid="aaf27711-8b25-44b0-bbb9-346e76a8b2ce">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box leftPadding="4" rightPadding="4">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Fixer des objectifs pour améliorer son travail]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="71dfce00-9d49-4e85-8999-85eeaf8f4c82"/>
+								<text><![CDATA[Total PERSON_ID1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="SCHOOL_YEAR1" height="20" headerPosition="Stretch">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="20" uuid="3706f77b-e6c6-455d-a3d9-277dc63ab63e"/>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="dbe00971-315c-4bc3-98af-5362a59e854a"/>
+								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="REPORT_PERIOD1" height="20">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{REPORT_PERIOD}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="20" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="b6c38814-2cc2-464e-aad1-da6db6907433"/>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_PERIOD1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="8e968d9c-55d4-46c3-bb5e-e4802b9f4179"/>
+								<text><![CDATA[Total REPORT_PERIOD1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="HH_FRA_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_FRA_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_FIA_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_FIA_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_ORG_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_ORG_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_AUT_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_AUT_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_COL_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_COL_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_INI_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_INI_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_REG_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_REG_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_DEV_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_DEV_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_INFO_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_INFO_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_COOP_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_COOP_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_PART_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_PART_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_RES_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_RES_I}]]></measureExpression>
+				</measure>
+				<measure name="HH_OBJ_I_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{HH_OBJ_I}]]></measureExpression>
+				</measure>
+				<crosstabCell width="20" height="260">
+					<cellContents mode="Opaque">
+						<textField isBlankWhenNull="true">
+							<reportElement style="FRA" x="0" y="120" width="20" height="20" uuid="f9d0a0a9-6692-4f78-8623-aead9b7506e1">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_FRA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement key="" style="FIA" x="0" y="0" width="20" height="20" uuid="feda3f3b-bea1-439f-b008-63d3f1ff3026"/>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_FIA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="ORG" x="0" y="20" width="20" height="20" uuid="31edabeb-f9c0-4769-b0ae-a6e42154b213">
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_ORG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="AUT" x="0" y="80" width="20" height="20" uuid="68d6a6d1-1f95-4d29-a6c0-47b326dd0846">
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_AUT_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="COL" x="0" y="40" width="20" height="20" uuid="5826ec04-55f4-406c-8b48-3c9d07f39452"/>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_COL_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="INI" x="0" y="100" width="20" height="20" uuid="24536536-d4f8-4336-8403-00efdc9810f6">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_INI_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="REG" x="0" y="60" width="20" height="20" uuid="2941ffe9-51bb-4cfe-90f5-031062460cca">
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_REG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="DEV" x="0" y="140" width="20" height="20" uuid="7a557e87-558f-42a7-860e-c23902aa3b6c">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_DEV_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="INFO" x="0" y="160" width="20" height="20" uuid="3da594a9-03b4-4062-a3ce-dba4d73afe4b">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_INFO_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="COOP" x="0" y="180" width="20" height="20" uuid="012576f3-5d3e-4e5e-a0f9-e1c7f66a86a5">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_COOP_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="PART" x="0" y="200" width="20" height="20" uuid="fbdf864d-e7da-4135-8b71-9771e7c5b990">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_PART_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="RES" x="0" y="220" width="20" height="20" uuid="31bf65de-735b-4fd2-ab0d-32e24d82c637">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_RES_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="OBJ" x="0" y="240" width="20" height="20" uuid="79c7b74a-3e91-4efe-bb2e-e2894a950906">
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{HH_OBJ_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="1" forecolor="#FFFFFF" uuid="a6172124-0146-4cf5-a853-01892339c65f"/>
+							<textFieldExpression><![CDATA[$V{HH_FRA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="1" width="60" height="1" forecolor="#FFFFFF" uuid="343aa8e4-310b-419b-98ba-d4a78777af17"/>
+							<textFieldExpression><![CDATA[$V{HH_FIA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="1" forecolor="#FFFFFF" uuid="7de54d4e-4cc2-48c1-9b21-7986b930a582"/>
+							<textFieldExpression><![CDATA[$V{HH_ORG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="3" width="60" height="1" forecolor="#FFFFFF" uuid="ead6d45f-0eea-4319-847a-28ee3111f20f"/>
+							<textFieldExpression><![CDATA[$V{HH_AUT_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="1" forecolor="#FFFFFF" uuid="bc5e207f-5aae-437f-b251-0eeefaace75d"/>
+							<textFieldExpression><![CDATA[$V{HH_COL_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="1" forecolor="#FFFFFF" uuid="45606180-0463-4b11-9090-a4cf77b07548"/>
+							<textFieldExpression><![CDATA[$V{HH_INI_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="1" forecolor="#FFFFFF" uuid="d0b135b0-d9f8-4166-8564-4f8de29b7e73"/>
+							<textFieldExpression><![CDATA[$V{HH_REG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="7" width="60" height="1" forecolor="#FFFFFF" uuid="38a03d1f-1127-4761-bb55-8db23dda62b7"/>
+							<textFieldExpression><![CDATA[$V{HH_DEV_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="1" forecolor="#FFFFFF" uuid="4d362d9c-961d-4487-8a65-14cf0a3a3ace"/>
+							<textFieldExpression><![CDATA[$V{HH_INFO_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="9" width="60" height="1" forecolor="#FFFFFF" uuid="ea66faea-c200-40a5-aaf1-57fe3c7eee80"/>
+							<textFieldExpression><![CDATA[$V{HH_COOP_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="1" forecolor="#FFFFFF" uuid="10fb9069-a586-4d37-b5ed-3c043d9ea557"/>
+							<textFieldExpression><![CDATA[$V{HH_PART_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="11" width="60" height="1" forecolor="#FFFFFF" uuid="b9b35512-7d2c-42e5-8fbc-1b926a68c940"/>
+							<textFieldExpression><![CDATA[$V{HH_RES_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="1" forecolor="#FFFFFF" uuid="30a16a4e-3359-4054-9e6a-e592751c0a25"/>
+							<textFieldExpression><![CDATA[$V{HH_OBJ_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="REPORT_PERIOD1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="1" uuid="9cdfba7e-ecc0-45ce-a6d7-9c25704c4223"/>
+							<textFieldExpression><![CDATA[$V{HH_FRA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="1" width="60" height="1" uuid="dd95e10a-56f0-4b0a-bc5c-52906b34c009"/>
+							<textFieldExpression><![CDATA[$V{HH_FIA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="1" uuid="61073f9b-1575-42cb-bd89-dc022dfb2bce"/>
+							<textFieldExpression><![CDATA[$V{HH_ORG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="3" width="60" height="1" uuid="9959095a-a88e-4a4e-b0a2-c6d37a7f761c"/>
+							<textFieldExpression><![CDATA[$V{HH_AUT_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="1" uuid="9db0138a-9f4c-4d95-8c5b-43e4abbb0f3d"/>
+							<textFieldExpression><![CDATA[$V{HH_COL_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="1" uuid="df77a104-0e9b-407c-a4d4-48c43f09469d"/>
+							<textFieldExpression><![CDATA[$V{HH_INI_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="1" uuid="03d8359a-f83c-443b-bc6d-6212ad6a69b4"/>
+							<textFieldExpression><![CDATA[$V{HH_REG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="7" width="60" height="1" uuid="bd32fe51-f6b6-410b-ab9a-bdea2b9f41a5"/>
+							<textFieldExpression><![CDATA[$V{HH_DEV_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="1" uuid="ade0f488-21fd-4135-b917-0cb1862e0585"/>
+							<textFieldExpression><![CDATA[$V{HH_INFO_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="9" width="60" height="1" uuid="05661942-e732-4d27-a2ab-8d985bc9cd5e"/>
+							<textFieldExpression><![CDATA[$V{HH_COOP_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="1" uuid="bd9feef5-353f-4e1a-802c-342862ea98de"/>
+							<textFieldExpression><![CDATA[$V{HH_PART_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="11" width="60" height="1" uuid="4d39b66e-0a36-49c7-804b-ccc602a67d80"/>
+							<textFieldExpression><![CDATA[$V{HH_RES_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="1" uuid="52365b02-36a8-4fb1-9eb0-d6a9e214f3e2"/>
+							<textFieldExpression><![CDATA[$V{HH_OBJ_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="1" forecolor="#FFFFFF" uuid="f5f53073-e66f-4cf4-b6f9-288769df23a6"/>
+							<textFieldExpression><![CDATA[$V{HH_FRA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="1" width="60" height="1" forecolor="#FFFFFF" uuid="1f2d73eb-2141-41ff-9233-b8a047a52bbf"/>
+							<textFieldExpression><![CDATA[$V{HH_FIA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="1" forecolor="#FFFFFF" uuid="7d80f40b-7ca9-4321-b963-5c18aed619b9"/>
+							<textFieldExpression><![CDATA[$V{HH_ORG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="3" width="60" height="1" forecolor="#FFFFFF" uuid="7dc0a410-7e02-4dc1-8dd9-9a657aa1b49f"/>
+							<textFieldExpression><![CDATA[$V{HH_AUT_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="1" forecolor="#FFFFFF" uuid="0c0267e6-07c9-4358-b73f-12d2189da302"/>
+							<textFieldExpression><![CDATA[$V{HH_COL_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="1" forecolor="#FFFFFF" uuid="b81c23fb-82f4-4faa-b403-517c6cd0daa7"/>
+							<textFieldExpression><![CDATA[$V{HH_INI_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="1" forecolor="#FFFFFF" uuid="242faacc-4b38-4878-b66c-78127166da46"/>
+							<textFieldExpression><![CDATA[$V{HH_REG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="7" width="60" height="1" forecolor="#FFFFFF" uuid="8b4aa679-d370-4319-95ba-3a7f06fd9116"/>
+							<textFieldExpression><![CDATA[$V{HH_DEV_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="1" forecolor="#FFFFFF" uuid="2bc076e0-2f9a-4854-bc15-0721f45ebd02"/>
+							<textFieldExpression><![CDATA[$V{HH_INFO_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="9" width="60" height="1" forecolor="#FFFFFF" uuid="f8bf6832-e09d-4ee8-98c1-324f5e7e764a"/>
+							<textFieldExpression><![CDATA[$V{HH_COOP_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="1" forecolor="#FFFFFF" uuid="d6d0ba06-cece-4c7a-811c-1d191ccf7420"/>
+							<textFieldExpression><![CDATA[$V{HH_PART_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="11" width="60" height="1" forecolor="#FFFFFF" uuid="702cf40f-1876-4207-8de4-c6e08ad0447d"/>
+							<textFieldExpression><![CDATA[$V{HH_RES_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="1" forecolor="#FFFFFF" uuid="44b8ba47-c4a0-4aba-abed-3af8a552cb63"/>
+							<textFieldExpression><![CDATA[$V{HH_OBJ_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1" columnTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="1" forecolor="#FFFFFF" uuid="14f5f49d-07db-45fa-8b20-f9981bbe37e0"/>
+							<textFieldExpression><![CDATA[$V{HH_FRA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="1" width="60" height="1" forecolor="#FFFFFF" uuid="8ee46952-a7d6-40d9-872c-ac568eb9dbf0"/>
+							<textFieldExpression><![CDATA[$V{HH_FIA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="1" forecolor="#FFFFFF" uuid="8e6599bc-6783-4711-9368-69a0ea43f6a1"/>
+							<textFieldExpression><![CDATA[$V{HH_ORG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="3" width="60" height="1" forecolor="#FFFFFF" uuid="e8c95810-e569-487b-9aeb-50c643f1a3db"/>
+							<textFieldExpression><![CDATA[$V{HH_AUT_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="1" forecolor="#FFFFFF" uuid="3f71a4ca-cbc0-46a7-9668-8806273b62d3"/>
+							<textFieldExpression><![CDATA[$V{HH_COL_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="1" forecolor="#FFFFFF" uuid="4227a4e3-f6e7-4e69-ba18-a63512f71871"/>
+							<textFieldExpression><![CDATA[$V{HH_INI_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="1" forecolor="#FFFFFF" uuid="5453c3cc-8ec8-4dbd-a06c-7d4f1c189a02"/>
+							<textFieldExpression><![CDATA[$V{HH_REG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="7" width="60" height="1" forecolor="#FFFFFF" uuid="d2fc39a6-6c45-4d0b-a76a-2feea2d1723b"/>
+							<textFieldExpression><![CDATA[$V{HH_DEV_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="1" forecolor="#FFFFFF" uuid="a1539b52-96c8-4c2b-b99d-330d42ea1a2a"/>
+							<textFieldExpression><![CDATA[$V{HH_INFO_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="9" width="60" height="1" forecolor="#FFFFFF" uuid="607ace2b-b163-4c94-b6b1-77670dfe9f97"/>
+							<textFieldExpression><![CDATA[$V{HH_COOP_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="1" forecolor="#FFFFFF" uuid="981d6f94-4c31-4982-b4dc-1a09b68d3c2f"/>
+							<textFieldExpression><![CDATA[$V{HH_PART_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="11" width="60" height="1" forecolor="#FFFFFF" uuid="07689f5d-1c4a-4b70-bdcf-263eb4c75474"/>
+							<textFieldExpression><![CDATA[$V{HH_RES_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="1" forecolor="#FFFFFF" uuid="8a93e5a1-1a47-4fb1-877e-fbe9b1e13d40"/>
+							<textFieldExpression><![CDATA[$V{HH_OBJ_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1" columnTotalGroup="REPORT_PERIOD1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="1" forecolor="#FFFFFF" uuid="ebc302cb-0303-4330-b5b3-585b5029b4d0"/>
+							<textFieldExpression><![CDATA[$V{HH_FRA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="1" width="60" height="1" forecolor="#FFFFFF" uuid="278aaa38-95d4-4c93-99ec-675159915843"/>
+							<textFieldExpression><![CDATA[$V{HH_FIA_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="1" forecolor="#FFFFFF" uuid="6ede7a99-6c41-437b-925e-7927a79d3ab2"/>
+							<textFieldExpression><![CDATA[$V{HH_ORG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="3" width="60" height="1" forecolor="#FFFFFF" uuid="2fcf6ad1-0cb6-445f-b494-c191df63d80a"/>
+							<textFieldExpression><![CDATA[$V{HH_AUT_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="1" forecolor="#FFFFFF" uuid="f7bde423-04aa-4828-acf9-9e7e1dd92446"/>
+							<textFieldExpression><![CDATA[$V{HH_COL_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="1" forecolor="#FFFFFF" uuid="ebd5837d-0041-4c2d-b5ef-8f825c36d041"/>
+							<textFieldExpression><![CDATA[$V{HH_INI_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="1" forecolor="#FFFFFF" uuid="c73493e5-c702-4614-ad62-211866ced534"/>
+							<textFieldExpression><![CDATA[$V{HH_REG_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="7" width="60" height="1" forecolor="#FFFFFF" uuid="48f6073c-d1e3-4a05-a1b5-ff1f010a76c2"/>
+							<textFieldExpression><![CDATA[$V{HH_DEV_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="1" forecolor="#FFFFFF" uuid="0d0db5fb-3c11-49ba-ad25-fab5aee0d292"/>
+							<textFieldExpression><![CDATA[$V{HH_INFO_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="9" width="60" height="1" forecolor="#FFFFFF" uuid="6e54af03-5b3f-4ddd-8230-94bc3c847d24"/>
+							<textFieldExpression><![CDATA[$V{HH_COOP_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="1" forecolor="#FFFFFF" uuid="da1535e5-bcd5-447b-ac1a-292e09f48139"/>
+							<textFieldExpression><![CDATA[$V{HH_PART_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="11" width="60" height="1" forecolor="#FFFFFF" uuid="dcef1e84-0e7d-4ba0-b082-d6739dce2546"/>
+							<textFieldExpression><![CDATA[$V{HH_RES_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="1" forecolor="#FFFFFF" uuid="bc25e9b5-660b-4057-8233-b1da9652d0c7"/>
+							<textFieldExpression><![CDATA[$V{HH_OBJ_I_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

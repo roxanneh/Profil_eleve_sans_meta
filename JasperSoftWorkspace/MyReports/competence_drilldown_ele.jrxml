@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-30T15:23:11 -->
+<!-- 2015-07-24T14:39:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="competence_drilldown_ele" pageWidth="460" pageHeight="802" columnWidth="460" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d52585e8-e8ec-45cc-a42b-561707ab82a0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -90,7 +90,7 @@
 	<parameter name="SCHOOL_YEAR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select N_EVALUATION_ID, 
-       e_ecole, e_anneescolaire, to_char(e_date, 'dd') || '/' || trim(to_char(e_date, 'month')) || '/' || to_char(e_date, 'yyyy') e_date, e_description, strand_description_f, strand_code,
+       e_ecole, regexp_replace(e_anneescolaire, '(\w{4})(\w{4})', '\1-\2') e_anneescolaire, to_char(e_date, 'dd') || '/' || trim(to_char(e_date, 'month')) || '/' || to_char(e_date, 'yyyy') e_date, e_description, strand_description_f, strand_code,
        PKG_PROFILE_ÉLÈVE.GET_NOTE_RENDEMENT(n_comp1_note, e_anneescolaire, GRADE) as CC,  
        PKG_PROFILE_ÉLÈVE.GET_NOTE_RENDEMENT(n_comp2_note, e_anneescolaire, grade) as HP,
        PKG_PROFILE_ÉLÈVE.GET_NOTE_RENDEMENT(n_comp3_note, e_anneescolaire, grade) as COM,
@@ -106,7 +106,7 @@ and n_membre_id =  $P{ACCOUNT_ID}
 AND PERSON_ID = N_MEMBRE_ID
 AND SCHOOL_YEAR = E_ANNEESCOLAIRE
 and e_strand_code = strand_code
-and e_anneescolaire =  $P{SCHOOL_YEAR} 
+and e_anneescolaire =  replace($P{SCHOOL_YEAR}, '-')
 and replace(lower(strand_description_f), 'é', 'e') =  replace(lower($P{STRAND}), 'é', 'e')
 order by case when strand_description_f = 'Communication orale' then 0 
                            when strand_description_f = 'Écriture' then 1

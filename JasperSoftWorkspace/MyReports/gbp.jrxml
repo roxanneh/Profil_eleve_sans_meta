@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-25T14:45:18 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gbp" pageWidth="560" pageHeight="802" columnWidth="560" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8f22835b-683d-4cfb-bf7d-3e7756e05531">
+<!-- 2015-08-06T11:25:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gbp" pageWidth="560" pageHeight="800" columnWidth="560" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8f22835b-683d-4cfb-bf7d-3e7756e05531">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Niveau" fill="Solid" fontName="Tahoma" fontSize="8">
 		<conditionalStyle>
@@ -19,18 +19,122 @@
 	</style>
 	<style name="DEGCOM">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{Degré de compréhension}>69]]></conditionExpression>
+			<conditionExpression><![CDATA[AND( $F{Degré de compréhension}>69, NOT(EXACT($F{COMMENTAIRE}, "Données Historique")) )]]></conditionExpression>
 			<style mode="Opaque" backcolor="#B4E38D"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[AND($F{Degré de compréhension}<70, $F{Degré de compréhension}>39)]]></conditionExpression>
+			<conditionExpression><![CDATA[AND(AND($F{Degré de compréhension}<70, $F{Degré de compréhension}>39),  NOT(EXACT($F{COMMENTAIRE}, "Données Historique")) )]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDC77B"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{Degré de compréhension}<40]]></conditionExpression>
+			<conditionExpression><![CDATA[AND($F{Degré de compréhension}<40, NOT(EXACT($F{COMMENTAIRE}, "Données Historique")) )]]></conditionExpression>
 			<style mode="Opaque" backcolor="#C76563"/>
 		</conditionalStyle>
 	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#AE9D9D">
+		<box>
+			<pen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+			<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EAE6E6"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="charts" uuid="116cf0bc-e702-4fc6-8920-694b24b09eae">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+		<parameter name="SUB_ACCOUNT_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT 
+sr.school_code,
+res.resultat_id "ID",
+res.evaluation_date "Date d'évaluation",
+res.niveau "Niveau"  ,
+CSCFN.PKG_PROFILE_ÉLÈVE.GBP_ERREURS(res.resultat_id) "ERR", --Fonction qui fait la somme des "utilisation d'indices"
+CSCFN.PKG_PROFILE_ÉLÈVE.GBP_AC(res.resultat_id) "AC",       --Fonction qui fait la somme des autocorrections
+CSCFN.PKG_PROFILE_ÉLÈVE.GBP_ERREURS_S(res.resultat_id) "ERR_S", --Fonction qui fait la somme des erreurs sémantiques
+CSCFN.PKG_PROFILE_ÉLÈVE.GBP_ERREURS_ST(res.resultat_id) "ERR_ST", --Fontion qui fait la somme des erreurs syntactiques
+CSCFN.PKG_PROFILE_ÉLÈVE.GBP_ERREURS_V(res.resultat_id) "ERR_V", --Fonction qui fait la somme des erreurs visuelles
+nvl(CSCFN.PKG_PROFILE_ÉLÈVE.GBP_TAUX_PRECISION(res.resultat_id), 0) "PERCENT", --Fonction qui calcule le pourcentage des erreurs
+CSCFN.PKG_PROFILE_ÉLÈVE.GBP_NIVEAU_LECTURE(res.resultat_id) "NIVEAU DE LECTURE", --Fonction qui indique le niveau de lecture                                                              
+
+--Nombre de bonnes réponses dans la catégorie "Compréhension litérale"
+PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_BONNES_REPONSES(RES.RESULTAT_ID, 1)|| '/'||PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_QUE(RES.RESULTAT_ID, 1)"Comp. Litérale", 
+--Nombre de bonnes réponses dans la catégorie "Compréhension déductive"
+PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_BONNES_REPONSES(RES.RESULTAT_ID, 2)|| '/'||PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_QUE(RES.RESULTAT_ID, 2) "Comp. Déductive",
+--Nombre de bonnes réponses dans la catégorie "Rappel du texte"
+PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_BONNES_REPONSES(RES.RESULTAT_ID, 3)|| '/'||PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_QUE(RES.RESULTAT_ID, 3) "Rappel du texte",
+
+--Caculcul du degré de compréhension donc le nombre de bonne réponses, divisé par le nombre de questions 
+--(divisé par LE NOMBRE DE CATÉGORIES OÙ IL Y A EUE DES QUESTIONS pour avoir la moyenne et multiplié par 100 pour avoir le pourcentage)
+--Arrondie à la deuxième déciamle
+round(((                                                                                                                                               --*************************************************************************************************--
+        NVL((PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_BONNES_REPONSES(RES.RESULTAT_ID, 1)/NULLIF(PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_QUE(RES.RESULTAT_ID, 1), 0)), 0) + -- #DE BONNES RÉPONSES / # DE QUESTION >> SI LE # DE QUESTIONS EST 0, ON LE REMPLACE AVEC NULL...  -- 
+        NVL((PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_BONNES_REPONSES(RES.RESULTAT_ID, 2)/NULLIF(PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_QUE(RES.RESULTAT_ID, 2), 0)), 0) + -- PUISQUE LE NULLIF NULLERAI L'ÉQUATION AU COMPLET, ON REMPLACE L'INSTANCE SPÉCIFIQUE DE CE NULL  --
+        NVL((PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_BONNES_REPONSES(RES.RESULTAT_ID, 3)/NULLIF(PKG_PROFILE_ÉLÈVE.GBP_GET_NUM_QUE(RES.RESULTAT_ID, 3), 0)), 0)   -- AVEC 0. DONC SI NOUS AVONS (3/3) + (1/2) + (0/0), ON FINI PAR REMPLACER LE (0/0) PAR 0 ET NOUS  --
+       )                                                                                                                                               -- OBTENONS (3/3) + (1/2) + 0... VEUE QUE CECI VEUX DIRE QU'IL Y A SEULEMENT DEUX CATÉGORIES OÙ IL --
+     /PKG_PROFILE_ÉLÈVE.GBP_GET_DENOMINATOR(res.resultat_id))                                                                                          -- Y A EU DES RÉPONSES, NOUS DEVONS AJUSTER LE DÉNOMINATEUR DYNAMIQUEMENT. CECI EST TRAITÉ DANS    --
+*100, 2) AS "Degré de compréhension",
+
+PKG_PROFILE_ÉLÈVE.GBP_GET_RECS(RES.RESULTAT_ID) AS "Recommendations"
+
+
+FROM ATELIER.GBP_RESULTATS   res, student_registrations sr 
+
+WHERE res.person_id =  $P{SUB_ACCOUNT_ID} 
+AND RES.TEXTE_ID <> 0
+AND sr.person_id = res.person_id 
+AND sr.school_year = res.school_year
+and sr.status_indicator_code = 'Active'
+--and res.commentaire <> 'Données Historique'
+ORDER BY  res.evaluation_date DESC]]>
+		</queryString>
+		<field name="SCHOOL_CODE" class="java.lang.String"/>
+		<field name="ID" class="java.math.BigDecimal"/>
+		<field name="Date d&apos;évaluation" class="java.sql.Timestamp"/>
+		<field name="Niveau" class="java.math.BigDecimal"/>
+		<field name="ERR" class="java.lang.String"/>
+		<field name="AC" class="java.lang.String"/>
+		<field name="ERR_S" class="java.lang.String"/>
+		<field name="ERR_ST" class="java.lang.String"/>
+		<field name="ERR_V" class="java.lang.String"/>
+		<field name="PERCENT" class="java.math.BigDecimal"/>
+		<field name="NIVEAU DE LECTURE" class="java.lang.String"/>
+		<field name="Comp. Litérale" class="java.lang.String"/>
+		<field name="Comp. Déductive" class="java.lang.String"/>
+		<field name="Rappel du texte" class="java.lang.String"/>
+		<field name="Degré de compréhension" class="java.math.BigDecimal"/>
+		<field name="Recommendations" class="java.lang.String"/>
+		<variable name="Average degré de comp" class="java.lang.Double" calculation="Average">
+			<variableExpression><![CDATA[$F{Degré de compréhension}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{Degré de compréhension}]]></initialValueExpression>
+		</variable>
+		<variable name="Average taux de pré" class="java.lang.Double" calculation="Average">
+			<variableExpression><![CDATA[$F{PERCENT}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{PERCENT}]]></initialValueExpression>
+		</variable>
+	</subDataset>
 	<parameter name="ACCOUNT_ID" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
@@ -38,8 +142,9 @@
 		<![CDATA[SELECT 
 sr.school_code,
 res.resultat_id "ID",
-res.evaluation_date "Date d'évaluation",
-res.niveau "Niveau"  ,
+to_date(to_char(res.evaluation_date, 'dd/mon/yyyy'), 'dd/mon/yyyy') "Date d'évaluation",
+res.niveau "Niveau",
+commentaire,
 CSCFN.PKG_PROFILE_ÉLÈVE.GBP_ERREURS(res.resultat_id) "ERR", --Fonction qui fait la somme des "utilisation d'indices"
 CSCFN.PKG_PROFILE_ÉLÈVE.GBP_AC(res.resultat_id) "AC",       --Fonction qui fait la somme des autocorrections
 CSCFN.PKG_PROFILE_ÉLÈVE.GBP_ERREURS_S(res.resultat_id) "ERR_S", --Fonction qui fait la somme des erreurs sémantiques
@@ -82,23 +187,24 @@ ORDER BY  res.evaluation_date DESC]]>
 	<field name="ID" class="java.math.BigDecimal"/>
 	<field name="Date d&apos;évaluation" class="java.sql.Timestamp"/>
 	<field name="Niveau" class="java.math.BigDecimal"/>
+	<field name="COMMENTAIRE" class="java.lang.String"/>
 	<field name="ERR" class="java.lang.String"/>
 	<field name="AC" class="java.lang.String"/>
 	<field name="ERR_S" class="java.lang.String"/>
 	<field name="ERR_ST" class="java.lang.String"/>
 	<field name="ERR_V" class="java.lang.String"/>
-	<field name="PERCENT" class="java.lang.Double"/>
+	<field name="PERCENT" class="java.math.BigDecimal"/>
 	<field name="NIVEAU DE LECTURE" class="java.lang.String"/>
 	<field name="Comp. Litérale" class="java.lang.String"/>
 	<field name="Comp. Déductive" class="java.lang.String"/>
 	<field name="Rappel du texte" class="java.lang.String"/>
 	<field name="Degré de compréhension" class="java.lang.Double"/>
 	<field name="Recommendations" class="java.lang.String"/>
-	<variable name="Average degré de comp" class="java.lang.Double" calculation="Average">
+	<variable name="Average degré de comp MAIN" class="java.lang.Double" calculation="Average">
 		<variableExpression><![CDATA[$F{Degré de compréhension}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{Degré de compréhension}]]></initialValueExpression>
 	</variable>
-	<variable name="Average taux de pré" class="java.lang.Double" calculation="Average">
+	<variable name="Average taux de pré MAIN" class="java.lang.Double" calculation="Average">
 		<variableExpression><![CDATA[$F{PERCENT}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{PERCENT}]]></initialValueExpression>
 	</variable>
@@ -115,7 +221,9 @@ ORDER BY  res.evaluation_date DESC]]>
 				<text><![CDATA[GB+]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="75" y="20" width="30" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2d3cbf63-7c55-4071-92e5-e5e9dc87c07c"/>
+				<reportElement mode="Opaque" x="75" y="20" width="25" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2d3cbf63-7c55-4071-92e5-e5e9dc87c07c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -301,7 +409,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<text><![CDATA[Niveau de lecture]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="105" y="20" width="25" height="30" uuid="4c6f18d2-af80-4116-879d-2dd56ef8c569"/>
+				<reportElement x="100" y="20" width="30" height="30" uuid="4c6f18d2-af80-4116-879d-2dd56ef8c569"/>
 				<box>
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -311,14 +419,16 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Mépris]]></text>
+				<text><![CDATA[Méprises]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="75" y="0" width="30" height="30" uuid="afa8261c-7bca-4df6-8210-b0ec70823fcd"/>
+				<reportElement stretchType="RelativeToTallestObject" x="75" y="0" width="25" height="30" uuid="afa8261c-7bca-4df6-8210-b0ec70823fcd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -344,7 +454,7 @@ ORDER BY  res.evaluation_date DESC]]>
 				<textFieldExpression><![CDATA[$F{Recommendations}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="105" y="0" width="25" height="30" uuid="6ef96990-6e19-42c9-b7be-c5b24e73e440"/>
+				<reportElement stretchType="RelativeToTallestObject" x="100" y="0" width="30" height="30" uuid="6ef96990-6e19-42c9-b7be-c5b24e73e440"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -521,16 +631,25 @@ ORDER BY  res.evaluation_date DESC]]>
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<meterChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="330" y="250" width="200" height="280" uuid="8b911f85-bc31-4aff-8de4-e091573a3a5d"/>
+					<reportElement x="330" y="250" width="200" height="280" uuid="9744b8c2-eb67-4761-9fc0-33d76e0c5ac4"/>
 					<chartTitle position="Bottom">
-						<font fontName="Tahoma" size="8"/>
-						<titleExpression><![CDATA["Moyenne des degrés de compréhension"]]></titleExpression>
+						<font fontName="Tahoma" size="6"/>
+						<titleExpression><![CDATA["À notre que cette moyenne ne comprend pas les données historiques."]]></titleExpression>
 					</chartTitle>
-					<chartSubtitle/>
+					<chartSubtitle>
+						<subtitleExpression><![CDATA["Moyenne des degrés de compréhension"]]></subtitleExpression>
+					</chartSubtitle>
 					<chartLegend/>
 				</chart>
 				<valueDataset>
-					<dataset resetType="Report"/>
+					<dataset resetType="Report">
+						<datasetRun subDataset="charts" uuid="1d4e5941-7441-4a35-b057-b0d0d6d6a7fc">
+							<datasetParameter name="SUB_ACCOUNT_ID">
+								<datasetParameterExpression><![CDATA[$P{ACCOUNT_ID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
 					<valueExpression><![CDATA[$V{Average degré de comp}]]></valueExpression>
 				</valueDataset>
 				<meterPlot units="%" tickInterval="5.0" meterColor="rgba(212, 212, 212, 0.019607844)" needleColor="#000000" tickColor="#5E5E5E">
@@ -564,18 +683,27 @@ ORDER BY  res.evaluation_date DESC]]>
 			</meterChart>
 			<meterChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="30" y="250" width="200" height="280" uuid="54fc0464-ede3-4479-819c-2d32171e183d">
+					<reportElement x="30" y="250" width="200" height="280" uuid="d7acfdcc-59f8-4bcb-8175-8c95282a339f">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<chartTitle position="Bottom">
-						<font fontName="Tahoma" size="8"/>
-						<titleExpression><![CDATA["Moyenne des taux de pécision"]]></titleExpression>
+						<font fontName="Tahoma" size="6"/>
+						<titleExpression><![CDATA["À notre que cette moyenne ne comprend pas les données historiques."]]></titleExpression>
 					</chartTitle>
-					<chartSubtitle/>
+					<chartSubtitle>
+						<subtitleExpression><![CDATA["Moyenne des taux de précision"]]></subtitleExpression>
+					</chartSubtitle>
 					<chartLegend/>
 				</chart>
 				<valueDataset>
-					<dataset resetType="Report"/>
+					<dataset resetType="Report">
+						<datasetRun subDataset="charts" uuid="d09a7774-64d2-4578-898f-c387d0ce13fd">
+							<datasetParameter name="SUB_ACCOUNT_ID">
+								<datasetParameterExpression><![CDATA[$P{ACCOUNT_ID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
 					<valueExpression><![CDATA[$V{Average taux de pré}]]></valueExpression>
 				</valueDataset>
 				<meterPlot shape="chord" units="%" tickInterval="5.0" meterColor="rgba(212, 212, 212, 0.019607844)" needleColor="#000000" tickColor="#5E5E5E">
@@ -627,11 +755,22 @@ ORDER BY  res.evaluation_date DESC]]>
 					</plot>
 					<timeAxisLabelExpression><![CDATA["Date de l'évaluation"]]></timeAxisLabelExpression>
 					<timeAxisFormat>
-						<axisFormat tickLabelMask="dd MMMM, yyyy"/>
+						<axisFormat tickLabelMask="dd MMMM yyyy">
+							<tickLabelFont>
+								<font fontName="Tahoma"/>
+							</tickLabelFont>
+						</axisFormat>
 					</timeAxisFormat>
 					<valueAxisLabelExpression><![CDATA["Niveau obtenu"]]></valueAxisLabelExpression>
 					<valueAxisFormat>
-						<axisFormat tickLabelMask="#"/>
+						<axisFormat tickLabelMask="#">
+							<labelFont>
+								<font fontName="Tahoma"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Tahoma"/>
+							</tickLabelFont>
+						</axisFormat>
 					</valueAxisFormat>
 					<rangeAxisMinValueExpression><![CDATA[0]]></rangeAxisMinValueExpression>
 					<rangeAxisMaxValueExpression><![CDATA[30]]></rangeAxisMaxValueExpression>

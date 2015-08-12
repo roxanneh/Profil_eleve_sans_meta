@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-29T13:48:43 -->
+<!-- 2015-07-24T15:22:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="assiduité_drilldown" pageWidth="520" pageHeight="842" columnWidth="480" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="407e382e-16a5-4fb8-99e2-e34f6574374e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -22,7 +22,7 @@ and p.person_id = pa.person_id
 AND SCHOOL_CODE NOT IN ('ESF', 'ESA', 'ESE')  --On compte seulement les absences prises durant le séjour élémentaire
 --AND ATTENDANCE_CODE NOT IN ('N', 'E', 'G') --On ne compte pas les absences "Justifié". "Jour avec pas d'enseignement" ou "Intempéries"
 AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-and school_year =  $P{SCHOOL_YEAR}  
+and school_year =  replace($P{SCHOOL_YEAR} , '-')
 and pa.attendance_code = ac.attendance_code
 and pa.attendance_code <> 'L'
 and replace(lower(trim(to_char(calendar_date, 'mon'))), 'é', 'e') =  replace(lower(trim($P{MONTH})), 'é', 'e')

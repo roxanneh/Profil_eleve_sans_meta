@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-11T15:49:23 -->
+<!-- 2015-07-24T13:17:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="groupes" pageWidth="200" pageHeight="802" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="910acc04-0d88-4a24-9aae-254528740352">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -11,7 +11,7 @@
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select group_name, school_year 
+		<![CDATA[select group_name, regexp_replace(school_year, '(\w{4})(\w{4})', '\1-\2') school_year 
 from student_groups 
 where person_id =  $P{ACCOUNT_ID} 
 --and school_year = pkg_profile_élève.get_school_year(sysdate)

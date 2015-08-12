@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-07-20T12:00:32 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rend_sub_test" pageWidth="470" pageHeight="800" columnWidth="470" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0d03c9f6-dfcd-46cc-b430-70282fd38f40">
+<!-- 2015-08-05T09:03:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rend_sub_test" pageWidth="490" pageHeight="800" columnWidth="490" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0d03c9f6-dfcd-46cc-b430-70282fd38f40">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
 		<conditionalStyle>
@@ -209,23 +209,13 @@
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
 	</style>
-	<style name="ABS">
-		<conditionalStyle>
-			<conditionExpression><![CDATA[(new Boolean(DOUBLE_VALUE($F{ABS})>10.0))]]></conditionExpression>
-			<style mode="Opaque" backcolor="#FFFF99"/>
-		</conditionalStyle>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
-			<style mode="Opaque" backcolor="#E8E8E8"/>
-		</conditionalStyle>
-	</style>
 	<style name="P_F">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{FRA_P} == 2]]></conditionExpression>
 			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{FRA_P} == 3]]></conditionExpression>
+			<conditionExpression><![CDATA[$F{FRA_P} == 1]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 	</style>
@@ -235,20 +225,68 @@
 			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{MATH_P} == 3]]></conditionExpression>
+			<conditionExpression><![CDATA[$F{MATH_P} == 1]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+	</style>
+	<style name="Colour abs" isBlankWhenNull="true" fontName="Tahoma" fontSize="8">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND ((DOUBLE_VALUE($F{ABS}) >= 10), DOUBLE_VALUE($F{ABS}) <= 15)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99">
+				<pen lineWidth="0.01" lineColor="#A3A3A3"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND ((DOUBLE_VALUE($F{ABS}) > 15), DOUBLE_VALUE($F{ABS}) <= 20)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979">
+				<pen lineWidth="0.01" lineColor="#A3A3A3"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(DOUBLE_VALUE($F{ABS}) > 20)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58">
+				<pen lineWidth="0.01" lineColor="#757575"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="Colour ret" isBlankWhenNull="true" fontName="Tahoma" fontSize="8">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND ((DOUBLE_VALUE($F{LATES}) >= 10), DOUBLE_VALUE($F{LATES}) <= 15)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99">
+				<pen lineWidth="0.01" lineColor="#A3A3A3"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[AND ((DOUBLE_VALUE($F{LATES}) > 15), DOUBLE_VALUE($F{LATES}) <= 20)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979">
+				<pen lineWidth="0.01" lineColor="#A3A3A3"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(DOUBLE_VALUE($F{LATES}) > 20)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58">
+				<pen lineWidth="0.01" lineColor="#757575"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select  distinct
         sr.school_code,
-        sr.school_year, 
+        regexp_replace(sr.school_year, '(\w{4})(\w{4})', '\1-\2') school_year, 
         csa.report_period,
 		sr.grade,
     
-    PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_ABS(sr.person_id, sr.school_year, sr.school_code, csa.report_period ) as ABS,
-    PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_LATES(sr.person_id, sr.school_year, sr.school_code,  csa.report_period ) as LATES,
+    replace(PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_ABS(sr.person_id, sr.school_year, sr.school_code, csa.report_period ), ',', '.') as ABS,
+    replace(PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_LATES(sr.person_id, sr.school_year, sr.school_code,  csa.report_period ), ',', '.') as LATES,
 
 
     PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'003' ) NOTE_COM,
@@ -273,7 +311,7 @@ and csa.strand_code IN ('003', '002', '001', '020', '021', '024', '023', '022')
 and p.person_id =  $P{ACCOUNT_ID} 
 and sr.school_code NOT IN ('ESA', 'ESE', 'ESF') 
 and sr.grade NOT IN ('JK', 'SK')
-order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
+order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 	</queryString>
 	<field name="SCHOOL_CODE" class="java.lang.String"/>
 	<field name="SCHOOL_YEAR" class="java.lang.String"/>
@@ -289,22 +327,22 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 	<field name="NOTE_TRA" class="java.lang.String"/>
 	<field name="NOTE_MOD" class="java.lang.String"/>
 	<field name="NOTE_GEO" class="java.lang.String"/>
-	<field name="FRA_P" class="java.math.BigDecimal"/>
-	<field name="MATH_P" class="java.math.BigDecimal"/>
+	<field name="FRA_P" class="java.lang.Integer"/>
+	<field name="MATH_P" class="java.lang.Integer"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{SCHOOL_YEAR}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
 				<textField>
-					<reportElement mode="Opaque" x="0" y="0" width="470" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="6e8e7eac-5d74-42fa-99a2-6b45f4d21774">
+					<reportElement mode="Opaque" x="0" y="0" width="490" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="6e8e7eac-5d74-42fa-99a2-6b45f4d21774">
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<box leftPadding="3" rightPadding="2">
-						<topPen lineWidth="0.2" lineColor="#787878"/>
-						<leftPen lineWidth="0.2"/>
-						<bottomPen lineWidth="0.2"/>
-						<rightPen lineWidth="0.2"/>
+						<topPen lineWidth="0.0" lineColor="#149966"/>
+						<leftPen lineWidth="0.0" lineColor="#149966"/>
+						<bottomPen lineWidth="0.0" lineColor="#149966"/>
+						<rightPen lineWidth="0.0" lineColor="#149966"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
 						<font fontName="Tahoma" size="10" isBold="false"/>
@@ -318,19 +356,31 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20" splitType="Stretch"/>
-	</title>
-	<columnHeader>
-		<band height="40" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="380" height="20" uuid="a0a03032-ca49-4f21-bfac-e556bbcc3846"/>
+				<reportElement x="0" y="0" width="380" height="20" uuid="12c0b0d8-31eb-4f86-954d-674dcd79ff34"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Rendement à l'élémentaire - Littératie et numératie]]></text>
 			</staticText>
+			<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+				<reportElement x="0" y="20" width="380" height="30" uuid="4e93a583-b0a3-409e-b797-bddd3114aca4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Cliquez ici pour voir ce tableau en format horizontal."]]></textFieldExpression>
+				<hyperlinkParameter name="_report">
+					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/rndment_ele_crosstab"]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="ACCOUNT_ID">
+					<hyperlinkParameterExpression><![CDATA[$P{ACCOUNT_ID}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="270" y="20" width="40" height="20" uuid="64373735-9a0b-42d0-b904-6f4a33fd4ac3"/>
+				<reportElement x="270" y="0" width="40" height="20" uuid="64373735-9a0b-42d0-b904-6f4a33fd4ac3"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -344,7 +394,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Model.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="20" width="40" height="20" uuid="21471f6d-8a5f-4402-8c2a-4589fa16d172"/>
+				<reportElement x="310" y="0" width="40" height="20" uuid="21471f6d-8a5f-4402-8c2a-4589fa16d172"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -358,7 +408,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Trait.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="230" y="20" width="40" height="20" uuid="7596e7d6-3bbe-4e84-a5b9-6ab4b12aea86"/>
+				<reportElement x="230" y="0" width="40" height="20" uuid="7596e7d6-3bbe-4e84-a5b9-6ab4b12aea86"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -372,7 +422,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Mesure]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="20" width="40" height="20" uuid="6d120440-7013-4931-8ad7-c43a6d42a732"/>
+				<reportElement x="70" y="0" width="40" height="20" uuid="6d120440-7013-4931-8ad7-c43a6d42a732"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -386,7 +436,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Comm.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="20" width="40" height="20" uuid="b095227f-ac4a-49bd-9b37-4f3e34b23f6b"/>
+				<reportElement x="350" y="0" width="40" height="20" uuid="b095227f-ac4a-49bd-9b37-4f3e34b23f6b"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -400,7 +450,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Géom.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="190" y="20" width="40" height="20" uuid="32299b1e-174d-4625-afac-992a6ede3eb3"/>
+				<reportElement x="190" y="0" width="40" height="20" uuid="32299b1e-174d-4625-afac-992a6ede3eb3"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -414,7 +464,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Num.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="20" width="30" height="20" uuid="172f62c9-a529-4fa5-bccf-bfd1ba9eb082"/>
+				<reportElement x="40" y="0" width="30" height="20" uuid="172f62c9-a529-4fa5-bccf-bfd1ba9eb082"/>
 				<box leftPadding="1">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -427,8 +477,8 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Période de rapport]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="20" width="40" height="20" uuid="03d396b7-0ccb-450f-94be-8275d90463b6">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<reportElement x="390" y="0" width="50" height="20" uuid="03d396b7-0ccb-450f-94be-8275d90463b6">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="2">
 					<topPen lineWidth="0.2"/>
@@ -436,13 +486,13 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 					<bottomPen lineWidth="0.2"/>
 					<rightPen lineWidth="0.2"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Absences]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="20" width="40" height="20" uuid="7626546b-d7f2-4d11-9fa7-6fab55632a3c"/>
+				<reportElement x="150" y="0" width="40" height="20" uuid="7626546b-d7f2-4d11-9fa7-6fab55632a3c"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -456,20 +506,20 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<text><![CDATA[Lecture]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="430" y="20" width="40" height="20" uuid="b0fe07f1-b68b-40d4-99ea-87465565508f"/>
+				<reportElement x="440" y="0" width="50" height="20" uuid="b0fe07f1-b68b-40d4-99ea-87465565508f"/>
 				<box topPadding="2" leftPadding="4" bottomPadding="2" rightPadding="2">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
 					<bottomPen lineWidth="0.2"/>
 					<rightPen lineWidth="0.2"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Retards]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="20" width="40" height="20" uuid="beec4b86-0f9e-436d-af2f-b8e4f3106ef9"/>
+				<reportElement x="110" y="0" width="40" height="20" uuid="beec4b86-0f9e-436d-af2f-b8e4f3106ef9"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -539,6 +589,12 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MATH_P}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement x="390" y="0" width="100" height="20" backcolor="#706F6F" uuid="0a6f6c97-82e0-409a-9d1c-bdd4c54d9374"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
 		</band>
 		<band height="20" splitType="Stretch">
 			<textField>
@@ -659,9 +715,8 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<textFieldExpression><![CDATA[$F{NOTE_GEO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="Everything else" x="390" y="0" width="40" height="20" uuid="89f39fb8-662d-42e7-a4c4-2a20ca62a246">
+				<reportElement style="Colour abs" x="390" y="0" width="50" height="20" uuid="89f39fb8-662d-42e7-a4c4-2a20ca62a246">
 					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
@@ -675,7 +730,7 @@ order by sr.school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<textFieldExpression><![CDATA[$F{ABS}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="Everything else" x="430" y="0" width="40" height="20" uuid="bfa9fe0a-c3a7-496e-9d4e-c4392887daa3"/>
+				<reportElement key="" style="Colour ret" x="440" y="0" width="50" height="20" uuid="bfa9fe0a-c3a7-496e-9d4e-c4392887daa3"/>
 				<box>
 					<topPen lineWidth="0.1" lineColor="#A3A3A3"/>
 					<leftPen lineWidth="0.1" lineColor="#A3A3A3"/>

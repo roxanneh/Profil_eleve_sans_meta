@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-08-04T15:55:13 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rndment_ele_crosstab" pageWidth="1000" pageHeight="595" orientation="Landscape" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fe7d918-b575-436b-804b-e1d0bf78193a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/rndment_ele_crosstab_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/rndment_ele_crosstab"/>
+	<style name="COM">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_COM_MEASURE1}, "59"), EXACT($V{NOTE_COM_MEASURE1}, "60"), EXACT($V{NOTE_COM_MEASURE1}, "61"), EXACT($V{NOTE_COM_MEASURE1}, "62"), EXACT($V{NOTE_COM_MEASURE1}, "63"), EXACT($V{NOTE_COM_MEASURE1}, "64"), EXACT($V{NOTE_COM_MEASURE1}, "65"), EXACT($V{NOTE_COM_MEASURE1}, "66"), EXACT($V{NOTE_COM_MEASURE1}, "67"), EXACT($V{NOTE_COM_MEASURE1}, "68"), EXACT($V{NOTE_COM_MEASURE1}, "69")),OR(EXACT($V{NOTE_COM_MEASURE1}, "C"),EXACT($V{NOTE_COM_MEASURE1}, "C+"),EXACT($V{NOTE_COM_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_COM_MEASURE1}, "49"), EXACT($V{NOTE_COM_MEASURE1}, "50"), EXACT($V{NOTE_COM_MEASURE1}, "51"), EXACT($V{NOTE_COM_MEASURE1}, "52"), EXACT($V{NOTE_COM_MEASURE1}, "53"), EXACT($V{NOTE_COM_MEASURE1}, "54"), EXACT($V{NOTE_COM_MEASURE1}, "55"), EXACT($V{NOTE_COM_MEASURE1}, "56"), EXACT($V{NOTE_COM_MEASURE1}, "57"), EXACT($V{NOTE_COM_MEASURE1}, "58"), EXACT($V{NOTE_COM_MEASURE1}, "59")),OR(EXACT($V{NOTE_COM_MEASURE1}, "D"),EXACT($V{NOTE_COM_MEASURE1}, "D+"),EXACT($V{NOTE_COM_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_GEO_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_COM_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_COM_MEASURE1}, "R"),EXACT($V{NOTE_COM_MEASURE1}, "R1"),EXACT($V{NOTE_COM_MEASURE1}, "R2"),EXACT($V{NOTE_COM_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_COM_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_COM_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="ECR">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_ECR_MEASURE1}, "59"), EXACT($V{NOTE_ECR_MEASURE1}, "60"), EXACT($V{NOTE_ECR_MEASURE1}, "61"), EXACT($V{NOTE_ECR_MEASURE1}, "62"), EXACT($V{NOTE_ECR_MEASURE1}, "63"), EXACT($V{NOTE_ECR_MEASURE1}, "64"), EXACT($V{NOTE_ECR_MEASURE1}, "65"), EXACT($V{NOTE_ECR_MEASURE1}, "66"), EXACT($V{NOTE_ECR_MEASURE1}, "67"), EXACT($V{NOTE_ECR_MEASURE1}, "68"), EXACT($V{NOTE_ECR_MEASURE1}, "69")),OR(EXACT($V{NOTE_ECR_MEASURE1}, "C"),EXACT($V{NOTE_ECR_MEASURE1}, "C+"),EXACT($V{NOTE_ECR_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_ECR_MEASURE1}, "49"), EXACT($V{NOTE_ECR_MEASURE1}, "50"), EXACT($V{NOTE_ECR_MEASURE1}, "51"), EXACT($V{NOTE_ECR_MEASURE1}, "52"), EXACT($V{NOTE_ECR_MEASURE1}, "53"), EXACT($V{NOTE_ECR_MEASURE1}, "54"), EXACT($V{NOTE_ECR_MEASURE1}, "55"), EXACT($V{NOTE_ECR_MEASURE1}, "56"), EXACT($V{NOTE_ECR_MEASURE1}, "57"), EXACT($V{NOTE_ECR_MEASURE1}, "58"), EXACT($V{NOTE_ECR_MEASURE1}, "59")),OR(EXACT($V{NOTE_ECR_MEASURE1}, "D"),EXACT($V{NOTE_ECR_MEASURE1}, "D+"),EXACT($V{NOTE_ECR_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_ECR_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_ECR_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_ECR_MEASURE1}, "R"),EXACT($V{NOTE_ECR_MEASURE1}, "R1"),EXACT($V{NOTE_ECR_MEASURE1}, "R2"),EXACT($V{NOTE_ECR_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_ECR_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_ECR_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="LEC">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_LEC_MEASURE1}, "59"), EXACT($V{NOTE_LEC_MEASURE1}, "60"), EXACT($V{NOTE_LEC_MEASURE1}, "61"), EXACT($V{NOTE_LEC_MEASURE1}, "62"), EXACT($V{NOTE_LEC_MEASURE1}, "63"), EXACT($V{NOTE_LEC_MEASURE1}, "64"), EXACT($V{NOTE_LEC_MEASURE1}, "65"), EXACT($V{NOTE_LEC_MEASURE1}, "66"), EXACT($V{NOTE_LEC_MEASURE1}, "67"), EXACT($V{NOTE_LEC_MEASURE1}, "68"), EXACT($V{NOTE_LEC_MEASURE1}, "69")),OR(EXACT($V{NOTE_LEC_MEASURE1}, "C"),EXACT($V{NOTE_LEC_MEASURE1}, "C+"),EXACT($V{NOTE_LEC_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_LEC_MEASURE1}, "49"), EXACT($V{NOTE_LEC_MEASURE1}, "50"), EXACT($V{NOTE_LEC_MEASURE1}, "51"), EXACT($V{NOTE_LEC_MEASURE1}, "52"), EXACT($V{NOTE_LEC_MEASURE1}, "53"), EXACT($V{NOTE_LEC_MEASURE1}, "54"), EXACT($V{NOTE_LEC_MEASURE1}, "55"), EXACT($V{NOTE_LEC_MEASURE1}, "56"), EXACT($V{NOTE_LEC_MEASURE1}, "57"), EXACT($V{NOTE_LEC_MEASURE1}, "58"), EXACT($V{NOTE_LEC_MEASURE1}, "59")),OR(EXACT($V{NOTE_LEC_MEASURE1}, "D"),EXACT($V{NOTE_LEC_MEASURE1}, "D+"),EXACT($V{NOTE_LEC_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_LEC_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_LEC_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_LEC_MEASURE1}, "R"),EXACT($V{NOTE_LEC_MEASURE1}, "R1"),EXACT($V{NOTE_LEC_MEASURE1}, "R2"),EXACT($V{NOTE_LEC_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_LEC_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_LEC_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="NUM">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_NUM_MEASURE1}, "59"), EXACT($V{NOTE_NUM_MEASURE1}, "60"), EXACT($V{NOTE_NUM_MEASURE1}, "61"), EXACT($V{NOTE_NUM_MEASURE1}, "62"), EXACT($V{NOTE_NUM_MEASURE1}, "63"), EXACT($V{NOTE_NUM_MEASURE1}, "64"), EXACT($V{NOTE_NUM_MEASURE1}, "65"), EXACT($V{NOTE_NUM_MEASURE1}, "66"), EXACT($V{NOTE_NUM_MEASURE1}, "67"), EXACT($V{NOTE_NUM_MEASURE1}, "68"), EXACT($V{NOTE_NUM_MEASURE1}, "69")),OR(EXACT($V{NOTE_NUM_MEASURE1}, "C"),EXACT($V{NOTE_NUM_MEASURE1}, "C+"),EXACT($V{NOTE_NUM_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_NUM_MEASURE1}, "49"), EXACT($V{NOTE_NUM_MEASURE1}, "50"), EXACT($V{NOTE_NUM_MEASURE1}, "51"), EXACT($V{NOTE_NUM_MEASURE1}, "52"), EXACT($V{NOTE_NUM_MEASURE1}, "53"), EXACT($V{NOTE_NUM_MEASURE1}, "54"), EXACT($V{NOTE_NUM_MEASURE1}, "55"), EXACT($V{NOTE_NUM_MEASURE1}, "56"), EXACT($V{NOTE_NUM_MEASURE1}, "57"), EXACT($V{NOTE_NUM_MEASURE1}, "58"), EXACT($V{NOTE_NUM_MEASURE1}, "59")),OR(EXACT($V{NOTE_NUM_MEASURE1}, "D"),EXACT($V{NOTE_NUM_MEASURE1}, "D+"),EXACT($V{NOTE_NUM_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_NUM_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_NUM_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_NUM_MEASURE1}, "R"),EXACT($V{NOTE_NUM_MEASURE1}, "R1"),EXACT($V{NOTE_NUM_MEASURE1}, "R2"),EXACT($V{NOTE_NUM_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_NUM_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_NUM_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="MES">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_MES_MEASURE1}, "59"), EXACT($V{NOTE_MES_MEASURE1}, "60"), EXACT($V{NOTE_MES_MEASURE1}, "61"), EXACT($V{NOTE_MES_MEASURE1}, "62"), EXACT($V{NOTE_MES_MEASURE1}, "63"), EXACT($V{NOTE_MES_MEASURE1}, "64"), EXACT($V{NOTE_MES_MEASURE1}, "65"), EXACT($V{NOTE_MES_MEASURE1}, "66"), EXACT($V{NOTE_MES_MEASURE1}, "67"), EXACT($V{NOTE_MES_MEASURE1}, "68"), EXACT($V{NOTE_MES_MEASURE1}, "69")),OR(EXACT($V{NOTE_MES_MEASURE1}, "C"),EXACT($V{NOTE_MES_MEASURE1}, "C+"),EXACT($V{NOTE_MES_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_MES_MEASURE1}, "49"), EXACT($V{NOTE_MES_MEASURE1}, "50"), EXACT($V{NOTE_MES_MEASURE1}, "51"), EXACT($V{NOTE_MES_MEASURE1}, "52"), EXACT($V{NOTE_MES_MEASURE1}, "53"), EXACT($V{NOTE_MES_MEASURE1}, "54"), EXACT($V{NOTE_MES_MEASURE1}, "55"), EXACT($V{NOTE_MES_MEASURE1}, "56"), EXACT($V{NOTE_MES_MEASURE1}, "57"), EXACT($V{NOTE_MES_MEASURE1}, "58"), EXACT($V{NOTE_MES_MEASURE1}, "59")),OR(EXACT($V{NOTE_MES_MEASURE1}, "D"),EXACT($V{NOTE_MES_MEASURE1}, "D+"),EXACT($V{NOTE_MES_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_MES_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_MES_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_MES_MEASURE1}, "R"),EXACT($V{NOTE_MES_MEASURE1}, "R1"),EXACT($V{NOTE_MES_MEASURE1}, "R2"),EXACT($V{NOTE_MES_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_MES_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_MES_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="TRA">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_TRA_MEASURE1}, "59"), EXACT($V{NOTE_TRA_MEASURE1}, "60"), EXACT($V{NOTE_TRA_MEASURE1}, "61"), EXACT($V{NOTE_TRA_MEASURE1}, "62"), EXACT($V{NOTE_TRA_MEASURE1}, "63"), EXACT($V{NOTE_TRA_MEASURE1}, "64"), EXACT($V{NOTE_TRA_MEASURE1}, "65"), EXACT($V{NOTE_TRA_MEASURE1}, "66"), EXACT($V{NOTE_TRA_MEASURE1}, "67"), EXACT($V{NOTE_TRA_MEASURE1}, "68"), EXACT($V{NOTE_TRA_MEASURE1}, "69")),OR(EXACT($V{NOTE_TRA_MEASURE1}, "C"),EXACT($V{NOTE_TRA_MEASURE1}, "C+"),EXACT($V{NOTE_TRA_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_TRA_MEASURE1}, "49"), EXACT($V{NOTE_TRA_MEASURE1}, "50"), EXACT($V{NOTE_TRA_MEASURE1}, "51"), EXACT($V{NOTE_TRA_MEASURE1}, "52"), EXACT($V{NOTE_TRA_MEASURE1}, "53"), EXACT($V{NOTE_TRA_MEASURE1}, "54"), EXACT($V{NOTE_TRA_MEASURE1}, "55"), EXACT($V{NOTE_TRA_MEASURE1}, "56"), EXACT($V{NOTE_TRA_MEASURE1}, "57"), EXACT($V{NOTE_TRA_MEASURE1}, "58"), EXACT($V{NOTE_TRA_MEASURE1}, "59")),OR(EXACT($V{NOTE_TRA_MEASURE1}, "D"),EXACT($V{NOTE_TRA_MEASURE1}, "D+"),EXACT($V{NOTE_TRA_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_TRA_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_TRA_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_TRA_MEASURE1}, "R"),EXACT($V{NOTE_TRA_MEASURE1}, "R1"),EXACT($V{NOTE_TRA_MEASURE1}, "R2"),EXACT($V{NOTE_TRA_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_TRA_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_TRA_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="MOD">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_MOD_MEASURE1}, "59"), EXACT($V{NOTE_MOD_MEASURE1}, "60"), EXACT($V{NOTE_MOD_MEASURE1}, "61"), EXACT($V{NOTE_MOD_MEASURE1}, "62"), EXACT($V{NOTE_MOD_MEASURE1}, "63"), EXACT($V{NOTE_MOD_MEASURE1}, "64"), EXACT($V{NOTE_MOD_MEASURE1}, "65"), EXACT($V{NOTE_MOD_MEASURE1}, "66"), EXACT($V{NOTE_MOD_MEASURE1}, "67"), EXACT($V{NOTE_MOD_MEASURE1}, "68"), EXACT($V{NOTE_MOD_MEASURE1}, "69")),OR(EXACT($V{NOTE_MOD_MEASURE1}, "C"),EXACT($V{NOTE_MOD_MEASURE1}, "C+"),EXACT($V{NOTE_MOD_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_MOD_MEASURE1}, "49"), EXACT($V{NOTE_MOD_MEASURE1}, "50"), EXACT($V{NOTE_MOD_MEASURE1}, "51"), EXACT($V{NOTE_MOD_MEASURE1}, "52"), EXACT($V{NOTE_MOD_MEASURE1}, "53"), EXACT($V{NOTE_MOD_MEASURE1}, "54"), EXACT($V{NOTE_MOD_MEASURE1}, "55"), EXACT($V{NOTE_MOD_MEASURE1}, "56"), EXACT($V{NOTE_MOD_MEASURE1}, "57"), EXACT($V{NOTE_MOD_MEASURE1}, "58"), EXACT($V{NOTE_MOD_MEASURE1}, "59")),OR(EXACT($V{NOTE_MOD_MEASURE1}, "D"),EXACT($V{NOTE_MOD_MEASURE1}, "D+"),EXACT($V{NOTE_MOD_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_MOD_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_MOD_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_MOD_MEASURE1}, "R"),EXACT($V{NOTE_MOD_MEASURE1}, "R1"),EXACT($V{NOTE_MOD_MEASURE1}, "R2"),EXACT($V{NOTE_MOD_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_MOD_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_MOD_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="GEO">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_GEO_MEASURE1}, "59"), EXACT($V{NOTE_GEO_MEASURE1}, "60"), EXACT($V{NOTE_GEO_MEASURE1}, "61"), EXACT($V{NOTE_GEO_MEASURE1}, "62"), EXACT($V{NOTE_GEO_MEASURE1}, "63"), EXACT($V{NOTE_GEO_MEASURE1}, "64"), EXACT($V{NOTE_GEO_MEASURE1}, "65"), EXACT($V{NOTE_GEO_MEASURE1}, "66"), EXACT($V{NOTE_GEO_MEASURE1}, "67"), EXACT($V{NOTE_GEO_MEASURE1}, "68"), EXACT($V{NOTE_GEO_MEASURE1}, "69")),OR(EXACT($V{NOTE_GEO_MEASURE1}, "C"),EXACT($V{NOTE_GEO_MEASURE1}, "C+"),EXACT($V{NOTE_GEO_MEASURE1}, "C-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_GEO_MEASURE1}, "49"), EXACT($V{NOTE_GEO_MEASURE1}, "50"), EXACT($V{NOTE_GEO_MEASURE1}, "51"), EXACT($V{NOTE_GEO_MEASURE1}, "52"), EXACT($V{NOTE_GEO_MEASURE1}, "53"), EXACT($V{NOTE_GEO_MEASURE1}, "54"), EXACT($V{NOTE_GEO_MEASURE1}, "55"), EXACT($V{NOTE_GEO_MEASURE1}, "56"), EXACT($V{NOTE_GEO_MEASURE1}, "57"), EXACT($V{NOTE_GEO_MEASURE1}, "58"), EXACT($V{NOTE_GEO_MEASURE1}, "59")),OR(EXACT($V{NOTE_GEO_MEASURE1}, "D"),EXACT($V{NOTE_GEO_MEASURE1}, "D+"),EXACT($V{NOTE_GEO_MEASURE1}, "D-")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR( NOT($V{NOTE_GEO_MEASURE1}.matches("\\D[\\+\\-]?")) ? INTEGER_VALUE($V{NOTE_GEO_MEASURE1}) < 49 : false,
+	OR(EXACT($V{NOTE_GEO_MEASURE1}, "R"),EXACT($V{NOTE_GEO_MEASURE1}, "R1"),EXACT($V{NOTE_GEO_MEASURE1}, "R2"),EXACT($V{NOTE_GEO_MEASURE1}, "R3")))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_GEO_MEASURE1}, "I")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#E34540" backcolor="#363636"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT($V{NOTE_GEO_MEASURE1}, "!")]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E34540" backcolor="rgba(54, 54, 54, 0.0)" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  distinct
+        sr.school_code,
+        regexp_replace(sr.school_year, '(\w{4})(\w{4})', '\1-\2') school_year, 
+        csa.report_period,
+		sr.grade,
+    
+    replace(PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_ABS(sr.person_id, sr.school_year, sr.school_code, csa.report_period ), ',', '.') as ABS,
+    replace(PKG_PROFILE_ÉLÈVE.GET_REPORT_PERIOD_LATES(sr.person_id, sr.school_year, sr.school_code,  csa.report_period ), ',', '.') as LATES,
+
+
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'003' ) NOTE_COM,
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'002' ) NOTE_ECR, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'001' ) NOTE_LEC, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'020' ) NOTE_NUM, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'021' ) NOTE_MES, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'024' ) NOTE_TRA,
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'023' ) NOTE_MOD, 
+    PKG_PROFILE_ÉLÈVE.GET_NOTE_ELE (p.PERSON_ID, sr.school_year, csa.report_period,'022' ) NOTE_GEO,
+    PKG_PROFILE_ÉLÈVE. GET_RAPPORT_P(p.PERSON_ID, sr.school_code, sr.school_year, '009') FRA_P,
+    PKG_PROFILE_ÉLÈVE.GET_RAPPORT_P(p.PERSON_ID, sr.school_code, sr.school_year, '9999000000030' ) MATH_P
+
+from persons p, student_registrations sr, STUDENT_COURSE_STRAND_ACHIEVE CSA
+
+where p.person_id = sr.person_id
+and csa.person_id = p.person_id
+and csa.school_code = sr.school_code
+and csa.school_year = sr.school_year
+and csa.grade = sr.grade
+and csa.strand_code IN ('003', '002', '001', '020', '021', '024', '023', '022')
+and p.person_id = $P{ACCOUNT_ID} 
+and sr.school_code NOT IN ('ESA', 'ESE', 'ESF') 
+and sr.grade NOT IN ('JK', 'SK')
+order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
+	</queryString>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="REPORT_PERIOD" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="ABS" class="java.lang.String"/>
+	<field name="LATES" class="java.lang.String"/>
+	<field name="NOTE_COM" class="java.lang.String"/>
+	<field name="NOTE_ECR" class="java.lang.String"/>
+	<field name="NOTE_LEC" class="java.lang.String"/>
+	<field name="NOTE_NUM" class="java.lang.String"/>
+	<field name="NOTE_MES" class="java.lang.String"/>
+	<field name="NOTE_TRA" class="java.lang.String"/>
+	<field name="NOTE_MOD" class="java.lang.String"/>
+	<field name="NOTE_GEO" class="java.lang.String"/>
+	<field name="FRA_P" class="java.math.BigDecimal"/>
+	<field name="MATH_P" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="370" height="30" uuid="288191fb-d00f-4ee0-a469-d26d56e89733"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rendment à élémentaire - littératie et numératie]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="230" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<crosstab horizontalPosition="Left">
+				<reportElement x="0" y="0" width="960" height="220" uuid="bf245f45-64ef-4a0a-bab6-0fa31c2a07bc"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<rowGroup name="ABS1" width="60">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[1]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="140" width="60" height="20" uuid="a9d85b81-0f1b-41c7-809c-d7958bd49394"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Géom."]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="40" width="60" height="20" uuid="f4675a25-a688-49ab-8485-8df6555f56ec"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Lecture"]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="100" width="60" height="20" uuid="4298b5b6-e06b-4b2a-9064-02e466c09bee"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Model."]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="60" height="20" uuid="c30d1c59-d833-4e75-9e9b-5e22fe269242"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Com."]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="60" width="60" height="20" uuid="11078629-2a0b-4fe2-9ef7-5f0006fd10ad"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Num."]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="120" width="60" height="20" uuid="391c49d0-2f5f-4919-81fd-b2e1c2f7b095"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Trait."]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="80" width="60" height="20" uuid="8dd50032-b5ac-42a7-8eb0-420b0c2b8049"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Mesure"]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="20" width="60" height="20" uuid="7bf3bb2e-99ae-42de-871d-75d7d462b5b1"/>
+								<box padding="3">
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Écriture"]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="d758ca62-0f81-4aad-85a3-0cdeb80d8f54"/>
+								<text><![CDATA[1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="SCHOOL_YEAR1" height="20" headerPosition="Stretch">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="f76f3e07-c7e8-427e-a9b6-f691ccd2c31a">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="3454f135-0521-425f-a608-d9e9a1d24472"/>
+								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="SCHOOL_CODE1" height="20" headerPosition="Stretch">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{SCHOOL_CODE}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="67e8b32f-7ee5-4c9d-b21a-9a2c122f5e5a">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.1" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineColor="#787878"/>
+									<bottomPen lineWidth="0.1" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineColor="#787878"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SCHOOL_CODE1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="4455ac90-59cc-423b-928e-a664abac2fa2"/>
+								<text><![CDATA[Total SCHOOL_CODE1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="REPORT_PERIOD1" height="20">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{REPORT_PERIOD}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="c0565bf1-5703-46bb-b192-63f504ea5cfd"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#787878"/>
+									<leftPen lineWidth="0.1" lineStyle="Solid" lineColor="#FFFFFF"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#787878"/>
+									<rightPen lineWidth="0.1" lineStyle="Solid" lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_PERIOD1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="adc85d28-bfed-4fb3-9e81-13bdf4788dcd"/>
+								<text><![CDATA[Total REPORT_PERIOD1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="NOTE_COM_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_COM}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_ECR_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_ECR}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_LEC_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_LEC}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_NUM_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_NUM}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_MES_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_MES}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_TRA_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_TRA}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_MOD_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_MOD}]]></measureExpression>
+				</measure>
+				<measure name="NOTE_GEO_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{NOTE_GEO}]]></measureExpression>
+				</measure>
+				<crosstabCell width="50" height="160">
+					<cellContents mode="Opaque">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<textField isBlankWhenNull="true">
+							<reportElement style="COM" x="0" y="0" width="50" height="20" uuid="0d39a9f0-aa29-4fc1-b26d-46b9242e5494"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="ECR" x="0" y="20" width="50" height="20" uuid="1740753a-9427-47e0-90b0-f7d13b9848a5">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement key="" style="LEC" x="0" y="40" width="50" height="20" uuid="74398b4f-bb93-42a3-be65-60473c3e6511"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="NUM" x="0" y="60" width="50" height="20" uuid="55070dda-9f51-44a1-bd4d-8dc2341e28d4"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="MES" x="0" y="80" width="50" height="20" uuid="d2baa190-dc00-43d2-bc4f-a9ed2ba7c706"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="TRA" x="0" y="120" width="50" height="20" uuid="8f5a9caa-f271-4a2d-a95f-675683e275bb"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="MOD" x="0" y="100" width="50" height="20" uuid="e1a5c2eb-25df-42e4-97c6-2fa4d9e5c007"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="GEO" x="0" y="140" width="50" height="20" uuid="fd8bddd5-cfa6-4df3-aef9-9ccc188f9bb7"/>
+							<box>
+								<topPen lineWidth="0.1" lineColor="#787878"/>
+								<leftPen lineWidth="0.1" lineColor="#787878"/>
+								<bottomPen lineWidth="0.1" lineColor="#787878"/>
+								<rightPen lineWidth="0.1" lineColor="#787878"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" forecolor="#FFFFFF" uuid="505553f8-17f1-4661-82d7-d84ec050b1c9"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" forecolor="#FFFFFF" uuid="97d6bee0-d657-41c5-9424-5ec3b008d991"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" forecolor="#FFFFFF" uuid="abe08a3c-bfaf-4e17-ad57-7cab3b1eaa87"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" forecolor="#FFFFFF" uuid="91b08379-d449-4bfa-9095-451eabac32a1"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" forecolor="#FFFFFF" uuid="f821a013-f515-4fb4-a09e-1ca27d8e829e"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" forecolor="#FFFFFF" uuid="04a5bd09-b5e8-4814-9d05-7bbefdf67c9a"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" forecolor="#FFFFFF" uuid="a96f296b-683d-4688-a977-9272cb318d6c"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" forecolor="#FFFFFF" uuid="13629ebb-6027-4814-9b6c-654051e2fa1b"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_CODE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" uuid="226d7982-f892-47e5-bbc9-d8d7d95da781"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" uuid="09963e35-10aa-42a9-9e95-373581bf4f9a"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" uuid="6a12c59f-9c91-4d90-b8f5-9659a5ecc281"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" uuid="16e692fd-af64-4130-a326-154819d8bb72"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" uuid="f91e8669-957a-4f50-896c-9d24216befed"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" uuid="9b24e86a-ac07-4276-81cf-fdf168fed7d9"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" uuid="01bcbb45-e793-449d-bbb6-33aa610a7a20"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" uuid="f8a2ed64-bdbc-422c-a8bd-733624fcf1b1"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="REPORT_PERIOD1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" uuid="6bd94b0a-bd49-4bcb-bc98-6911cf4b2fd0"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" uuid="379a8a0f-f336-47f8-a574-01e05c67caff"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" uuid="63ad08ec-a226-418e-8a89-f567bc49a202"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" uuid="e36bd930-8357-4440-a5a7-fca27f1b8c9f"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" uuid="37ec7fec-73ec-4eca-8fed-64a8fa79bdf3"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" uuid="8333c804-a298-44ad-a27c-e420c5068734"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" uuid="44fa8b85-8c07-4807-933a-0246fa88a16b"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" uuid="bbb364a1-8097-4a73-8d98-0962cc02a514"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ABS1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" forecolor="#FFFFFF" uuid="f4ea3038-77a3-412c-9b3b-193f42f00840"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" forecolor="#FFFFFF" uuid="ee9a38c8-9031-4847-bdf2-801278d4ce0b"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" forecolor="#FFFFFF" uuid="cc7f32de-c7a6-46cf-9d03-83ae09d57760"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" forecolor="#FFFFFF" uuid="d1536aaa-3390-40ac-9c94-8ae2f57aa618"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" forecolor="#FFFFFF" uuid="791049e6-4d84-48fa-b88b-1f098a3d81db"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" forecolor="#FFFFFF" uuid="b758e510-386b-468a-b59e-79d3f0e99b5d"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" forecolor="#FFFFFF" uuid="f7cea8f8-4911-4a6a-b3aa-baa3c82e4cea"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" forecolor="#FFFFFF" uuid="f4ae6816-c4fa-4c74-8e2a-ae4b83bec8fa"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ABS1" columnTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" forecolor="#FFFFFF" uuid="d0540256-d56c-4ce9-8fbd-8a2f6c22b91d"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" forecolor="#FFFFFF" uuid="6d5ceb8a-fb6a-467d-8062-0612830ec012"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" forecolor="#FFFFFF" uuid="cdba1f14-9be6-4013-835b-374693dbc6ea"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" forecolor="#FFFFFF" uuid="6715a2f1-8897-4842-8878-a11fb74bfd9d"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" forecolor="#FFFFFF" uuid="f095eaa2-8820-4b52-bf7b-6b7675b48af2"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" forecolor="#FFFFFF" uuid="c228601d-cbfc-439b-9da7-296e9c43d120"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" forecolor="#FFFFFF" uuid="e3963f97-07a3-4e14-acc0-9c65cc7c0433"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" forecolor="#FFFFFF" uuid="b5fe39d7-e4e3-4918-a49e-1e54411141b2"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ABS1" columnTotalGroup="SCHOOL_CODE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" forecolor="#FFFFFF" uuid="1d230be9-c8b9-4fdc-a93c-ca8bfb922885"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" forecolor="#FFFFFF" uuid="19cb282b-25e0-4c45-b29c-74737a4d9c39"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" forecolor="#FFFFFF" uuid="1498c264-647e-4b96-b70e-b8121697c79e"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" forecolor="#FFFFFF" uuid="70701ad7-eb1f-4758-b04c-e5c40c40b955"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" forecolor="#FFFFFF" uuid="f27951b2-c420-479d-b5a8-a3cda156cdb3"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" forecolor="#FFFFFF" uuid="cb8eb94c-2e0c-4454-b234-39146d8615e7"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" forecolor="#FFFFFF" uuid="27047df5-991f-414e-8c0e-0ab5939e2d8b"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" forecolor="#FFFFFF" uuid="4b03168c-5609-4c77-9827-5929823073a4"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ABS1" columnTotalGroup="REPORT_PERIOD1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="2" forecolor="#FFFFFF" uuid="9cc3c5cb-90cd-4dd4-ac3e-9aa72a35762f"/>
+							<textFieldExpression><![CDATA[$V{NOTE_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="2" width="60" height="2" forecolor="#FFFFFF" uuid="2f858d4e-e72c-43fc-bbf6-d5197c7a3d97"/>
+							<textFieldExpression><![CDATA[$V{NOTE_ECR_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="4" width="60" height="2" forecolor="#FFFFFF" uuid="6061cd29-f604-4e2b-8280-f53e73e69629"/>
+							<textFieldExpression><![CDATA[$V{NOTE_LEC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="6" width="60" height="2" forecolor="#FFFFFF" uuid="2e02e6b9-01c8-4bb0-b65f-60e988adbac2"/>
+							<textFieldExpression><![CDATA[$V{NOTE_NUM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="8" width="60" height="2" forecolor="#FFFFFF" uuid="526d555f-11c6-472d-87d6-29d7e18375de"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MES_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="2" forecolor="#FFFFFF" uuid="fd8c8020-7bae-446d-ac89-a549beb0fd1f"/>
+							<textFieldExpression><![CDATA[$V{NOTE_TRA_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="12" width="60" height="2" forecolor="#FFFFFF" uuid="d5eea5d1-13a1-48a9-81aa-d0deef802ac4"/>
+							<textFieldExpression><![CDATA[$V{NOTE_MOD_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="14" width="60" height="2" forecolor="#FFFFFF" uuid="c8109ee0-db32-4c08-a9c6-c4a7ee2ee464"/>
+							<textFieldExpression><![CDATA[$V{NOTE_GEO_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

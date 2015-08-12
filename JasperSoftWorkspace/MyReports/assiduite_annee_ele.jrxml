@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-30T08:50:38 -->
+<!-- 2015-07-24T15:20:51 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="assiduite_annee_ele" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="77447c38-702d-46d4-945b-f681ff006c5e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
@@ -16,7 +16,7 @@ WHERE pa.PERSON_ID = $P{ACCOUNT_ID}
 and p.person_id = pa.person_id
 AND SCHOOL_CODE NOT IN ('ESF', 'ESA', 'ESE')  --On compte seulement les absences prises durant le séjour élémentaire
 AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-and school_year =  $P{SCHOOL_YEAR}  
+and school_year =  replace($P{SCHOOL_YEAR} , '-')
 and pa.attendance_code = ac.attendance_code
 order by to_date(calendar_date, 'dd/mm/yyyy') desc, school_period asc]]>
 	</queryString>

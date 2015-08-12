@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-19T15:06:13 -->
+<!-- 2015-08-05T15:08:48 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rendement_elementaire_HH" pageWidth="550" pageHeight="800" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="63ecc8d1-bd18-4707-9916-88a98b61e69f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="FIA">
@@ -193,7 +193,7 @@
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select sa.school_year, sa.report_period,
+		<![CDATA[select  regexp_replace(sa.school_year, '(\w{4})(\w{4})', '\1-\2') school_year , sa.report_period,
 
 PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_USE_OF_ORAL_FRE' ) HH_FRA_I,
 PKG_PROFILE_ÉLÈVE.GET_COTE_HH_ELE (p.PERSON_ID, sr.school_code, sr.school_year, sa.report_period,'LS_RESPONSIBILITY' ) HH_FIA_I,
@@ -220,6 +220,7 @@ and sr.school_year = sa.school_year
 order by sr.school_year DESC,  sa.report_period asc]]>
 	</queryString>
 	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="REPORT_PERIOD" class="java.lang.String"/>
 	<field name="HH_FRA_I" class="java.lang.String"/>
 	<field name="HH_FIA_I" class="java.lang.String"/>
 	<field name="HH_ORG_I" class="java.lang.String"/>
@@ -233,7 +234,6 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 	<field name="HH_PART_I" class="java.lang.String"/>
 	<field name="HH_RES_I" class="java.lang.String"/>
 	<field name="HH_OBJ_I" class="java.lang.String"/>
-	<field name="REPORT_PERIOD" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{SCHOOL_YEAR}]]></groupExpression>
 		<groupHeader>
@@ -257,17 +257,32 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<columnHeader>
-		<band height="100" splitType="Stretch">
+	<title>
+		<band height="50">
 			<staticText>
-				<reportElement x="0" y="20" width="480" height="20" uuid="e256daa1-951e-426d-be74-7a96a7725416"/>
+				<reportElement x="0" y="0" width="500" height="20" uuid="e256daa1-951e-426d-be74-7a96a7725416"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Rendement des élèves aux habiletés et habitudes de l'élémentaire]]></text>
+				<text><![CDATA[Rendement à l'élémentaire - Habiletés et habitudes de travail]]></text>
 			</staticText>
+			<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+				<reportElement x="0" y="20" width="380" height="30" uuid="35df1eb5-e664-4e71-afcc-3e4ac01676b2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Cliquez ici pour voir ce tableau en format horizontal."]]></textFieldExpression>
+				<hyperlinkParameter name="_report">
+					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/hh_horizontal"]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="ACCOUNT_ID">
+					<hyperlinkParameterExpression><![CDATA[$P{ACCOUNT_ID}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="59" splitType="Stretch">
 			<staticText>
-				<reportElement x="430" y="41" width="40" height="59" uuid="25d84fb0-bc21-468d-9e80-33f7daba2e0b"/>
+				<reportElement x="430" y="0" width="40" height="59" uuid="25d84fb0-bc21-468d-9e80-33f7daba2e0b"/>
 				<box padding="4" topPadding="4" bottomPadding="4">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -280,7 +295,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Participation en classe]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="270" y="41" width="40" height="59" uuid="cb0effb8-7917-4dcd-b1ea-62b6b063f0fd"/>
+				<reportElement x="270" y="0" width="40" height="59" uuid="cb0effb8-7917-4dcd-b1ea-62b6b063f0fd"/>
 				<box padding="4" topPadding="2" bottomPadding="2">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -293,7 +308,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Utilisation du français oral]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="470" y="41" width="40" height="59" uuid="2b0a5bc5-335b-4945-b1e4-7f1ab31b2f02"/>
+				<reportElement x="470" y="0" width="40" height="59" uuid="2b0a5bc5-335b-4945-b1e4-7f1ab31b2f02"/>
 				<box padding="4" bottomPadding="1">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -306,7 +321,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Habileté à résoudre des problèmes]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="30" y="41" width="40" height="59" uuid="b592a4b2-0b1b-4d00-be86-549f309327fc"/>
+				<reportElement x="30" y="0" width="40" height="59" uuid="b592a4b2-0b1b-4d00-be86-549f309327fc"/>
 				<box padding="4">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -319,7 +334,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Fiabilité]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="41" width="40" height="59" uuid="0d690f8b-038d-49b5-b439-11313f84b12b"/>
+				<reportElement x="150" y="0" width="40" height="59" uuid="0d690f8b-038d-49b5-b439-11313f84b12b"/>
 				<box padding="4">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -332,7 +347,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Autorégulation]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="190" y="41" width="40" height="59" uuid="a67ae71e-64c6-410d-80ad-1dcc8cd9b7ff"/>
+				<reportElement x="190" y="0" width="40" height="59" uuid="a67ae71e-64c6-410d-80ad-1dcc8cd9b7ff"/>
 				<box padding="4">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -345,7 +360,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Autonomie]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="41" width="40" height="59" uuid="c09f49dc-f3fd-470b-9e3a-af6433f12ba5"/>
+				<reportElement x="110" y="0" width="40" height="59" uuid="c09f49dc-f3fd-470b-9e3a-af6433f12ba5"/>
 				<box padding="4" topPadding="2" bottomPadding="2">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -358,7 +373,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Esprit de collaboration]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="510" y="41" width="40" height="59" uuid="4cc1ba96-8a7c-4137-841c-018661988b90"/>
+				<reportElement x="510" y="0" width="40" height="59" uuid="4cc1ba96-8a7c-4137-841c-018661988b90"/>
 				<box padding="4" topPadding="5" bottomPadding="5">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -371,7 +386,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Fixer des objectifs pour améliorer son travail]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="41" width="40" height="59" uuid="b0f20e77-b856-4884-8795-85857f538789"/>
+				<reportElement x="350" y="0" width="40" height="59" uuid="b0f20e77-b856-4884-8795-85857f538789"/>
 				<box padding="4">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -384,7 +399,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Utilisation de l'information]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="41" width="40" height="59" uuid="b7269639-e0e3-4a32-8ce1-8eb02067f962"/>
+				<reportElement x="390" y="0" width="40" height="59" uuid="b7269639-e0e3-4a32-8ce1-8eb02067f962"/>
 				<box padding="4" topPadding="3" bottomPadding="3">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -397,7 +412,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Coopération avec les autres]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="230" y="41" width="40" height="59" uuid="f5a86375-ace7-4cc8-b436-1099ae19e4d9"/>
+				<reportElement x="230" y="0" width="40" height="59" uuid="f5a86375-ace7-4cc8-b436-1099ae19e4d9"/>
 				<box padding="4" topPadding="5" bottomPadding="5">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -410,7 +425,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Sens de l'initiative]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="41" width="40" height="59" uuid="388b148c-5a3e-46c2-a007-7dd90b8a87b2"/>
+				<reportElement x="70" y="0" width="40" height="59" uuid="388b148c-5a3e-46c2-a007-7dd90b8a87b2"/>
 				<box padding="4" topPadding="2" leftPadding="0" bottomPadding="2">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -423,7 +438,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Sens de l'oganisation]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="41" width="40" height="59" uuid="00a99b8f-c135-44f2-a41d-2fca02cc6b52"/>
+				<reportElement x="310" y="0" width="40" height="59" uuid="00a99b8f-c135-44f2-a41d-2fca02cc6b52"/>
 				<box padding="4" topPadding="5" bottomPadding="5">
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>
@@ -436,7 +451,7 @@ order by sr.school_year DESC,  sa.report_period asc]]>
 				<text><![CDATA[Remise des travaux et des devoirs]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="41" width="30" height="59" uuid="31bf3942-c7bf-4e63-9784-8b99a69442e6"/>
+				<reportElement x="0" y="0" width="30" height="59" uuid="31bf3942-c7bf-4e63-9784-8b99a69442e6"/>
 				<box>
 					<topPen lineWidth="0.2"/>
 					<leftPen lineWidth="0.2"/>

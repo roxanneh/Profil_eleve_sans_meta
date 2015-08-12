@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-08-05T14:06:53 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Moyenne_comp_parannee" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2d8ce845-00c9-4370-9796-ada839eaf78c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/Moyenne_comp_parannee_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/Moyenne_comp_parannee"/>
+	<style name="cc" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("2-", $V{MOY_CC_MEASURE1}), EXACT("2", $V{MOY_CC_MEASURE1}.toString()), EXACT("2+", $V{MOY_CC_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("1-", $V{MOY_CC_MEASURE1}), EXACT("1", $V{MOY_CC_MEASURE1}.toString()), EXACT("1+", $V{MOY_CC_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT("R", $V{MOY_CC_MEASURE1})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{ROWORDER1}%2 == 0 ? true : false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="hp" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("2-", $V{MOY_HP_MEASURE1}), EXACT("2", $V{MOY_HP_MEASURE1}.toString()), EXACT("2+", $V{MOY_HP_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("1-", $V{MOY_HP_MEASURE1}), EXACT("1", $V{MOY_HP_MEASURE1}.toString()), EXACT("1+", $V{MOY_HP_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT("R", $V{MOY_HP_MEASURE1})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{ROWORDER1}%2 == 0 ? true : false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="com" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("2-", $V{MOY_COM_MEASURE1}), EXACT("2", $V{MOY_COM_MEASURE1}.toString()), EXACT("2+", $V{MOY_COM_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("1-", $V{MOY_COM_MEASURE1}), EXACT("1", $V{MOY_COM_MEASURE1}.toString()), EXACT("1+", $V{MOY_COM_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT("R", $V{MOY_COM_MEASURE1})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{ROWORDER1}%2 == 0 ? true : false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="ma" mode="Opaque" isBlankWhenNull="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("2-", $V{MOY_MA_MEASURE1}), EXACT("2", $V{MOY_MA_MEASURE1}.toString()), EXACT("2+", $V{MOY_MA_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[OR(EXACT("1-", $V{MOY_MA_MEASURE1}), EXACT("1", $V{MOY_MA_MEASURE1}.toString()), EXACT("1+", $V{MOY_MA_MEASURE1}.toString()))]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EDA979"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[EXACT("R", $V{MOY_MA_MEASURE1})]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E05A58"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{ROWORDER1}%2 == 0 ? true : false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<style name="Style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{ROWORDER1}.intValue() % 2 == 0 ? true : false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E8E8E8"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, STRAND_DESCRIPTION_F, 
+       MOY_CC, MOY_HP, MOY_COM, MOY_MA, 
+       CC_fr, HP_fr, COM_fr, MA_fr, 
+       CC_math, HP_math, COM_math, MA_math,
+       CASE when STRAND_DESCRIPTION_F = 'Communication orale' then 1
+            when STRAND_DESCRIPTION_F = 'Écriture' then 2
+            when STRAND_DESCRIPTION_F = 'Lecture' then 3
+            when STRAND_DESCRIPTION_F = 'Géométrie et sens de l''espace' then 4
+            when STRAND_DESCRIPTION_F = 'Mesure' then 5
+            when STRAND_DESCRIPTION_F = 'Modélisation et algèbre' then 6
+            when STRAND_DESCRIPTION_F = 'Numération et sens du nombre' then 7
+            when STRAND_DESCRIPTION_F = 'Traitement des données et probabilité' then 8
+            else 9 
+       end as rowOrder 
+
+FROM(
+    SELECT M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_STRAND_CODE, GRADE, STRAND_DESCRIPTION_F,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 1, M_STRAND_CODE, GRADE) AS MOY_CC,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 2, M_STRAND_CODE, GRADE) AS MOY_HP,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 3, M_STRAND_CODE, GRADE) AS MOY_COM,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 4, M_STRAND_CODE, GRADE) AS MOY_MA,
+
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 1) AS CC_fr,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 2) AS HP_fr,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 3) AS COM_fr,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 4) AS MA_fr,
+
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 1) AS CC_math,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 2) AS HP_math,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 3) AS COM_math,
+    PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 4) AS MA_math
+
+    FROM ATELIER.SP_ELEVES_RESULTATS, STUDENT_REGISTRATIONS, STRAND
+
+    WHERE M_MEMBRE_ID = $P{ACCOUNT_ID} 
+    AND PERSON_ID = M_MEMBRE_ID
+    AND M_ECOLE = SCHOOL_CODE
+    AND M_ANNEESCOLAIRE = SCHOOL_YEAR
+    AND M_STRAND_CODE = STRAND_CODE
+    AND M_STRAND_CODE IN ('001', '002', '003', '013', '015', '020', '021', '022', '023', '024', '')
+    AND M_ECOLE NOT IN ('ESA', 'ESF', 'ESE')
+    AND SCHOOL_CODE NOT IN ('ESA', 'ESF', 'ESE')
+)]]>
+	</queryString>
+	<field name="M_MEMBRE_ID" class="java.lang.String"/>
+	<field name="M_ECOLE" class="java.lang.String"/>
+	<field name="M_ANNEESCOLAIRE" class="java.lang.String"/>
+	<field name="M_PERIODE_REF" class="java.lang.String"/>
+	<field name="STRAND_DESCRIPTION_F" class="java.lang.String"/>
+	<field name="MOY_CC" class="java.lang.String"/>
+	<field name="MOY_HP" class="java.lang.String"/>
+	<field name="MOY_COM" class="java.lang.String"/>
+	<field name="MOY_MA" class="java.lang.String"/>
+	<field name="CC_FR" class="java.lang.String"/>
+	<field name="HP_FR" class="java.lang.String"/>
+	<field name="COM_FR" class="java.lang.String"/>
+	<field name="MA_FR" class="java.lang.String"/>
+	<field name="CC_MATH" class="java.lang.String"/>
+	<field name="HP_MATH" class="java.lang.String"/>
+	<field name="COM_MATH" class="java.lang.String"/>
+	<field name="MA_MATH" class="java.lang.String"/>
+	<field name="ROWORDER" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="310" height="20" uuid="53cb4389-c487-41b1-ab0b-9b64c34f2588"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Moyenne des compétences à l'élémentaire]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="150" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="10" width="572" height="140" uuid="ef7cf082-0b36-4215-9085-f8c0b7083a78"/>
+				<rowGroup name="ROWORDER1" width="1" headerPosition="Stretch">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{ROWORDER}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							<textField>
+								<reportElement x="0" y="0" width="0" height="0" uuid="51c42268-4e54-42a3-9c0a-18b88f197f8f">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{ROWORDER1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="923dc8c0-3ece-4681-8ea1-41434d95ade5"/>
+								<text><![CDATA[Total ROWORDER1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="STRAND_DESCRIPTION_F1" width="100" headerPosition="Stretch">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{STRAND_DESCRIPTION_F}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							<textField>
+								<reportElement x="0" y="0" width="75" height="80" uuid="3996f306-9261-4149-8c0d-9c63bf1b4ed4">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box padding="5">
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{STRAND_DESCRIPTION_F1}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement style="Style1" x="75" y="0" width="25" height="20" uuid="62476526-21c9-4312-958e-f147f82f5870">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[CC]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Style1" x="75" y="20" width="25" height="20" uuid="1b8a3a2f-266e-4b7c-9965-f2f36842b533">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[HP]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Style1" x="75" y="40" width="25" height="20" uuid="b3665537-2917-434b-bf7a-72a516a6f1b3">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[COM]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Style1" x="75" y="60" width="25" height="20" uuid="567cbba7-e222-4b53-a866-369350cd07e6">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[MA]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="94ceb06b-55a4-4091-ac21-54d39eff632d"/>
+								<text><![CDATA[Total STRAND_DESCRIPTION_F1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="M_ANNEESCOLAIRE1" height="20" headerPosition="Stretch">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{M_ANNEESCOLAIRE}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<textField>
+								<reportElement x="0" y="0" width="30" height="20" uuid="6fa7a954-858f-4096-a8c7-feb0f4f77c03"/>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{M_ANNEESCOLAIRE1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="8e574421-0cbd-44e3-b634-0ac9b7123e1f"/>
+								<text><![CDATA[Total M_ANNEESCOLAIRE1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="M_ECOLE1" height="20" headerPosition="Stretch">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{M_ECOLE}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<textField>
+								<reportElement x="0" y="0" width="30" height="20" uuid="5e3ad90d-b026-431e-ac21-24f13dec73ef"/>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{M_ECOLE1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="ed6f584d-79e5-456c-93d8-25eb5149c96a"/>
+								<text><![CDATA[Total M_ECOLE1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="M_PERIODE_REF1" height="20">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{M_PERIODE_REF}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="30" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="1d1f196f-c852-4ed9-8fa7-f8badc767c5c"/>
+								<box>
+									<topPen lineWidth="0.2"/>
+									<leftPen lineWidth="0.2"/>
+									<bottomPen lineWidth="0.2"/>
+									<rightPen lineWidth="0.2"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{M_PERIODE_REF1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="d60cb5ac-3e39-4f05-ab82-de654931ffe3"/>
+								<text><![CDATA[Total M_PERIODE_REF1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="MOY_CC_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{MOY_CC}]]></measureExpression>
+				</measure>
+				<measure name="MOY_HP_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{MOY_HP}]]></measureExpression>
+				</measure>
+				<measure name="MOY_COM_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{MOY_COM}]]></measureExpression>
+				</measure>
+				<measure name="MOY_MA_MEASURE1" class="java.lang.String">
+					<measureExpression><![CDATA[$F{MOY_MA}]]></measureExpression>
+				</measure>
+				<crosstabCell width="30" height="80">
+					<cellContents mode="Opaque">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<textField isBlankWhenNull="true">
+							<reportElement style="cc" x="0" y="0" width="30" height="20" uuid="1a742f2d-fad2-4485-9370-b8adb5a7787c">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="hp" x="0" y="20" width="30" height="20" uuid="917776e0-9f4b-45ca-862e-5f13bc777f18"/>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="com" x="0" y="40" width="30" height="20" uuid="4819f757-8bbf-4bd9-bde1-b1fb5a4f02aa"/>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement style="ma" x="0" y="60" width="30" height="20" uuid="581151d2-1e12-48b2-8393-7e1145ba3983">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.2"/>
+								<leftPen lineWidth="0.2"/>
+								<bottomPen lineWidth="0.2"/>
+								<rightPen lineWidth="0.2"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="M_ANNEESCOLAIRE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" forecolor="#FFFFFF" uuid="6d648014-4318-4ec9-a946-0c94d7f7cb0b"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" forecolor="#FFFFFF" uuid="e1c6badd-0cf5-4730-bed8-f0be18e79471"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" forecolor="#FFFFFF" uuid="eb0c94aa-fe4e-4448-8165-5d334aa59776"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" forecolor="#FFFFFF" uuid="d4599af0-a50d-47e6-93e0-a94c10f9b9bc"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="M_ECOLE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" uuid="faa68179-e956-4e7b-9752-a6001e0b6271"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" uuid="9e095f99-1eb3-4a41-8f6d-da91747050ad"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" uuid="75ba7867-d9a8-4738-a74e-ca4c3e9a8842"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" uuid="435989ff-a237-4e09-a8cf-fa49fe0bc337"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="M_PERIODE_REF1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" uuid="83b2392f-4277-4145-81c2-c582bc140d6d"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" uuid="86fbc4f4-4c3d-437c-a823-ec8eeb9c262a"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" uuid="f33906f5-91c0-4452-9d66-12ee01d208a8"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" uuid="b90cd011-6401-498c-a04e-2bd174808e8e"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ROWORDER1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" forecolor="#FFFFFF" uuid="077d9516-dcd0-4ca9-8b74-d2b38b34bf7e"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" forecolor="#FFFFFF" uuid="62b10676-3881-45aa-bc05-4884f24f64fd"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" forecolor="#FFFFFF" uuid="df9a6cfc-4d33-4521-9c74-80e2156759af"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" forecolor="#FFFFFF" uuid="fe3f9335-c804-4641-842b-454aca4ba57f"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ROWORDER1" columnTotalGroup="M_ANNEESCOLAIRE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" forecolor="#FFFFFF" uuid="9644c5e4-0d4b-48d3-abc1-71e49bcc5e1b"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" forecolor="#FFFFFF" uuid="2fdc3e92-adaf-456c-b7bf-0ce9b45d954a"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" forecolor="#FFFFFF" uuid="90ae6b2f-a71a-4331-84a5-c45d3d8ba813"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" forecolor="#FFFFFF" uuid="0a679de9-e899-40c4-bc2b-954e4c55029e"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ROWORDER1" columnTotalGroup="M_ECOLE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" forecolor="#FFFFFF" uuid="29302ef7-1c88-41cc-b7b9-c162d77d9f8f"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" forecolor="#FFFFFF" uuid="c3ee85bd-7574-4ee2-a923-2e5e410cbd83"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" forecolor="#FFFFFF" uuid="f64e96a6-39bd-4cfb-b855-39b9450e8560"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" forecolor="#FFFFFF" uuid="986e6e76-8b74-4665-9c6c-f2a95ad27476"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="ROWORDER1" columnTotalGroup="M_PERIODE_REF1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" forecolor="#FFFFFF" uuid="fae6d977-4fc7-4491-9d8f-a54753e44605"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" forecolor="#FFFFFF" uuid="f9e42481-941e-4f8f-9356-f807070646f2"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" forecolor="#FFFFFF" uuid="6de63c10-acea-4888-9ffb-304600b73da5"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" forecolor="#FFFFFF" uuid="3930ff09-8f81-4246-a709-fb74f601fba6"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="STRAND_DESCRIPTION_F1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" uuid="9141aae5-c946-43aa-975e-6b0efacee5d5"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" uuid="8e392e4d-7a65-4117-aa8e-01a37cb4fadd"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" uuid="2cda7b3f-21cd-46fe-b1ae-3ea5fddff16e"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" uuid="80b1143c-c168-4b77-8eae-6f5572acd7bc"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="STRAND_DESCRIPTION_F1" columnTotalGroup="M_ANNEESCOLAIRE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" forecolor="#FFFFFF" uuid="c56fdbf7-dea8-48dd-990b-0ff17388108a"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" forecolor="#FFFFFF" uuid="a9903c38-d206-4901-b12f-e50fa5ff4457"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" forecolor="#FFFFFF" uuid="8a94994c-0139-4162-ba03-deceffd5c07d"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" forecolor="#FFFFFF" uuid="f38f7f22-fec3-41ed-a6ec-2cfb35e31514"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="STRAND_DESCRIPTION_F1" columnTotalGroup="M_ECOLE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" uuid="fbc57118-9514-48c9-839b-bb65ca82ec77"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" uuid="94763c1a-2cd8-4f16-8fae-6970c7d9af80"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" uuid="d7b160c1-26b4-4a55-99e5-eb3e2a4a3500"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" uuid="1e88ec06-b844-45e0-8624-9d40a7eccf62"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="STRAND_DESCRIPTION_F1" columnTotalGroup="M_PERIODE_REF1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="5" uuid="84e9148a-91fe-4953-b463-2bbf5b952b55"/>
+							<textFieldExpression><![CDATA[$V{MOY_CC_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="5" width="60" height="5" uuid="bde4b655-def5-4e57-8292-72ebdab712ec"/>
+							<textFieldExpression><![CDATA[$V{MOY_HP_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="5" uuid="420ccc78-ed23-40d8-a893-90cd7bb5339a"/>
+							<textFieldExpression><![CDATA[$V{MOY_COM_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="15" width="60" height="5" uuid="a0e78e61-3c65-4ba5-8606-a3451f56e00a"/>
+							<textFieldExpression><![CDATA[$V{MOY_MA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>
