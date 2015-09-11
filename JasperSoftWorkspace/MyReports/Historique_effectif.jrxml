@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-23T11:28:39 -->
+<!-- 2015-09-10T11:46:31 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Historique_effectif" pageWidth="430" pageHeight="802" columnWidth="430" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="bc5b7572-a901-4604-aa63-2e4d2cdc6dc9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -64,7 +64,7 @@ order by se.school_year DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[Date d'arrivé]]></text>
+				<text><![CDATA[Date d'arrivée]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="40" width="100" height="20" uuid="b4f7ff88-d069-4f7e-82b8-dbc1710883ec"/>
@@ -97,7 +97,7 @@ order by se.school_year DESC]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Historique de l'effectif]]></text>
+				<text><![CDATA[Historique des écoles]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
