@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-29T13:48:07 -->
+<!-- 2015-10-02T10:10:19 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ret_drilldown" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7798fd2d-1f15-485c-a51b-10d7207cf110">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
-	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/ret_drilldown_files/main_jrxml"/>
-	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/ret_drilldown"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Drilldowns/Rox/ret_drilldown_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Drilldowns/Rox/ret_drilldown"/>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<parameter name="SCHOOL_YEAR" class="java.lang.String"/>
 	<parameter name="MONTH" class="java.lang.String"/>
@@ -21,7 +21,7 @@ WHERE pa.PERSON_ID = $P{ACCOUNT_ID}
 and p.person_id = pa.person_id
 AND SCHOOL_CODE NOT IN ('ESF', 'ESA', 'ESE')  --On compte seulement les absences prises durant le séjour élémentaire
 AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-and school_year =  $P{SCHOOL_YEAR}  
+and regexp_replace(SCHOOL_YEAR, '(\w{4})(\w{4})', '\1-\2') =  $P{SCHOOL_YEAR}  
 and pa.attendance_code = ac.attendance_code
 and pa.attendance_code = 'L'
 and replace(lower(trim(to_char(calendar_date, 'mon'))), 'é', 'e') =  replace(lower(trim($P{MONTH})), 'é', 'e')

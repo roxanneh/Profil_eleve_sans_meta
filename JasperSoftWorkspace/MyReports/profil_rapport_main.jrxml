@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-10T15:43:51 -->
+<!-- 2015-10-02T10:36:48 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -693,7 +693,7 @@ WHERE     p.person_id = sr.person_id
 					<hyperlinkParameterExpression><![CDATA[$P{STUDENT}]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 				<hyperlinkParameter name="_report">
-					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/details_alf"]]></hyperlinkParameterExpression>
+					<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/details_alf"]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 			</textField>
 			<staticText>
@@ -701,7 +701,7 @@ WHERE     p.person_id = sr.person_id
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
-				<text><![CDATA[ALS, ALF, PANA]]></text>
+				<text><![CDATA[ALS]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="406" y="97" width="33" height="10" uuid="79f76f6d-04f5-4fc3-9943-bce68804c641"/>
@@ -1016,7 +1016,7 @@ WHERE     p.person_id = sr.person_id
 								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
 								<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences et des retards de l'élève pour l'année choisie"]]></hyperlinkTooltipExpression>
 								<hyperlinkParameter name="_report">
-									<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_annee_ele"]]></hyperlinkParameterExpression>
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/assiduite_annee_ele"]]></hyperlinkParameterExpression>
 								</hyperlinkParameter>
 								<hyperlinkParameter name="ACCOUNT_ID">
 									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
@@ -1205,7 +1205,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des retards de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
-								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/ret_drilldown"]]></hyperlinkParameterExpression>
+								<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/ret_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 							<hyperlinkParameter name="ACCOUNT_ID">
 								<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
@@ -1214,7 +1214,7 @@ WHERE     p.person_id = sr.person_id
 								<hyperlinkParameterExpression><![CDATA[$V{SCHOOL_YEAR1}]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 							<hyperlinkParameter name="MONTH">
-								<hyperlinkParameterExpression><![CDATA[$V{MNTH1}]]></hyperlinkParameterExpression>
+								<hyperlinkParameterExpression><![CDATA[SUBSTITUTE($V{MNTH1},"é","e")]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 						</textField>
 						<textField pattern="##.##" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
@@ -1233,7 +1233,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
-								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_drilldown"]]></hyperlinkParameterExpression>
+								<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/assiduite_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 							<hyperlinkParameter name="ACCOUNT_ID">
 								<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
@@ -1447,7 +1447,7 @@ WHERE     p.person_id = sr.person_id
 								<textFieldExpression><![CDATA[$V{SCHOOL_YEAR1}]]></textFieldExpression>
 								<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences et des retards de l'élève pour l'année choisie"]]></hyperlinkTooltipExpression>
 								<hyperlinkParameter name="_report">
-									<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_annee_sec"]]></hyperlinkParameterExpression>
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/assiduite_annee_sec"]]></hyperlinkParameterExpression>
 								</hyperlinkParameter>
 								<hyperlinkParameter name="ACCOUNT_ID">
 									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
@@ -1633,7 +1633,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des retards de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
-								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/ret_sec_drilldown"]]></hyperlinkParameterExpression>
+								<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/ret_sec_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 							<hyperlinkParameter name="ACCOUNT_ID">
 								<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>
@@ -1661,7 +1661,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 							<hyperlinkTooltipExpression><![CDATA["Charge le rapport détaillé des absences de l'élève pour ce mois"]]></hyperlinkTooltipExpression>
 							<hyperlinkParameter name="_report">
-								<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/assiduite_sec_drilldown"]]></hyperlinkParameterExpression>
+								<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/assiduite_sec_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 							<hyperlinkParameter name="ACCOUNT_ID">
 								<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></hyperlinkParameterExpression>

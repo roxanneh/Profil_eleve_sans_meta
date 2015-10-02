@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-07-31T13:47:17 -->
+<!-- 2015-10-02T09:40:58 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="competances_sec" pageWidth="300" pageHeight="802" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="540d7451-c853-487a-a9d7-6d01b3671025">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -256,7 +256,7 @@ ORDER BY E_ANNEESCOLAIRE DESC, SEMESTER ASC, case when (e_codecours like 'FRA%'
 				</textElement>
 				<textFieldExpression><![CDATA[$F{E_CODECOURS}]]></textFieldExpression>
 				<hyperlinkParameter name="_report">
-					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/competence_drilldown_sec"]]></hyperlinkParameterExpression>
+					<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/competence_drilldown_sec"]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 				<hyperlinkParameter name="ACCOUNT_ID">
 					<hyperlinkParameterExpression><![CDATA[$F{N_MEMBRE_ID}]]></hyperlinkParameterExpression>
