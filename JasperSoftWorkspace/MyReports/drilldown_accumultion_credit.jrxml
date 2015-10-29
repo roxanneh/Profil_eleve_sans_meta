@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-22T15:44:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="drilldown_accumultion_credit" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a77d563e-60de-4858-b049-bb7a73c26ee9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/Accumulation_des_credits_secondaire_drilldown_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/Accumulation_des_credits_secondaire_drilldown"/>
+	<parameter name="STUDENT" class="java.lang.String"/>
+	<parameter name="SCHOOL_YEAR" class="java.lang.String"/>
+	<parameter name="SEMESTER" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select distinct preferred_surname || ', ' || preferred_first_name as name, scc.school_year, scc.school_code, 
+scc.course_code, scc.earned_credit_value, COMPULSORY_FLAG, SUBSTITUTION_FLAG
+
+from fs_secondary_course_credit scc, class_meetings cm, student_program_class_tracks spct, persons
+where scc.person_id = $P{STUDENT} 
+
+and scc.person_id = persons.person_id
+
+and scc.person_id = spct.person_id
+and scc.school_code = spct.school_code
+and scc.school_year = spct.school_year
+and scc.course_code = spct.course_code
+and scc.course_section = spct.course_section
+
+and spct.school_code = cm.school_code
+and spct.school_year = cm.school_year
+and spct.school_year_track = cm.school_year_track
+and spct.class_code = cm.class_code
+
+AND CM.SEMESTER = $P{SEMESTER} 
+AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
+	</queryString>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="COURSE_CODE" class="java.lang.String"/>
+	<field name="EARNED_CREDIT_VALUE" class="java.math.BigDecimal"/>
+	<field name="COMPULSORY_FLAG" class="java.lang.String"/>
+	<field name="SUBSTITUTION_FLAG" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="410" height="30" uuid="17b8f659-837a-4202-946b-4cc7239fba64">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Accumulation des crédits 9e - 10e]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="30" width="410" height="30" uuid="9b7067de-2605-41d5-afb1-2fbb41a26557"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAME} + " - " + $F{SCHOOL_YEAR} + " - " + $P{SEMESTER} + "e semestre"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="66" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="1bfc67da-cb01-435c-8a9d-55d6d7696299"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Année scolaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="66" y="0" width="63" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="034c9bbb-ff23-4b3e-a592-3bebd6682393"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[École]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="129" y="0" width="91" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="96933d69-95ec-4e16-8f64-9510ee8e9c47"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Cours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="220" y="0" width="63" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2c32fb0d-f27d-419e-9976-2431b4e4cacc"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Valeur du crédit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="283" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2a92bd5a-ba22-4dd5-95b8-6582c04ca731"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Obli.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="323" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="933f9c3c-c604-459d-8254-95fd9d63f387"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Subs.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="66" height="30" uuid="f1e6527c-61dd-4e08-9dd4-4727e64514ee"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SCHOOL_YEAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="0" width="63" height="30" uuid="71b1212f-27f8-45a1-afe8-e608da41e37b"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SCHOOL_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="0" width="91" height="30" uuid="35f5f765-51d0-48d9-affa-b03193b93481"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COURSE_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="220" y="0" width="63" height="30" uuid="d4635f8b-0f52-43ab-b4af-2e0d5f50d872"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EARNED_CREDIT_VALUE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="283" y="0" width="40" height="30" uuid="730e90cb-00bd-44a2-b5ff-74bbcd70aecb"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COMPULSORY_FLAG}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="323" y="0" width="40" height="30" uuid="f0a2cf7a-b5e1-4055-984b-46b35b3e44c0">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SUBSTITUTION_FLAG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

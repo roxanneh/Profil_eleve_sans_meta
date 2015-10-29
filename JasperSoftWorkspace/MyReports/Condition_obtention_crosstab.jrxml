@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-16T11:30:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Condition_obtention_crosstab" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f6cf45b-54ef-4d9e-a3ba-c75371662fbc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<queryString>
+		<![CDATA[/* Requête Trillium pour l'extraction des crédits requis et les crédits obtenus
+    par catégorie pour chaque élève */
+SELECT 
+         fs_requirement_areas.description_f "Exigences du diplôme",
+         fs_award_requirements.required_credits "Total des crédits requis",
+         fs_student_credits.credit_value "Total des crédits cumulés"
+    FROM fs_student_credits,
+         fs_student_awards,
+         fs_award_requirements,
+         fs_requirement_areas, 
+         student_registrations sr
+   WHERE     (fs_requirement_areas.requirement_area =
+                 fs_award_requirements.requirement_area)
+         AND (fs_requirement_areas.requirement_area =
+                 fs_student_credits.requirement_area)
+         AND (fs_award_requirements.requirement_area =
+                 fs_student_credits.requirement_area)
+         AND (fs_award_requirements.requirement_version =
+                 fs_student_credits.requirement_version)
+         AND (fs_award_requirements.award = fs_student_credits.award)
+         AND (fs_student_awards.person_id = fs_student_credits.person_id)
+         AND (fs_student_awards.award = fs_student_credits.award)
+         AND (fs_student_awards.requirement_version =
+                 fs_student_credits.requirement_version)
+         --AND fs_requirement_areas.requirement_area NOT IN ('21', '20')
+         AND (fs_student_awards.current_diploma_flag = 'x')
+         AND fs_student_credits.person_id = 000147531
+         AND fs_student_awards.award <> 'SHSM'
+         and fs_student_credits.person_id = sr.person_id
+         and fs_student_awards.person_id = sr.person_id
+         and sr.school_year = pkg_profile_élève.get_school_year(sysdate)
+         and sr.grade not in ('07', '08')
+ORDER BY sort_order,
+        case when fs_requirement_areas.description_f in ( 'Obligatoires', 'Optionnels') then 10 else 1 end, 
+        fs_requirement_areas.description_f asc]]>
+	</queryString>
+	<field name="Total des crédits requis" class="java.math.BigDecimal"/>
+	<field name="Total des crédits cumulés" class="java.math.BigDecimal"/>
+	<field name="Exigences du diplôme" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

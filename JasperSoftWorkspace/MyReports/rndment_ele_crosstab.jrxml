@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-04T15:55:13 -->
+<!-- 2015-10-29T11:35:23 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rndment_ele_crosstab" pageWidth="1000" pageHeight="595" orientation="Landscape" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fe7d918-b575-436b-804b-e1d0bf78193a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
-	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/rndment_ele_crosstab_files/main_jrxml"/>
-	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/rndment_ele_crosstab"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/rndment_ele_crosstab_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/rndment_ele_crosstab"/>
 	<style name="COM">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[OR(OR( EXACT($V{NOTE_COM_MEASURE1}, "59"), EXACT($V{NOTE_COM_MEASURE1}, "60"), EXACT($V{NOTE_COM_MEASURE1}, "61"), EXACT($V{NOTE_COM_MEASURE1}, "62"), EXACT($V{NOTE_COM_MEASURE1}, "63"), EXACT($V{NOTE_COM_MEASURE1}, "64"), EXACT($V{NOTE_COM_MEASURE1}, "65"), EXACT($V{NOTE_COM_MEASURE1}, "66"), EXACT($V{NOTE_COM_MEASURE1}, "67"), EXACT($V{NOTE_COM_MEASURE1}, "68"), EXACT($V{NOTE_COM_MEASURE1}, "69")),OR(EXACT($V{NOTE_COM_MEASURE1}, "C"),EXACT($V{NOTE_COM_MEASURE1}, "C+"),EXACT($V{NOTE_COM_MEASURE1}, "C-")))]]></conditionExpression>

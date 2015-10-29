@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-02T09:36:14 -->
+<!-- 2015-10-16T10:16:34 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="COMPETANCES" pageWidth="320" pageHeight="802" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a347432e-175b-4753-b578-d19c0bda5c45">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -313,16 +313,16 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="50">
+		<band height="60">
 			<staticText>
-				<reportElement x="0" y="0" width="310" height="20" uuid="8a1dc61c-4498-47b8-97ab-7db791ebb6b2"/>
+				<reportElement x="0" y="10" width="310" height="20" uuid="8a1dc61c-4498-47b8-97ab-7db791ebb6b2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Moyenne des compétences à l'élémentaire]]></text>
 			</staticText>
 			<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-				<reportElement x="0" y="20" width="320" height="30" uuid="5d77c197-11ae-4cc7-8e27-cd69c1662dc0"/>
+				<reportElement x="0" y="30" width="320" height="30" uuid="5d77c197-11ae-4cc7-8e27-cd69c1662dc0"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Cliquez ici pour voir ce tableau en format horizontal."]]></textFieldExpression>
 				<hyperlinkParameter name="_report">

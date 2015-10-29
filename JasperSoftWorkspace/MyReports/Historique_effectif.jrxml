@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-10T11:46:31 -->
+<!-- 2015-10-21T10:42:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Historique_effectif" pageWidth="430" pageHeight="802" columnWidth="430" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="bc5b7572-a901-4604-aa63-2e4d2cdc6dc9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -90,7 +90,7 @@ order by se.school_year DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[Date de demit]]></text>
+				<text><![CDATA[Date de démit]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="20" width="340" height="20" uuid="95449878-2758-48d6-9ee5-1e7fef616451"/>

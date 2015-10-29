@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-29T11:41:39 -->
+<!-- 2015-10-16T10:46:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -75,54 +75,6 @@
 			<style mode="Opaque" backcolor="#E05A58">
 				<pen lineWidth="0.01" lineColor="#757575"/>
 			</style>
-		</conditionalStyle>
-	</style>
-	<style name="Obligatoire">
-		<conditionalStyle>
-			<conditionExpression><![CDATA[NOT($V{COMPULSORY_FLAG_MEASURE1}.equals("x"))]]></conditionExpression>
-			<style mode="Transparent" forecolor="#5E5E5E"/>
-		</conditionalStyle>
-	</style>
-	<style name="Crosstab 3_CH" mode="Opaque" backcolor="#C3CFD9">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CG" mode="Opaque" backcolor="#E6F3FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CT" mode="Opaque" backcolor="#737A80">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab 3_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Count_credit">
-		<conditionalStyle>
-			<conditionExpression><![CDATA[$V{EARNED_CREDIT_VALUE_MEASURE1}<8]]></conditionExpression>
-			<style forecolor="#DB3E3B"/>
 		</conditionalStyle>
 	</style>
 	<subDataset name="Dataset1" uuid="4d18a449-776b-4420-87f3-8013066b04ac">
@@ -431,37 +383,9 @@ order by mnth asc]]>
 		<field name="L" class="java.math.BigDecimal"/>
 		<field name="A" class="java.math.BigDecimal"/>
 	</subDataset>
-	<subDataset name="credits" uuid="318dc3b1-55f3-45ee-8292-6fbcfa9bfb54">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString>
-			<![CDATA[select distinct scc.person_id, scc.school_code, regexp_replace(scc.school_year, '(\w{4})(\w{4})', '\1-\2') school_year, semester, scc.course_code, 
-scc.earned_credit_value, scc.compulsory_flag, scc.substitution_flag 
-
-from fs_secondary_course_credit scc, class_meetings cm, student_program_class_tracks spct
-where scc.person_id =  $P{ACCOUNT_ID} 
-
-and scc.person_id = spct.person_id
-and scc.school_code = spct.school_code
-and scc.school_year = spct.school_year
-and scc.course_code = spct.course_code
-and scc.course_section = spct.course_section
-
-and spct.school_code = cm.school_code
-and spct.school_year = cm.school_year
-and spct.school_year_track = cm.school_year_track
-and spct.class_code = cm.class_code]]>
-		</queryString>
-		<field name="PERSON_ID" class="java.lang.String"/>
-		<field name="SCHOOL_CODE" class="java.lang.String"/>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="SEMESTER" class="java.lang.String"/>
-		<field name="COURSE_CODE" class="java.lang.String"/>
-		<field name="EARNED_CREDIT_VALUE" class="java.lang.Double"/>
-		<field name="COMPULSORY_FLAG" class="java.lang.String"/>
-		<field name="SUBSTITUTION_FLAG" class="java.lang.String"/>
-	</subDataset>
-	<parameter name="STUDENT" class="java.lang.String"/>
+	<parameter name="STUDENT" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
 	<parameter name="LoggedInUser" class="com.jaspersoft.jasperserver.api.metadata.user.domain.client.UserImpl" isForPrompting="false">
 		<parameterDescription><![CDATA[Not usable in query input control, but is used as parameter to report]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new com.jaspersoft.jasperserver.api.metadata.user.domain.client.UserImpl()]]></defaultValueExpression>
@@ -676,7 +600,7 @@ WHERE     p.person_id = sr.person_id
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Année d'études]]></text>
+				<text><![CDATA[Année d'étude]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="68" y="97" width="118" height="10" uuid="cbd02c23-d1fc-410b-a68b-9af4335b7ae2"/>
@@ -764,7 +688,7 @@ WHERE     p.person_id = sr.person_id
 			</staticText>
 			<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
 				<reportElement x="406" y="87" width="33" height="10" uuid="ca4046e7-76af-4fa8-9b81-92bfb18d31a8">
-					<printWhenExpression><![CDATA[NOT(EQUALS($F{ALF}, "Non"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[OR(EXACT($F{ALF}, "Oui"),EXACT($F{ALF}, "Démit"))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="6" isBold="true"/>
@@ -804,7 +728,7 @@ WHERE     p.person_id = sr.person_id
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ANOMALIE} == null ? "Non" : $F{ANOMALIE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ANOMALIE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="346" y="107" width="50" height="10" uuid="6f2bf58e-4807-419f-aeaa-3778baf01cf6"/>
@@ -988,13 +912,13 @@ WHERE     p.person_id = sr.person_id
 				<textFieldExpression><![CDATA[$F{TOTAL_COMMUNITY_HOURS}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-10" y="127" width="68" height="10" uuid="a4e79ae4-4c03-4914-9151-ba5fce94d09b">
+				<reportElement x="-4" y="127" width="62" height="10" uuid="a4e79ae4-4c03-4914-9151-ba5fce94d09b">
 					<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Heures communautaires]]></text>
+				<text><![CDATA[Heures communtaires]]></text>
 			</staticText>
 		</band>
 		<band height="40" splitType="Prevent">
@@ -1008,7 +932,7 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["GET_PGC_INFO.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="3" width="70" height="18" forecolor="#007349" uuid="e1820ab2-96a7-4eec-b3fe-a7ce0b046027">
+				<reportElement mode="Opaque" x="40" y="3" width="70" height="18" forecolor="#007349" uuid="e1820ab2-96a7-4eec-b3fe-a7ce0b046027">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -1017,11 +941,11 @@ WHERE     p.person_id = sr.person_id
 				<text><![CDATA[Contact GP]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="73" y="2" width="475" height="19" forecolor="#949494" uuid="af00e780-ef4c-4059-a336-d41149564002"/>
+				<reportElement x="120" y="2" width="435" height="19" forecolor="#949494" uuid="af00e780-ef4c-4059-a336-d41149564002"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Langue parlée à la maison: " + ($F{SPOKEN_AT_HOME} == null ? "Aucune information enregistrée" : $F{SPOKEN_AT_HOME})]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Langue parlé à la maison: " + $F{SPOKEN_AT_HOME}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="3" splitType="Prevent">
@@ -1056,7 +980,7 @@ WHERE     p.person_id = sr.person_id
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[À noter que une (1) absence équivaut une journée complète d'absence et que les décimales comptent comme une période d'assiduité manquée. Par exemple, s'il y a 2 périodes d'assiduité pour une école, 1 = deux périodes manquées et 1.5 = trois périodes manquées.]]></text>
+				<text><![CDATA[À noter que une (1) absence équivau une journée complète d'absence et que les décimales compte comme une période d'assiduité manquée. Par exemple, s'il y a 2 périodes d'assiduité pour une école, 1 = deux périodes manquées et 1.5 = trois périodes manquées.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="11" width="250" height="20" uuid="f40562a1-f6e0-4285-940d-eb3153106d06"/>
@@ -1069,7 +993,7 @@ WHERE     p.person_id = sr.person_id
 				<reportElement x="-10" y="68" width="580" height="2" uuid="301756a5-bfe5-48ee-ab00-2b2facb433ae"/>
 				<crosstabDataset>
 					<dataset>
-						<datasetRun subDataset="Dataset5" uuid="603c7c88-0071-4650-8c42-a2d74efb3ecd">
+						<datasetRun subDataset="Dataset5" uuid="564aaab6-a1b9-4098-bf71-1989707a1b74">
 							<datasetParameter name="ACCOUNT_ID">
 								<datasetParameterExpression><![CDATA[$F{PERSON_ID}]]></datasetParameterExpression>
 							</datasetParameter>
@@ -1493,7 +1417,7 @@ WHERE     p.person_id = sr.person_id
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[À noter que une (1) absence équivaut une journée complète d'absence et que les décimales comptent comme une période manquée. Donc, si l'élève prend 4 cours, 1 = quatre périodes manquées et 0.25 = une période manquée. Si l'élève prend 5 cours, 1 = cinq périodes manquées et 0.2 = une période manquée.]]></text>
+				<text><![CDATA[À noter que une (1) absence équivau une journée complète d'absence et que les décimales compte comme une période manquée. Donc, si l'élève prend 4 cours, 1 = quatre périodes manquées et 0.25 = une période manquée. Si l'élève prend 5 cours, 1 = cinq périodes manquées et 0.2 = une période manquée.]]></text>
 			</staticText>
 			<crosstab horizontalPosition="Center">
 				<reportElement x="-8" y="77" width="578" height="3" backcolor="#FFFFFF" uuid="f9062632-91ed-4d91-a82f-413c93264e00"/>
@@ -1905,9 +1829,9 @@ WHERE     p.person_id = sr.person_id
 				</crosstabCell>
 			</crosstab>
 		</band>
-		<band height="10" splitType="Prevent">
+		<band height="10">
 			<subreport>
-				<reportElement x="-6" y="2" width="576" height="6" uuid="78df5853-eec4-4afd-930d-52db4064bd01"/>
+				<reportElement x="-10" y="3" width="581" height="7" uuid="088c223e-4e85-4c02-808e-e0e9b65ec71e"/>
 				<subreportParameter name="ACCOUNT_ID">
 					<subreportParameterExpression><![CDATA[$P{STUDENT}]]></subreportParameterExpression>
 				</subreportParameter>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-07-30T08:53:27 -->
+<!-- 2015-10-28T10:50:15 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="details_alf" pageWidth="585" pageHeight="752" whenNoDataType="NoDataSection" columnWidth="585" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="87357a13-f89d-4b1c-b229-402646d40cf1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
-	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/details_alf_files/main_jrxml"/>
-	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/details_alf"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/details_alf_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/details_alf"/>
 	<style name="Everything else">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[(new Boolean( $V{REPORT_COUNT}.intValue() % 2 == 0 ))]]></conditionExpression>
@@ -158,7 +158,7 @@ and active_flag_10 = 1]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Détail des programmes ALS, ALF et PANA de l'élève]]></text>
+				<text><![CDATA[Détail des programmes ALS: ALF et PANA de l'élève]]></text>
 			</staticText>
 		</band>
 	</title>

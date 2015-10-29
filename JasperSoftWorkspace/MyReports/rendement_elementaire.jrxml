@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-05T09:03:46 -->
+<!-- 2015-10-29T11:36:23 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rend_sub_test" pageWidth="490" pageHeight="800" columnWidth="490" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0d03c9f6-dfcd-46cc-b430-70282fd38f40">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -209,23 +209,23 @@
 			<style mode="Opaque" backcolor="#E8E8E8"/>
 		</conditionalStyle>
 	</style>
-	<style name="P_F">
+	<style name="P_F" forecolor="#000000">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{FRA_P} == 2]]></conditionExpression>
+			<conditionExpression><![CDATA[$F{FRA_P} == "2"]]></conditionExpression>
 			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{FRA_P} == 1]]></conditionExpression>
+			<conditionExpression><![CDATA[$F{FRA_P} == "1"]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 	</style>
-	<style name="P_M">
+	<style name="P_M" forecolor="#000000">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{MATH_P} == 2]]></conditionExpression>
+			<conditionExpression><![CDATA[$F{MATH_P} == "2"]]></conditionExpression>
 			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{MATH_P} == 1]]></conditionExpression>
+			<conditionExpression><![CDATA[$F{MATH_P} == "1"]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 	</style>
@@ -327,8 +327,8 @@ order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 	<field name="NOTE_TRA" class="java.lang.String"/>
 	<field name="NOTE_MOD" class="java.lang.String"/>
 	<field name="NOTE_GEO" class="java.lang.String"/>
-	<field name="FRA_P" class="java.lang.Integer"/>
-	<field name="MATH_P" class="java.lang.Integer"/>
+	<field name="FRA_P" class="java.lang.String"/>
+	<field name="MATH_P" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{SCHOOL_YEAR}]]></groupExpression>
 		<groupHeader>
@@ -369,7 +369,7 @@ order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Cliquez ici pour voir ce tableau en format horizontal."]]></textFieldExpression>
 				<hyperlinkParameter name="_report">
-					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/rndment_ele_crosstab"]]></hyperlinkParameterExpression>
+					<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/rndment_ele_crosstab"]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 				<hyperlinkParameter name="ACCOUNT_ID">
 					<hyperlinkParameterExpression><![CDATA[$P{ACCOUNT_ID}]]></hyperlinkParameterExpression>
@@ -574,7 +574,7 @@ order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FRA_P}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FRA_P} == null ? "" : $F{FRA_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="P_M" x="190" y="0" width="200" height="20" uuid="2f304570-60f5-47fb-8a2d-398e73b1fbae"/>
@@ -587,7 +587,7 @@ order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{MATH_P}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{MATH_P} == null ? "" : $F{MATH_P}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="390" y="0" width="100" height="20" backcolor="#706F6F" uuid="0a6f6c97-82e0-409a-9d1c-bdd4c54d9374"/>
