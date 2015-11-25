@@ -88,9 +88,24 @@
 			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1438777966568</location>
 		</link>
 		<link>
-			<name>JasperReportsServer-1443796911995</name>
+			<name>JasperReportsServer-1446208716324</name>
 			<type>2</type>
-			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1443796911995</location>
+			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1446208716324</location>
+		</link>
+		<link>
+			<name>JasperReportsServer-1446662986523</name>
+			<type>2</type>
+			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1446662986523</location>
+		</link>
+		<link>
+			<name>JasperReportsServer-1448373636247</name>
+			<type>2</type>
+			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1448373636247</location>
+		</link>
+		<link>
+			<name>JasperReportsServer-1448483395084</name>
+			<type>2</type>
+			<location>C:/Users/henryr/AppData/Local/Temp/JasperReportsServer-1448483395084</location>
 		</link>
 		<link>
 			<name>Rendement_elementaire_HH.jasper</name>
@@ -103,29 +118,14 @@
 			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/competances_sec.jasper</location>
 		</link>
 		<link>
-			<name>competances_sec.jrxml</name>
+			<name>condition_obtention.jasper</name>
 			<type>1</type>
-			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/competances_sec.jrxml</location>
-		</link>
-		<link>
-			<name>condition_obtention.jrxml</name>
-			<type>1</type>
-			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/condition_obtention.jrxml</location>
+			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/condition_obtention.jasper</location>
 		</link>
 		<link>
 			<name>gbp.jasper</name>
 			<type>1</type>
 			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/gbp.jasper</location>
-		</link>
-		<link>
-			<name>get_pgc.jasper</name>
-			<type>1</type>
-			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/get_pgc.jasper</location>
-		</link>
-		<link>
-			<name>get_pgc.jrxml</name>
-			<type>1</type>
-			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/get_pgc.jrxml</location>
 		</link>
 		<link>
 			<name>rendement_elementaire.jasper</name>
@@ -138,19 +138,9 @@
 			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/rendement_secondaire.jasper</location>
 		</link>
 		<link>
-			<name>rendement_secondaire.jrxml</name>
-			<type>1</type>
-			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/rendement_secondaire.jrxml</location>
-		</link>
-		<link>
 			<name>rendement_secondaire_HH.jasper</name>
 			<type>1</type>
 			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/rendement_secondaire_HH.jasper</location>
-		</link>
-		<link>
-			<name>rendement_secondaire_HH.jrxml</name>
-			<type>1</type>
-			<location>C:/Users/henryr/Documents/GitHub/Profil_eleve_sans_meta/JasperSoftWorkspace/MyReports/rendement_secondaire_HH.jrxml</location>
 		</link>
 	</linkedResources>
 </projectDescription>

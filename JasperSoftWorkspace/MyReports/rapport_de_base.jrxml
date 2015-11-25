@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-05T16:28:19 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapport_de_base" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26f78b6a-ed6c-4afc-926e-f175c689460e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PEI web"/>
+	<queryString>
+		<![CDATA[select * from SE313R where person_id = 000160942]]>
+	</queryString>
+	<field name="ID_SE313" class="java.math.BigDecimal"/>
+	<field name="ID_PEI" class="java.lang.String"/>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="DATECREATION" class="java.sql.Timestamp"/>
+	<field name="CREERPAR" class="java.lang.String"/>
+	<field name="DATE_CIPR" class="java.sql.Timestamp"/>
+	<field name="FOYER" class="java.lang.String"/>
+	<field name="CLASSES_DISTINCTES" class="java.math.BigDecimal"/>
+	<field name="NIVEAU" class="java.lang.String"/>
+	<field name="CYCLE" class="java.lang.String"/>
+	<field name="IDENTIFICATION" class="java.math.BigDecimal"/>
+	<field name="ANOMALIE" class="java.math.BigDecimal"/>
+	<field name="PLACEMENT" class="java.lang.String"/>
+	<field name="MOTIF" class="java.lang.String"/>
+	<field name="DEMANDE" class="java.math.BigDecimal"/>
+	<field name="TYPE_CLASSE" class="java.math.BigDecimal"/>
+	<field name="SOUSTITRE" class="java.math.BigDecimal"/>
+	<field name="DATE_RENCONTRE" class="java.sql.Timestamp"/>
+	<field name="POINTS_FORTS" class="java.sql.Clob"/>
+	<field name="BESOINS" class="java.sql.Clob"/>
+	<field name="RECOMMANDATION_CIPR" class="java.math.BigDecimal"/>
+	<field name="HEURE_DEBUT" class="java.lang.String"/>
+	<field name="HEURE_FIN" class="java.lang.String"/>
+	<field name="PARENTS_PERSON_IDS" class="java.lang.String"/>
+	<field name="RECOMMANDATION" class="java.sql.Clob"/>
+	<field name="TITULAIRE_PERSON_ID" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="IS_HIDDEN" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="79025ff2-392e-443d-a1ce-03113cd42eaa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PERSON_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="30" uuid="a8ab7bfd-91af-4819-adf5-30b5fbb6585c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DATE_RENCONTRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="40" height="30" uuid="ca5ae382-5228-49f6-9233-2e502f80f496"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[GRADE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="100" height="30" uuid="5d70f0d7-8d09-4d11-9e70-71b5e0cf3cad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ANOMALIE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="2eff090b-0dd3-4fee-aee8-231a88e6bed0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PERSON_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="30" uuid="8b27a8b1-b520-48d0-85db-af2c2e727d07"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DATE_RENCONTRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="40" height="30" uuid="2642e84d-ae29-408f-abb4-2f15764b1987"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="100" height="30" uuid="8099bff3-cdbf-4912-8a73-1ab8d3644c41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ANOMALIE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

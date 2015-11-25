@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-09-18T15:50:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Horaire" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="45e6abf5-ccc0-4f62-8e53-3497b0321ac3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Horraires/Horaire_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Horraires/Horaire"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="SCHOOL_YEAR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_SEMESTER" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_SECONDARY_SCHOOL_CODE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_DATE" class="java.sql.Date" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT P.PERSON_ID,
+P.PREFERRED_NAME_UPPER AS NOM,
+SR.GRADE,
+PT.AREA_CODE,
+PT.PHONE_NO,
+CM.SEMESTER
+
+FROM PERSONS P
+INNER JOIN PERSON_TELECOM PT
+	ON PT.PERSON_ID = P.PERSON_ID
+INNER JOIN STUDENT_REGISTRATIONS SR
+	ON SR.PERSON_ID = P.PERSON_ID
+INNER JOIN STUDENT_PROGRAM_CLASS_TRACKS SPCT
+	ON SPCT.PERSON_ID = P.PERSON_ID
+INNER JOIN CLASS_MEETINGS CM
+	ON CM.SCHOOL_CODE = SPCT.SCHOOL_CODE
+	AND CM.SCHOOL_YEAR = SPCT.SCHOOL_YEAR
+	AND CM.CLASS_CODE = SPCT.CLASS_CODE
+
+WHERE SR.SCHOOL_CODE = $P{P_SECONDARY_SCHOOL_CODE}
+AND SR.SCHOOL_YEAR = $P{SCHOOL_YEAR}
+AND $X{IN, CM.SEMESTER, P_SEMESTER} 
+AND SPCT.END_DATE > $P{P_DATE}
+AND (SR.STATUS_INDICATOR_CODE = 'Active' OR SR.PERSON_ID IN (SELECT PERSON_ID FROM STUDENT_ENROLMENTS SE WHERE SE.TRANSACTION_TYPE_IND = '5'
+	AND SE.EFFECTIVE_DATE = PKG_RAPPORT_DE_RENDEMENT_ELE.GET_SCHOOL_YEAR_END( SR.SCHOOL_YEAR, SR.SCHOOL_CODE )))
+AND PT.TELECOM_TYPE_NAME NOT IN ('Business', 'Conjoint - trava', 'Fax', 'Internet', 'Pager', 'Travail', 'Travail - mère')
+
+ORDER BY P.PREFERRED_NAME_UPPER ASC, CM.SEMESTER ASC]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="NOM" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="AREA_CODE" class="java.lang.String"/>
+	<field name="PHONE_NO" class="java.lang.String"/>
+	<field name="SEMESTER" class="java.lang.String"/>
+	<group name="G_PERSON_ID" minHeightToStartNewPage="69" keepTogether="true">
+		<groupExpression><![CDATA[$F{PERSON_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="45" splitType="Prevent">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<rectangle>
+					<reportElement x="5" y="10" width="562" height="35" backcolor="#F0F0F0" uuid="090e2a15-0c5f-46bd-9fcf-91299a2226b0">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+				</rectangle>
+				<textField>
+					<reportElement x="5" y="10" width="562" height="13" uuid="8cbee9ff-0eb0-4f1d-8409-896cfd1748c7"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOM} + " " + $F{GRADE} + "ième année"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="5" y="23" width="562" height="11" uuid="d70db94c-a1ba-4b1e-beac-ec2a6e56f867">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Numéro d'élève : " + $F{PERSON_ID}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="5" y="34" width="562" height="11" uuid="353cf0a3-3663-44b3-b382-5a853ce81c3a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Numéro de téléphone : " + $F{AREA_CODE} + " " + $F{PHONE_NO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G_SEMESTER" keepTogether="true">
+		<groupExpression><![CDATA[$F{SEMESTER}]]></groupExpression>
+		<groupHeader>
+			<band height="22" splitType="Prevent">
+				<textField>
+					<reportElement x="5" y="0" width="562" height="11" uuid="b4f7190b-5fb7-494f-ac15-bc88e2aaef17">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Semestre : " + $F{SEMESTER}]]></textFieldExpression>
+				</textField>
+				<subreport>
+					<reportElement isPrintRepeatedValues="false" x="11" y="11" width="550" height="11" isPrintInFirstWholeBand="true" uuid="5c5521fc-ceec-4d3b-92bb-a6125403648f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<subreportParameter name="P_STUDENT_ID">
+						<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_SEMESTER">
+						<subreportParameterExpression><![CDATA[$F{SEMESTER}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SCHOOL_YEAR">
+						<subreportParameterExpression><![CDATA[$P{SCHOOL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_DATE">
+						<subreportParameterExpression><![CDATA[$P{P_DATE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["Horaire_subreport.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="79" y="0" width="201" height="11" uuid="072a0194-28e2-4112-a2e1-7eb7c9ce3cc3">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DATEFORMAT(NOW( ), "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="501" height="32" uuid="061ab66f-6487-4974-8f88-7fb5157d0150">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Horaire " + $P{P_SECONDARY_SCHOOL_CODE} + " SEM " + $P{P_SEMESTER} + " " + $P{SCHOOL_YEAR}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="55437ff4-483d-4d9e-945c-0f114959c49f"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-16T12:01:57 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GBP_niveaux" pageWidth="1224" pageHeight="792" orientation="Landscape" columnWidth="1184" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b1e9285-a6bf-4305-a2d5-59651619ad06">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString>
+		<![CDATA[select * from (SELECT preferred_name_upper, sr.school_year,
+        sr.school_code,
+        PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_CODE (
+          sr.SCHOOL_CODE,
+          PKG_PROFILE_ÉLÈVE.get_school_year (SYSDATE),
+          p.person_id,
+          SYSDATE) as class_code,
+       sr.grade,
+
+       res.niveau as Niveau,
+       TO_DATE (TO_CHAR (res.evaluation_date, 'dd/mon/yyyy'), 'dd/mon/yyyy') as  Date_evaluation
+
+  FROM persons p,
+       student_registrations sr
+       LEFT JOIN ATELIER.GBP_RESULTATS res
+          ON     sr.person_id = res.person_id
+             AND sr.school_year = res.school_year
+             AND sr.person_id = res.person_id
+  
+ WHERE p.person_id = sr.person_id
+ 
+
+ and sr.school_code = 'STT'
+ and res.evaluation_date is not null)
+where class_code = '1RE/2E'
+     
+     order by preferred_name_upper, Date_evaluation, niveau]]>
+	</queryString>
+	<field name="PREFERRED_NAME_UPPER" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="CLASS_CODE" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="NIVEAU" class="java.math.BigDecimal"/>
+	<field name="DATE_EVALUATION" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="420" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="10" y="1" width="1170" height="419" uuid="c4313348-c3f5-4b6a-964a-cf8ba8b5bdb9"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{DATE_EVALUATION}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{PREFERRED_NAME_UPPER}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{NIVEAU}]]></valueExpression>
+						<labelExpression><![CDATA[$F{PREFERRED_NAME_UPPER}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot labelRotation="45.0">
+						<seriesColor seriesOrder="0" color="#9A6BBF"/>
+						<seriesColor seriesOrder="1" color="#0924C3"/>
+						<seriesColor seriesOrder="2" color="#70CECB"/>
+						<seriesColor seriesOrder="3" color="#EBC42A"/>
+						<seriesColor seriesOrder="4" color="#71A3DA"/>
+						<seriesColor seriesOrder="5" color="#E04186"/>
+						<seriesColor seriesOrder="6" color="#357100"/>
+						<seriesColor seriesOrder="7" color="#FC663D"/>
+					</plot>
+					<itemLabel>
+						<font fontName="Tahoma"/>
+					</itemLabel>
+					<categoryAxisFormat labelRotation="45.0">
+						<axisFormat verticalTickLabels="true"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelMask="##"/>
+					</valueAxisFormat>
+					<rangeAxisMinValueExpression><![CDATA[0]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[30]]></rangeAxisMaxValueExpression>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

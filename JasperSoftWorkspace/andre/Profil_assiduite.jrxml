@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-25T14:01:17 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Profil_assiduite" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a4635920-8d9c-4e25-a6fb-5f6274c7bbd6">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="P_SCHOOL_CODE" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_SCHOOL_YEAR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_DATE_DEBUT" class="java.sql.Date" isForPrompting="false"/>
+	<parameter name="P_DATE_FIN" class="java.sql.Date" isForPrompting="false"/>
+	<parameter name="P_GRADE" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_CLASS_CODE" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_PERSON_ID" class="java.util.List" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT SPCT.PERSON_ID,
+SPCT.SCHOOL_CODE,
+SR.GRADE,
+P2.LEGAL_SURNAME AS NOM_PROF,
+P2.LEGAL_FIRST_NAME AS PRENOM_PROF,
+P.LEGAL_SURNAME AS NOM_ELEVE,
+P.LEGAL_FIRST_NAME AS PRENOM_ELEVE,
+P.LEGAL_MIDDLE_NAME AS NOM_MILIEU_ELEVE,
+P.STUDENT_NO,
+S.SCHOOL_NAME,
+SPCT.CLASS_CODE AS CLASSE_FOYER,
+EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM P.BIRTH_DATE) - (
+    CASE WHEN EXTRACT(MONTH FROM SYSDATE) = EXTRACT(MONTH FROM P.BIRTH_DATE) THEN (
+        CASE WHEN EXTRACT(DAY FROM SYSDATE) < EXTRACT(DAY FROM P.BIRTH_DATE) THEN 1
+        ELSE 0 END
+    )
+    WHEN EXTRACT(MONTH FROM SYSDATE) < EXTRACT(MONTH FROM P.BIRTH_DATE) THEN 1
+    ELSE 0 END
+) AS AGE_ANNEE,
+CASE WHEN EXTRACT(MONTH FROM SYSDATE) > EXTRACT(MONTH FROM P.BIRTH_DATE)
+    THEN (EXTRACT(MONTH FROM SYSDATE) - EXTRACT(MONTH FROM P.BIRTH_DATE))
+    ELSE ((12 + EXTRACT(MONTH FROM SYSDATE)) - EXTRACT(MONTH FROM P.BIRTH_DATE))
+END - CASE WHEN EXTRACT(DAY FROM SYSDATE) < EXTRACT(DAY FROM P.BIRTH_DATE) THEN 1 ELSE 0
+END AS AGE_MOIS
+
+
+FROM STUDENT_PROGRAM_CLASS_TRACKS SPCT
+INNER JOIN PERSONS P
+ON  SPCT.PERSON_ID = P.PERSON_ID
+INNER JOIN STUDENT_REGISTRATIONS SR
+ON  SPCT.PERSON_ID   = SR.PERSON_ID
+AND SPCT.SCHOOL_CODE = SR.SCHOOL_CODE
+AND SPCT.SCHOOL_YEAR = SR.SCHOOL_YEAR
+INNER JOIN SCHOOL_CLASSES SC
+ON  SPCT.SCHOOL_CODE = SC.SCHOOL_CODE
+AND SPCT.SCHOOL_YEAR = SC.SCHOOL_YEAR
+AND SPCT.CLASS_CODE  = SC.CLASS_CODE
+INNER JOIN PERSONS P2
+ON  SC.REPORTING_TEACHER = P2.PERSON_ID
+INNER JOIN SCHOOLS S
+ON  SPCT.SCHOOL_CODE = S.SCHOOL_CODE
+
+WHERE  $X{ IN, SPCT.SCHOOL_CODE, P_SCHOOL_CODE}
+AND  $X{ IN, SR.GRADE, P_GRADE}
+AND  $X{ IN, SPCT.CLASS_CODE, P_CLASS_CODE}
+AND  $X{ IN, SPCT.PERSON_ID, P_PERSON_ID}
+AND SPCT.SCHOOL_YEAR = $P{P_SCHOOL_YEAR}
+AND SPCT.CLASS_CODE IS NOT NULL
+AND SC.TAKE_ATTENDANCE_FLAG = 'x'
+AND SC.CLASS_HOMEROOM_FLAG = 'p'
+AND SPCT.START_DATE <= $P{P_DATE_FIN}
+AND (
+    SPCT.END_DATE IS NULL
+    OR (
+        SPCT.END_DATE >= $P{P_DATE_DEBUT}
+        AND SPCT.END_DATE = (
+            SELECT MAX(SPCT2.END_DATE)
+            FROM STUDENT_PROGRAM_CLASS_TRACKS SPCT2
+            INNER JOIN SCHOOL_CLASSES SC2
+            ON  SPCT2.SCHOOL_CODE = SC2.SCHOOL_CODE
+            AND SPCT2.SCHOOL_YEAR = SC2.SCHOOL_YEAR
+            AND SPCT2.CLASS_CODE  = SC2.CLASS_CODE
+            WHERE SPCT2.SCHOOL_CODE = SPCT.SCHOOL_CODE
+            AND SPCT2.SCHOOL_YEAR = SPCT.SCHOOL_YEAR
+            AND SPCT2.PERSON_ID = SPCT.PERSON_ID
+            AND SC2.CLASS_HOMEROOM_FLAG = 'p'
+            AND SPCT2.START_DATE <= $P{P_DATE_FIN}
+            AND (SPCT2.END_DATE IS NULL OR SPCT2.END_DATE >= $P{P_DATE_DEBUT})
+        )
+    )
+)
+
+ORDER BY UPPER(P.LEGAL_SURNAME), UPPER(P.LEGAL_FIRST_NAME)]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="NOM_PROF" class="java.lang.String"/>
+	<field name="PRENOM_PROF" class="java.lang.String"/>
+	<field name="NOM_ELEVE" class="java.lang.String"/>
+	<field name="PRENOM_ELEVE" class="java.lang.String"/>
+	<field name="NOM_MILIEU_ELEVE" class="java.lang.String"/>
+	<field name="STUDENT_NO" class="java.lang.String"/>
+	<field name="SCHOOL_NAME" class="java.lang.String"/>
+	<field name="CLASSE_FOYER" class="java.lang.String"/>
+	<field name="AGE_ANNEE" class="java.lang.Integer"/>
+	<field name="AGE_MOIS" class="java.lang.Integer"/>
+	<group name="G_PERSON_ID" isStartNewPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{PERSON_ID}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="45">
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="2a2881fe-1fe6-4b85-ae5c-453a031c16d2"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="20" uuid="210280eb-2772-42fc-80ab-a6c829e518f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profil d'assiduité]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="0" width="192" height="11" uuid="5d958d37-ad47-41d8-bd17-703e8b1a4145">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Généré le : " + DATEFORMAT(NOW( ),"dd-MM-yyyy hh:mm")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="20" width="572" height="16" uuid="24ffd30b-34b5-4759-abd9-0d728b70a4a0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SCHOOL_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="134">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="572" height="16" uuid="f2a0b112-a735-4a2d-9882-e98a32132aa5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Du " + DATEFORMAT( $P{P_DATE_DEBUT}, "dd MMM yyyy" ) + " au " + DATEFORMAT( $P{P_DATE_FIN}, "dd MMM yyyy" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="34" width="100" height="11" uuid="1b9f6323-fd74-4647-bda7-133dbadae7ae">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Élève]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="34" width="70" height="11" uuid="46a9d54f-643d-471c-87ca-7111b61a32f0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Âge]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="34" width="100" height="11" uuid="072e4920-c50d-40be-a470-a5cd11d3f5ad">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Classe-foyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="34" width="100" height="11" uuid="ada482ed-4109-443e-975c-1a67393b4ded">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Enseignant(e)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="34" width="100" height="11" uuid="9fdc2253-c33c-4bda-b388-34707d3a4ba7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parent/tuteur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="34" width="70" height="11" uuid="05a5d973-9ed6-4fe7-80c3-ec4072683007">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tél. au bureau]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="34" width="32" height="11" uuid="d08aceeb-2144-4c77-a5f4-55a0aa8b7fc4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Poste]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="54" width="100" height="11" uuid="ef083381-f105-4b72-b097-48ef3fd85b95">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOM_ELEVE} + ", " + $F{PRENOM_ELEVE} + " " + $F{NOM_MILIEU_ELEVE}.substring(0, 1)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="54" width="70" height="11" uuid="096d77ad-cb18-4da2-8b22-98cb4718b394"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGE_ANNEE}.toString() + " ans " + $F{AGE_MOIS}.toString() + " mois"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="170" y="54" width="100" height="11" uuid="41529bf6-c9a8-4c86-b728-db9378357186"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLASSE_FOYER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="54" width="100" height="11" uuid="5075c0cf-84aa-4eea-99aa-749858b5c9ab"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRENOM_PROF} + " " + $F{NOM_PROF}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="65" width="100" height="11" uuid="c8ebfa11-761c-4ce1-8364-03d67f60e81a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STUDENT_NO}.substring(0,3) + "-" + $F{STUDENT_NO}.substring(3,6) + "-" + $F{STUDENT_NO}.substring(6,9)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="84" width="50" height="11" uuid="734bb76e-d126-460c-8e23-7a9338613050">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. de tél.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="95" width="50" height="11" uuid="1996eb95-ee73-4b5f-b562-5ba2c83a478b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Année]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="50" y="95" width="70" height="11" uuid="6c28838a-10b6-4948-ba27-eb3b3e4906e3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="124" width="572" height="10" uuid="c33d402c-5ee1-492e-8e77-e70a89edda10">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="P_SCHOOL_CODE">
+					<subreportParameterExpression><![CDATA[$F{SCHOOL_CODE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_SCHOOL_YEAR">
+					<subreportParameterExpression><![CDATA[$P{P_SCHOOL_YEAR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{P_DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{P_DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PERSON_ID">
+					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Assiduite/Profil_assiduite/Profil_assiduite_subreport_1"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="50" y="84" width="70" height="11" uuid="49894c64-7dfa-49d9-adf5-10a1d7f0896e"/>
+				<subreportParameter name="P_PERSON_ID">
+					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Assiduite/Profil_assiduite/Profil_assiduite_subreport_2"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="370" y="54" width="201" height="51" uuid="4717699d-9e7a-4fa1-a827-556589e6fba1"/>
+				<subreportParameter name="P_PERSON_ID">
+					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Assiduite/Profil_assiduite/Profil_assiduite_subreport_3"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

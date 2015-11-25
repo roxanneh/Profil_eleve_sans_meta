@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-29T11:36:23 -->
+<!-- 2015-11-24T13:47:10 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rend_sub_test" pageWidth="490" pageHeight="800" columnWidth="490" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0d03c9f6-dfcd-46cc-b430-70282fd38f40">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -140,7 +140,7 @@
 			<style mode="Opaque" backcolor="#FFFF99"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[OR(OR( EXACT($F{NOTE_MOD}, "49"), EXACT($F{NOTE_MOD}, "50"), EXACT($F{NOTE_MOD}, "51"), EXACT($F{NOTE_MOD}, "52"), EXACT($F{NOTE_MOD}, "53"), EXACT($F{NOTE_MOD}, "54"), EXACT($F{NOTE_MOD}, "55"), EXACT($F{NOTE_MOD}, "56"), EXACT($F{NOTE_MOD}, "57"), EXACT($F{NOTE_MOD}, "58"), EXACT($F{NOTE_MOD}, "59")),OR(EXACT($F{NOTE_MOD}, "D"),EXACT($F{NOTE_MOD}, "D+"),EXACT($F{NOTE_MOD}, "D-")))]]></conditionExpression>
+			<conditionExpression><![CDATA[AND(OR(OR( EXACT($F{NOTE_MOD}, "49"), EXACT($F{NOTE_MOD}, "50"), EXACT($F{NOTE_MOD}, "51"), EXACT($F{NOTE_MOD}, "52"), EXACT($F{NOTE_MOD}, "53"), EXACT($F{NOTE_MOD}, "54"), EXACT($F{NOTE_MOD}, "55"), EXACT($F{NOTE_MOD}, "56"), EXACT($F{NOTE_MOD}, "57"), EXACT($F{NOTE_MOD}, "58"), EXACT($F{NOTE_MOD}, "59")),OR(EXACT($F{NOTE_MOD}, "D"),EXACT($F{NOTE_MOD}, "D+"),EXACT($F{NOTE_MOD}, "D-"))), NOT(EXACT($F{NOTE_MOD}, "I")))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979"/>
 		</conditionalStyle>
 		<conditionalStyle>
@@ -347,7 +347,7 @@ order by school_year desc, SR.SCHOOL_CODE, csa.report_period DESC]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
 						<font fontName="Tahoma" size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{SCHOOL_YEAR} + " - " + $F{GRADE} + "e" + " année"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{SCHOOL_YEAR} + " - " + INTEGER_VALUE($F{GRADE}) + "e" + " année"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

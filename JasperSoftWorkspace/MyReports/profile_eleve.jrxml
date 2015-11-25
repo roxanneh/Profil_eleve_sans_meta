@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-29T11:41:39 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profil_test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f88e9b7-79eb-4483-8f8b-3347432194f8">
+<!-- 2015-11-25T15:31:39 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profile_eleve" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="63c956b2-fbee-4eda-8711-47942104baf7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
@@ -125,148 +125,7 @@
 			<style forecolor="#DB3E3B"/>
 		</conditionalStyle>
 	</style>
-	<subDataset name="Dataset1" uuid="4d18a449-776b-4420-87f3-8013066b04ac">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString language="SQL">
-			<![CDATA[select scc.school_year, req.description_f, NVL(scc.earned_credit_value,'0') 
-from FS_SECONDARY_COURSE_CREDIT scc, FS_REQUIREMENT_AREAS req
-
-where req.requirement_area = scc.requirement_area
-and scc.person_id = $P{ACCOUNT_ID}
-ORDER BY sort_order asc]]>
-		</queryString>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="DESCRIPTION_F" class="java.lang.String"/>
-		<field name="NVL(SCC.EARNED_CREDIT_VALUE,&apos;0&apos;)" class="java.math.BigDecimal"/>
-	</subDataset>
-	<subDataset name="Dataset15" uuid="ff9f848e-2cd1-46b1-bf72-2997758f819e">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString>
-			<![CDATA[select school_year, MNTH, school_code,
-
-case when trim(mnth) IN ('sep', 'sept.') then 0 
-when trim(mnth)  in ('oct', 'oct.') then 1 
-when trim(mnth)  in ('nov', 'nov.') then 2
-when trim(mnth)  in ('dec', 'déc.') then 3
-when trim(mnth)  in ('jan', 'janv.') then 4
-when trim(mnth)  in ('feb', 'févr.') then 5
-when trim(mnth)  in ('mar', 'mars') then 6
-when trim(mnth)  in ('apr', 'avr.') then 7
-when trim(mnth)  in ('may', 'mai') then 8
-when trim(mnth)  in ('jun', 'juin') then 9
-when trim(mnth)  in ('jul', 'juil.') then 10
-else 11
-end as NUM, 
-
-attendance_code,
-
-       SUM(CASE WHEN ATTENDANCE_CODE = 'L' THEN 1 END) as L, 
-       SUM(CASE WHEN ATTENDANCE_CODE IN ('A', 'E', 'G', 'N')
-                THEN 
-                   round(1/gcc, 2)
-                END) as A --Le nullif est pour satisfaire Jaspersoft Studio qui se 
-                                                                                     --pleignait qu'il y avait une division par zéro. La division
-                                                                                     --détermine le poid de chaque absence. Par exemple, un élève 
-                                                                                     --qui prend 4 cours aura un poid d'absence de 0,25. tandis 
-                                                                                     --que l'élève qui en prend 5 aura un poid de 0,2. Une absence
-                                                                                     --est égale à une journée complète de cours manqués. 
-
-from (
-SELECT PA.SCHOOL_YEAR, TO_CHAR(CALENDAR_DATE, 'mon') MNTH, --Conversion de la date de l'absence à un mois
-       ATTENDANCE_CODE, pa. school_code, 
-       
-       PKG_PROFILE_ÉLÈVE.GET_COURSE_COUNT(PA.SCHOOL_YEAR,   $P{ACCOUNT_ID} ,  --Cette fonction retourne le nombre de cours dans lequel
-                   (case when (PA.CALENDAR_DATE BETWEEN--     un élève est inscrit qui doit prendre l'assiduité.
-                               SS.SEMESTER_START AND  --Ce Case statement détermine, d'après la date de l'absence, 
-                               SS.SEMESTER_END)       --     le semestre courrant.
-                         then SS.SEMESTER
-                   end)) as gcc
-                     
-       
-FROM PERIOD_ATTENDANCE PA, SCHOOL_SEMESTERS SS
-
-WHERE PERSON_ID =  $P{ACCOUNT_ID}   --Paramêtre dans Jaspersoft studio
-AND PA.SCHOOL_CODE IN ('ESF', 'ESA', 'ESE')--On compte seulement les absences prises durant le séjour secondaire
-AND SS.SCHOOL_CODE = PA.SCHOOL_CODE
-AND SS.SCHOOL_YEAR = PA.SCHOOL_YEAR
-AND CLASS_CODE IS NOT NULL --Dans le cas des absences secondaire, s'il y a une absence qui n'a pas de Class_Code associé, ce n'est pas une absence valide
---AND ATTENDANCE_CODE NOT IN ('N', 'E', 'G') --On ne compte pas les absences "Justifié". "Jour avec pas d'enseignement" ou "Intempéries"
-AND PA.SCHOOL_YEAR_TRACK = SS.SCHOOL_YEAR_TRACK
-AND CALENDAR_DATE BETWEEN SS.SEMESTER_START AND SS.SEMESTER_END --Ceci est pour prévenir que le Case ci-dessus retourne des rangées vides
-AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCUEIL', 'ACC.', 'FOYER') --On ne compte pas les absences prises durant le dîner, ou pendant l'acceuil/foyer
-)
-group by attendance_code, school_year, mnth, gcc, school_code
-order by mnth asc]]>
-		</queryString>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="MNTH" class="java.lang.String"/>
-		<field name="SCHOOL_CODE" class="java.lang.String"/>
-		<field name="NUM" class="java.math.BigDecimal"/>
-		<field name="ATTENDANCE_CODE" class="java.lang.String"/>
-		<field name="L" class="java.math.BigDecimal"/>
-		<field name="A" class="java.math.BigDecimal"/>
-	</subDataset>
-	<subDataset name="Dataset19" uuid="ec6f1e13-3844-4544-a412-53f5e7bdcbda">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString>
-			<![CDATA[SELECT SCSA.SCHOOL_CODE,  regexp_replace(scsa.school_year, '(\w{4})(\w{4})', '\1-\2') school_year, SCSA.SCHOOL_YEAR, SCSA.GRADE,  
-       SCSA.REPORT_PERIOD, S.SUBJECT_DESCRIPTION_F, SCSA.MARK, S.SUBJECT_CODE
-       
-FROM STUDENT_COURSE_STRAND_ACHIEVE SCSA, COURSE_CODES CC, SUBJECTS S
-
-WHERE SCSA.PERSON_ID =  $P{ACCOUNT_ID} 
-AND SCSA.SCHOOL_CODE = CC.SCHOOL_CODE
-AND SCSA.SCHOOL_YEAR = CC.SCHOOL_YEAR
-AND SCSA.STRAND_CODE = '999'
-AND SCSA.COURSE_CODE = CC.COURSE_CODE
-AND S.SUBJECT_CODE NOT IN ('009', '9999000000030')
-AND SCSA.GRADE = CC.GRADE
-AND CC.SUBJECT_CODE = S.SUBJECT_CODE
-ORDER BY SCSA.SCHOOL_YEAR, SCSA.REPORT_PERIOD desc, case when S.SUBJECT_DESCRIPTION_F = 'Anglais' then 0
-																											   when S.SUBJECT_DESCRIPTION_F = 'Sciences et technologie' then 1
-																											   when S.SUBJECT_DESCRIPTION_F IN ('Études sociales', 'Histoire', 'Géographie') then 2
-																											   when S.SUBJECT_DESCRIPTION_F = 'Éducation physique et santé' then 3
-																											   when S.SUBJECT_DESCRIPTION_F IN ('Musique', 'Arts visuels', 'Art dramatique et danse') then 4
-																											   else 5
-																											   end]]>
-		</queryString>
-		<field name="SCHOOL_CODE" class="java.lang.String"/>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="COLUMN_3" class="java.lang.String"/>
-		<field name="GRADE" class="java.lang.String"/>
-		<field name="REPORT_PERIOD" class="java.lang.String"/>
-		<field name="SUBJECT_DESCRIPTION_F" class="java.lang.String"/>
-		<field name="MARK" class="java.lang.String"/>
-		<field name="SUBJECT_CODE" class="java.lang.String"/>
-	</subDataset>
-	<subDataset name="Dataset4" uuid="b01261f1-a52e-4888-aa68-8fabfc51e91f">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
-		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString language="SQL">
-			<![CDATA[SELECT DISTINCT SORT_ORDER,
-SC.REQUIREMENT_AREA,
-REQ.DESCRIPTION_F,
-NVL(REGEXP_REPLACE(SCHOOL_YEAR, '(\w{4})(\w{4})', '\1-\2'), '-') SCHOOL_YEAR,
-NVL(PKG_PROFILE_ÉLÈVE.GET_EARNED_CREDIT(SC.PERSON_ID, SCC.SCHOOL_YEAR, SC.REQUIREMENT_AREA), 0) AS "EARNED CREDIT"
-FROM  FS_REQUIREMENT_AREAS REQ
-INNER JOIN FS_STUDENT_CREDITS SC
-ON REQ.REQUIREMENT_AREA = SC.REQUIREMENT_AREA
-LEFT JOIN FS_SECONDARY_COURSE_CREDIT SCC
-ON SC.PERSON_ID = SCC.PERSON_ID
-WHERE SC.PERSON_ID = $P{ACCOUNT_ID} 
-AND SC.REQUIREMENT_AREA NOT IN ('21', '20')
-ORDER BY SORT_ORDER]]>
-		</queryString>
-		<field name="SORT_ORDER" class="java.math.BigDecimal"/>
-		<field name="REQUIREMENT_AREA" class="java.lang.String"/>
-		<field name="DESCRIPTION_F" class="java.lang.String"/>
-		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="EARNED CREDIT" class="java.math.BigDecimal"/>
-	</subDataset>
-	<subDataset name="Dataset5" uuid="09928f70-ebce-4a2c-a526-1561539dfd4a">
+	<subDataset name="Dataset5" uuid="678ef505-1603-4755-93ac-52d53ac927c5">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 		<queryString>
@@ -362,7 +221,7 @@ AND UPPER(SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.') --On ne c
 		<field name="PERSON_ID" class="java.lang.String"/>
 		<field name="NUM" class="java.math.BigDecimal"/>
 	</subDataset>
-	<subDataset name="Dataset6" uuid="ad23ed53-ede2-45f9-92ae-6f8e05438158">
+	<subDataset name="Dataset6" uuid="8b81ab49-b4ba-4c5b-b124-797b88fc8dc5">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 		<queryString>
@@ -431,85 +290,35 @@ order by mnth asc]]>
 		<field name="L" class="java.math.BigDecimal"/>
 		<field name="A" class="java.math.BigDecimal"/>
 	</subDataset>
-	<subDataset name="credits" uuid="318dc3b1-55f3-45ee-8292-6fbcfa9bfb54">
+	<subDataset name="Dataset4" uuid="9eb3b85d-9e7d-41a5-be58-040c928e0328">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 		<parameter name="ACCOUNT_ID" class="java.lang.String"/>
-		<queryString>
-			<![CDATA[select distinct scc.person_id, scc.school_code, regexp_replace(scc.school_year, '(\w{4})(\w{4})', '\1-\2') school_year, semester, scc.course_code, 
-scc.earned_credit_value, scc.compulsory_flag, scc.substitution_flag 
-
-from fs_secondary_course_credit scc, class_meetings cm, student_program_class_tracks spct
-where scc.person_id =  $P{ACCOUNT_ID} 
-
-and scc.person_id = spct.person_id
-and scc.school_code = spct.school_code
-and scc.school_year = spct.school_year
-and scc.course_code = spct.course_code
-and scc.course_section = spct.course_section
-
-and spct.school_code = cm.school_code
-and spct.school_year = cm.school_year
-and spct.school_year_track = cm.school_year_track
-and spct.class_code = cm.class_code]]>
+		<queryString language="SQL">
+			<![CDATA[SELECT DISTINCT SORT_ORDER,
+SC.REQUIREMENT_AREA,
+REQ.DESCRIPTION_F,
+NVL(REGEXP_REPLACE(SCHOOL_YEAR, '(\w{4})(\w{4})', '\1-\2'), '-') SCHOOL_YEAR,
+NVL(PKG_PROFILE_ÉLÈVE.GET_EARNED_CREDIT(SC.PERSON_ID, SCC.SCHOOL_YEAR, SC.REQUIREMENT_AREA), 0) AS "EARNED CREDIT"
+FROM  FS_REQUIREMENT_AREAS REQ
+INNER JOIN FS_STUDENT_CREDITS SC
+ON REQ.REQUIREMENT_AREA = SC.REQUIREMENT_AREA
+LEFT JOIN FS_SECONDARY_COURSE_CREDIT SCC
+ON SC.PERSON_ID = SCC.PERSON_ID
+WHERE SC.PERSON_ID = $P{ACCOUNT_ID} 
+AND SC.REQUIREMENT_AREA NOT IN ('21', '20')
+ORDER BY SORT_ORDER]]>
 		</queryString>
-		<field name="PERSON_ID" class="java.lang.String"/>
-		<field name="SCHOOL_CODE" class="java.lang.String"/>
+		<field name="SORT_ORDER" class="java.math.BigDecimal"/>
+		<field name="REQUIREMENT_AREA" class="java.lang.String"/>
+		<field name="DESCRIPTION_F" class="java.lang.String"/>
 		<field name="SCHOOL_YEAR" class="java.lang.String"/>
-		<field name="SEMESTER" class="java.lang.String"/>
-		<field name="COURSE_CODE" class="java.lang.String"/>
-		<field name="EARNED_CREDIT_VALUE" class="java.lang.Double"/>
-		<field name="COMPULSORY_FLAG" class="java.lang.String"/>
-		<field name="SUBSTITUTION_FLAG" class="java.lang.String"/>
+		<field name="EARNED CREDIT" class="java.math.BigDecimal"/>
 	</subDataset>
 	<parameter name="STUDENT" class="java.lang.String"/>
-	<parameter name="LoggedInUser" class="com.jaspersoft.jasperserver.api.metadata.user.domain.client.UserImpl" isForPrompting="false">
-		<parameterDescription><![CDATA[Not usable in query input control, but is used as parameter to report]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new com.jaspersoft.jasperserver.api.metadata.user.domain.client.UserImpl()]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUsername" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[Of logged in user]]></parameterDescription>
-		<defaultValueExpression><![CDATA["joeuser"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserFullName" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[Of logged in user]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Joe Smith"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserEmailAddress" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[Of logged in user]]></parameterDescription>
-		<defaultValueExpression><![CDATA["joe@some.email"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserEnabled" class="java.lang.Boolean" isForPrompting="false">
-		<parameterDescription><![CDATA[Is logged in user enabled?]]></parameterDescription>
-		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserExternallyDefined" class="java.lang.Boolean" isForPrompting="false">
-		<parameterDescription><![CDATA[Is logged in user externally defined? ie. authenticated externally]]></parameterDescription>
-		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserTenantId" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[Of logged in user. Only relevant in Pro/Enterprise.]]></parameterDescription>
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserRoles" class="java.util.Collection" nestedType="java.util.String" isForPrompting="false">
-		<parameterDescription><![CDATA[Current set of roles of logged in user. Useful for $X parameter]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new ArrayList()]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserAttributes" class="java.util.Map" nestedType="java.util.String" isForPrompting="false">
-		<parameterDescription><![CDATA[Not usable in query input control, but is used as parameter to report. Empty map if no attributes]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new HashMap()]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserAttributeNames" class="java.util.Collection" nestedType="java.util.String" isForPrompting="false">
-		<parameterDescription><![CDATA[User profile attribute names. Useful for $X parameters. Empty collection if no attributes]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new ArrayList()]]></defaultValueExpression>
-	</parameter>
-	<parameter name="LoggedInUserAttributeValues" class="java.util.Collection" isForPrompting="false">
-		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new ArrayList()]]></defaultValueExpression>
-	</parameter>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT sr.OSR_FLAG, P.PREFERRED_NAME_UPPER, sr.school_year,
 	   pkg_profile_élève.get_spoken_at_home(p.person_id) as spoken_at_home,
-	   language_name_f,
+	   language_name_f, 
        P.LEGAL_FIRST_NAME,
        P.LEGAL_MIDDLE_NAME,
        P.LEGAL_SURNAME,
@@ -517,6 +326,19 @@ and spct.class_code = cm.class_code]]>
        P.GENDER,
        PKG_PROFILE_ÉLÈVE.GET_PNMI(p.person_id) AS PNMI,
        TO_CHAR(P.BIRTH_DATE, 'dd/mon/yyyy') as birth_date,
+       EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM P.BIRTH_DATE) - (
+    CASE WHEN EXTRACT(MONTH FROM SYSDATE) = EXTRACT(MONTH FROM P.BIRTH_DATE) THEN (
+        CASE WHEN EXTRACT(DAY FROM SYSDATE) < EXTRACT(DAY FROM P.BIRTH_DATE) THEN 1
+        ELSE 0 END
+    )
+    WHEN EXTRACT(MONTH FROM SYSDATE) < EXTRACT(MONTH FROM P.BIRTH_DATE) THEN 1
+    ELSE 0 END
+) AS AGE_ANNEE,
+CASE WHEN EXTRACT(MONTH FROM SYSDATE) > EXTRACT(MONTH FROM P.BIRTH_DATE)
+    THEN (EXTRACT(MONTH FROM SYSDATE) - EXTRACT(MONTH FROM P.BIRTH_DATE))
+    ELSE ((12 + EXTRACT(MONTH FROM SYSDATE)) - EXTRACT(MONTH FROM P.BIRTH_DATE))
+END - CASE WHEN EXTRACT(DAY FROM SYSDATE) < EXTRACT(DAY FROM P.BIRTH_DATE) THEN 1 ELSE 0
+END AS AGE_MOIS ,
        status_in_canada.FULL_NAME_F,
        PROGRAMS.PROGRAM_NAME_F,
        P.HEALTH_CARD_NO,
@@ -546,7 +368,7 @@ and spct.class_code = cm.class_code]]>
        PKG_PROFILE_ÉLÈVE_TEST.get_pgc_address_home_1 (p.person_id, SYSDATE),
        PKG_PROFILE_ÉLÈVE_TEST.get_pgc_address_home_2 (p.person_id, SYSDATE),
        PKG_PROFILE_ÉLÈVE.get_pgc_address_mail (p.person_id, SYSDATE),
-       PKG_PROFILE_ÉLÈVE.get_PERSON_PHONE_HOME (p.person_id, SYSDATE),
+       regexp_replace(PKG_PROFILE_ÉLÈVE.get_PERSON_PHONE_HOME (p.person_id, SYSDATE ), '(\S{8})(\w{4})', '\1-\2') as phone,
        PKG_PROFILE_ÉLÈVE.get_pgc_address_email (p.person_id, SYSDATE),
        fs_doctors.surname,
        fs_doctors.first_name,
@@ -559,7 +381,7 @@ and spct.class_code = cm.class_code]]>
        PKG_PROFILE_ÉLÈVE.GET_PEI(p.person_id) as PEI,
        PKG_PROFILE_ÉLÈVE.GET_ANOMALIE(p.person_id)as ANOMALIE,
        PKG_PROFILE_ÉLÈVE.GET_ALF(p.person_id) as ALF,
-       PKG_PROFILE_ÉLÈVE.GET_YTD_ABS(p.person_id, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate), SYSDATE, GRADE) as STU_ABS,
+       PKG_PROFILE_ÉLÈVE.GET_YTD_ABS(p.person_id, sr.school_code, sr.school_year) as STU_ABS,
        PKG_PROFILE_ÉLÈVE.GET_YTD_LATES(p.person_id, PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(sysdate), SYSDATE) as STU_LATES,
        (SELECT COUNT(*) FROM FS_SECONDARY_COURSE_CREDIT SCC WHERE SCC.PERSON_ID = P.PERSON_ID) AS CREDITS_SECONDAIRES
   FROM persons p,
@@ -606,11 +428,13 @@ WHERE     p.person_id = sr.person_id
 	<field name="GENDER" class="java.lang.String"/>
 	<field name="PNMI" class="java.lang.String"/>
 	<field name="BIRTH_DATE" class="java.lang.String"/>
+	<field name="AGE_ANNEE" class="java.math.BigDecimal"/>
+	<field name="AGE_MOIS" class="java.math.BigDecimal"/>
 	<field name="FULL_NAME_F" class="java.lang.String"/>
 	<field name="PROGRAM_NAME_F" class="java.lang.String"/>
 	<field name="HEALTH_CARD_NO" class="java.lang.String"/>
 	<field name="AGE" class="java.math.BigDecimal"/>
-	<field name="COLUMN_17" class="java.lang.String"/>
+	<field name="COLUMN_19" class="java.lang.String"/>
 	<field name="PKG_PROFILE_ÉLÈVE.GET_TEACHER_NAME(PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_TEACHER(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE))" class="java.lang.String"/>
 	<field name="STUDENT_NO" class="java.lang.String"/>
 	<field name="OEN_NUMBER" class="java.lang.String"/>
@@ -622,7 +446,7 @@ WHERE     p.person_id = sr.person_id
 	<field name="PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_1(P.PERSON_ID,SYSDATE)" class="java.lang.String"/>
 	<field name="PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_2(P.PERSON_ID,SYSDATE)" class="java.lang.String"/>
 	<field name="PKG_PROFILE_ÉLÈVE.GET_PGC_ADDRESS_MAIL(P.PERSON_ID,SYSDATE)" class="java.lang.String"/>
-	<field name="PKG_PROFILE_ÉLÈVE.GET_PERSON_PHONE_HOME(P.PERSON_ID,SYSDATE)" class="java.lang.String"/>
+	<field name="PHONE" class="java.lang.String"/>
 	<field name="PKG_PROFILE_ÉLÈVE.GET_PGC_ADDRESS_EMAIL(P.PERSON_ID,SYSDATE)" class="java.lang.String"/>
 	<field name="SURNAME" class="java.lang.String"/>
 	<field name="FIRST_NAME" class="java.lang.String"/>
@@ -635,135 +459,23 @@ WHERE     p.person_id = sr.person_id
 	<field name="PEI" class="java.lang.String"/>
 	<field name="ANOMALIE" class="java.lang.String"/>
 	<field name="ALF" class="java.lang.String"/>
-	<field name="STU_ABS" class="java.lang.String"/>
+	<field name="STU_ABS" class="java.lang.Double"/>
 	<field name="STU_LATES" class="java.lang.String"/>
-	<field name="CREDITS_SECONDAIRES" class="java.lang.Integer"/>
-	<variable name="row_count" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
-		<variableExpression><![CDATA[$F{SCHOOL_YEAR}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
-	</variable>
+	<field name="CREDITS_SECONDAIRES" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
 	<detail>
-		<band height="149" splitType="Prevent">
-			<textField isBlankWhenNull="true">
-				<reportElement x="68" y="77" width="142" height="10" uuid="49e46753-d259-4ed3-8b4e-516b5d21a58f"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{SCHOOL_NAME}]]></textFieldExpression>
-			</textField>
+		<band height="147" splitType="Stretch">
 			<staticText>
-				<reportElement x="6" y="77" width="52" height="10" uuid="3e436bb3-b0ec-4653-b862-c3f626eda47d"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[École]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="68" y="87" width="118" height="10" uuid="bb0a1f43-ca41-4208-986b-5ad7b4c730fe"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="6" y="87" width="52" height="10" uuid="1491f22b-4039-4869-86ad-02e192d86039"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Année d'études]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="68" y="97" width="118" height="10" uuid="cbd02c23-d1fc-410b-a68b-9af4335b7ae2"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_CODE(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="6" y="97" width="52" height="10" uuid="317de9f2-1369-4228-be07-f63d75f9b1aa"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Classe-foyer]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="65" y="107" width="134" height="10" uuid="9820572e-0369-4183-a7bc-6681feb4d795"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.GET_TEACHER_NAME(PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_TEACHER(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE))}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="6" y="107" width="52" height="10" uuid="18b3f3ac-8730-48b6-a180-22ea12f300c8"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Enseignant - e]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="68" y="117" width="118" height="10" uuid="293e4948-8d1e-4af8-add1-7cf4bdd91506"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PROGRAM_NAME_F}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="6" y="117" width="52" height="10" uuid="ef316ed9-ebf6-4991-aedb-e18c8d624d0d"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Programme]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="235" y="77" width="80" height="10" uuid="d063703e-2947-46f1-9719-1534b63fedf6"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{GENDER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="165" y="77" width="60" height="10" uuid="953ca6ed-955e-4124-9305-d324618207aa"/>
+				<reportElement x="185" y="107" width="46" height="10" uuid="80154130-5c61-4873-82c5-848f76f9a038"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Sexe]]></text>
-			</staticText>
-			<textField pattern="dd/mm/yyyy" isBlankWhenNull="true">
-				<reportElement x="235" y="87" width="80" height="10" uuid="54392141-7f43-4d52-90ce-501b13bdc667"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{BIRTH_DATE}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="165" y="87" width="60" height="10" uuid="241fe9a2-5f81-4868-9ffd-f3826e30b31d"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Date de naissance]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="235" y="127" width="72" height="10" uuid="1baf2056-2c4b-4133-ba37-3708f0cca1b6"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.GET_PERSON_PHONE_HOME(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="165" y="127" width="60" height="10" uuid="0c93bfb6-2877-41fb-a1f6-750a55de368f"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Numéro de téléphone]]></text>
+				<text><![CDATA[Adresse]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-				<reportElement x="406" y="87" width="33" height="10" uuid="ca4046e7-76af-4fa8-9b81-92bfb18d31a8">
+				<reportElement x="412" y="87" width="33" height="10" uuid="2f78cc35-f5dd-4d47-a295-fd41bea10cd6">
 					<printWhenExpression><![CDATA[NOT(EQUALS($F{ALF}, "Non"))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -778,50 +490,15 @@ WHERE     p.person_id = sr.person_id
 					<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/details_alf"]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 			</textField>
-			<staticText>
-				<reportElement x="346" y="87" width="50" height="10" uuid="a7fb25b2-4920-45b7-91c1-9fcca3c7f75f"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ALS]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="406" y="97" width="33" height="10" uuid="79f76f6d-04f5-4fc3-9943-bce68804c641"/>
+				<reportElement x="74" y="77" width="142" height="10" uuid="32c0b41e-518d-4a5c-b538-af18ecf98180"/>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PEI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SCHOOL_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="346" y="97" width="50" height="10" uuid="e624785d-ce71-4b04-9794-833ea04cf8b2"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6" isBold="false"/>
-				</textElement>
-				<text><![CDATA[PEI]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="406" y="107" width="54" height="10" uuid="239251db-d220-428b-aa47-52e3460d635b"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{ANOMALIE} == null ? "Non" : $F{ANOMALIE}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="346" y="107" width="50" height="10" uuid="6f2bf58e-4807-419f-aeaa-3778baf01cf6"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ANOMALIE]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="520" y="107" width="35" height="10" uuid="5a1dfaff-9238-4f36-8a8d-551e6cf2d530"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{STUDENT_NO}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="450" y="107" width="60" height="10" uuid="4e9a78e4-51c2-45af-8842-c691049f330a">
+				<reportElement x="456" y="107" width="60" height="10" uuid="680f6022-f71a-4299-adad-3d953ce5c318">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -830,74 +507,8 @@ WHERE     p.person_id = sr.person_id
 				</textElement>
 				<text><![CDATA[Numéro de l'élève]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="520" y="117" width="35" height="10" uuid="2d40b766-5119-42cd-92fd-bb55813d71e1"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{OEN_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="450" y="117" width="60" height="10" uuid="5c4ac9e8-69c6-42a6-9b0c-917e6abd646a">
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[NISO]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="235" y="107" width="114" height="10" uuid="28b45b7a-3d90-4e15-bb0f-ae176c9830f0"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_1(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="179" y="107" width="46" height="10" uuid="fbfb6752-f036-470a-ac77-02732a329080"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Adresse]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="235" y="117" width="82" height="10" uuid="76294c38-f058-4c8d-98b5-ba1d51150a42"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_2(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="406" y="127" width="33" height="10" uuid="b8cf2fa8-2922-4186-8ab4-d0270c6ed305"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{STU_ABS}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="305" y="127" width="91" height="10" uuid="305cd49b-1d57-405c-ae13-cb3aec5efce3"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="6"/>
-				</textElement>
-				<text><![CDATA[Absences cumulées pour l'année]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="40" y="45" width="100" height="20" forecolor="#007349" uuid="705a0194-c868-4f46-bda5-7ddf00057825"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Profil de l'élève - ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="140" y="45" width="190" height="20" forecolor="#949494" uuid="2c68e54a-1814-4140-9a30-a833bf1604ff"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{LEGAL_SURNAME} + ", " + $F{LEGAL_FIRST_NAME}]]></textFieldExpression>
-			</textField>
 			<rectangle>
-				<reportElement x="0" y="70" width="465" height="1" forecolor="#FFFFFF" backcolor="#CFCFCF" uuid="3ff2f671-c13e-4b0d-a4ad-a8b4583f2213">
+				<reportElement x="6" y="70" width="465" height="1" forecolor="#FFFFFF" backcolor="#CFCFCF" uuid="d30e8c12-de0e-4def-83a8-dd6122b2648b">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -907,50 +518,78 @@ WHERE     p.person_id = sr.person_id
 				</graphicElement>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="406" y="117" width="33" height="10" uuid="487206a8-667d-4a3e-9e66-4872dc32d94d"/>
+				<reportElement x="74" y="97" width="118" height="10" uuid="c3d81cbc-1558-4630-8025-c086992b1ca5"/>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{STU_LATES}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_CODE(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="315" y="117" width="81" height="10" uuid="33a9fb10-1abc-42e5-af4d-98b2c9137144"/>
+				<reportElement x="171" y="127" width="60" height="10" uuid="c55e7664-ee54-46b1-a975-bab54c8fe5b0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Numéro de téléphone]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
+				<reportElement x="476" y="0" width="85" height="100" uuid="af3928e9-ba99-417f-8c28-ee30985c1ff1"/>
+				<imageExpression><![CDATA["//TINTINV1/photosdeseleves/" + $F{STUDENT_NO} + ".jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="241" y="107" width="114" height="10" uuid="0b0b0812-6167-42e8-899a-a0481c4fb95e"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_1(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="107" width="52" height="10" uuid="b8f237e4-d3cc-4de6-8355-264178323eda"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Enseignant - e]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="-10" width="79" height="55" uuid="ef26a059-6dac-4652-adcf-f2c12a948bab"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="321" y="117" width="81" height="10" uuid="10df838f-7750-4849-9eb7-8b40f9c44e83"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[Retards cumulés pour l'année]]></text>
 			</staticText>
-			<image hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
-				<reportElement x="470" y="0" width="85" height="100" uuid="6c0d3d2d-2351-4d77-9749-ae2e5b41aab6"/>
-				<imageExpression><![CDATA["//TINTINV1/photosdeseleves/" + $F{STUDENT_NO} + ".jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="-10" width="79" height="55" uuid="daf1da31-46a4-40ab-946a-0b9d40de0826"/>
-				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
-			</image>
-			<textField>
-				<reportElement x="235" y="97" width="80" height="10" uuid="6b8f410b-fb80-4266-80fd-0dd06c105b6a"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{AGE}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="169" y="97" width="56" height="10" uuid="f61610b6-672d-48f1-9655-7299305ce06f"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="6"/>
+				<reportElement x="171" y="87" width="60" height="10" uuid="47ad1805-16c8-4ec1-bf06-d65e41770371"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Âge]]></text>
+				<text><![CDATA[Date de naissance]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
-				<reportElement x="406" y="77" width="54" height="10" uuid="8b104232-6805-4244-8cad-876e24d8d60a"/>
+			<staticText>
+				<reportElement mode="Transparent" x="46" y="45" width="100" height="20" forecolor="#007349" uuid="0d992c7c-0616-4896-9fd2-bc6ac720490f"/>
 				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profil de l'élève - ]]></text>
+			</staticText>
+			<textField pattern="dd/mm/yyyy" isBlankWhenNull="true">
+				<reportElement x="241" y="87" width="80" height="10" uuid="276be5a2-0056-4fbf-8010-8c2f5c7ba8f6"/>
+				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PNMI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{BIRTH_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="241" y="127" width="72" height="10" uuid="9f01c995-0296-4a97-96e7-a0ea0c33972a"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PHONE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="350" y="77" width="46" height="10" uuid="474465d0-a97f-4fe3-8cc8-b74aac4184f4">
+				<reportElement x="356" y="77" width="46" height="10" uuid="496b6af5-dabf-4ae0-8cde-6dfc9fcf9667">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -958,8 +597,15 @@ WHERE     p.person_id = sr.person_id
 				</textElement>
 				<text><![CDATA[PNMI]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="74" y="87" width="118" height="10" uuid="3c968562-b6f9-4523-8387-2e223e2d189f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+			</textField>
 			<rectangle>
-				<reportElement x="1" y="146" width="554" height="1" forecolor="#FFFFFF" backcolor="#CFCFCF" uuid="142b8d7e-9860-44e9-9957-49c88621b6b3">
+				<reportElement x="7" y="146" width="554" height="1" forecolor="#FFFFFF" backcolor="#CFCFCF" uuid="1735ea80-fbed-456e-aa03-e3898b7b257b">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -968,17 +614,159 @@ WHERE     p.person_id = sr.person_id
 				</graphicElement>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="406" y="87" width="33" height="10" uuid="e563166d-17c4-473f-ac23-6134beabe5e9">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<printWhenExpression><![CDATA[EXACT($F{ALF}, "Non")]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="526" y="117" width="35" height="10" uuid="2e2fc30b-b8f0-4f02-b50b-9bc96f5516ca"/>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ALF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{OEN_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="68" y="127" width="100" height="10" uuid="132c2b19-d4ae-48e1-9b12-719cc73c2094">
+				<reportElement x="241" y="117" width="82" height="10" uuid="f787eeb1-8196-485f-8c97-2fcc6fba8732"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE_TEST.GET_PGC_ADDRESS_HOME_2(P.PERSON_ID,SYSDATE)}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="412" y="127" width="33" height="10" uuid="3d9f2168-46e2-42c5-a577-53cb7fb8575b"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STU_ABS} == null ? 0 : $F{STU_ABS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="456" y="117" width="60" height="10" uuid="f36aa024-fb22-4b7a-89f8-2150134ff3f0">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[NISO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="146" y="45" width="190" height="20" forecolor="#949494" uuid="fc288b57-e7b8-4854-bb21-f81667cef205"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEGAL_SURNAME} + ", " + $F{LEGAL_FIRST_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="175" y="97" width="56" height="10" uuid="f5bb5f21-e0be-47d8-958e-fee2af1f370b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Âge]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-4" y="127" width="68" height="10" uuid="44eb5279-27bc-4c54-bd8b-504084026591">
+					<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Heures communautaires]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="77" width="52" height="10" uuid="2b46b2bb-23b1-46b1-a6f5-55ea17922ae5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[École]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="412" y="77" width="54" height="10" uuid="801ee592-bb87-4883-b9b4-28c67e0b33b5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PNMI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="412" y="97" width="33" height="10" uuid="1965e361-9e23-4961-bfea-22b4446c5f2e"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PEI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="87" width="50" height="10" uuid="5fb2ad7a-bf6d-41b9-90b5-469f2b3277a0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ALS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="74" y="117" width="118" height="10" uuid="833d2819-a5b8-4871-82d6-efcd099ec048"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROGRAM_NAME_F}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="117" width="52" height="10" uuid="534eebc7-888e-4f69-aa8a-fecc25717ee0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Programme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="127" width="91" height="10" uuid="a7974805-ac3e-46bd-8a64-c109560837e6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Absences cumulées pour l'année]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+				<reportElement x="412" y="107" width="54" height="10" uuid="5cde88d2-a2dc-4365-9f7a-cc7b62c66e5a"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANOMALIE} == null ? "Non" : $F{ANOMALIE}]]></textFieldExpression>
+				<hyperlinkWhenExpression><![CDATA[NOT($F{ANOMALIE}.equals("Non"))]]></hyperlinkWhenExpression>
+				<hyperlinkParameter name="_report">
+					<hyperlinkParameterExpression><![CDATA["repo:/Rapports_CSCFN_testing/Rox/details_cipr"]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<hyperlinkParameter name="ACCOUNT_ID">
+					<hyperlinkParameterExpression><![CDATA[$P{STUDENT}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="71" y="107" width="134" height="10" uuid="6f2e81b2-5a98-4bd0-a436-1ee4d6569fec"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PKG_PROFILE_ÉLÈVE.GET_TEACHER_NAME(PKG_PROFILE_ÉLÈVE.FIND_MAIN_CLASS_TEACHER(SR.SCHOOL_CODE,PKG_PROFILE_ÉLÈVE.GET_SCHOOL_YEAR(SYSDATE),P.PERSON_ID,SYSDATE))}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="241" y="77" width="80" height="10" uuid="82f9f671-39b6-47e0-b4b2-531af490be79"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GENDER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="412" y="117" width="33" height="10" uuid="353d04fa-e6f0-4a38-9422-0932da78c819"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STU_LATES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="97" width="50" height="10" uuid="f0fb5930-5530-4cf1-a914-a6176c630e85"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PEI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="171" y="77" width="60" height="10" uuid="3b84169c-1cb9-4eae-9f04-e17216d8cf84"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sexe]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="74" y="127" width="100" height="10" uuid="2535a53c-944a-4acd-910d-31c156e9a162">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 				</reportElement>
@@ -988,45 +776,82 @@ WHERE     p.person_id = sr.person_id
 				<textFieldExpression><![CDATA[$F{TOTAL_COMMUNITY_HOURS}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-10" y="127" width="68" height="10" uuid="a4e79ae4-4c03-4914-9151-ba5fce94d09b">
-					<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="12" y="97" width="52" height="10" uuid="244ae327-c8fe-41ef-b8ea-24ae9a003822"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
-				<text><![CDATA[Heures communautaires]]></text>
+				<text><![CDATA[Classe-foyer]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="241" y="97" width="80" height="10" uuid="cd50acb0-3afa-494c-bc1e-4f51692c0f6c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGE_ANNEE} + " ans et " + $F{AGE_MOIS} + " mois"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="412" y="87" width="33" height="10" uuid="424429da-d5b0-45f7-b2ee-7c368d26d5bc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[EXACT($F{ALF}, "Non")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ALF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="87" width="52" height="10" uuid="a7dcb569-68cc-457f-b2b0-ee57f6e9d8de"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Année d'études]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="107" width="50" height="10" uuid="890b5246-b446-4d12-aa68-ec376c498108"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ANOMALIE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="526" y="107" width="35" height="10" uuid="bfee73e0-1e87-4399-8905-e26638f9385d"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STUDENT_NO}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="40" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="-6" y="30" width="574" height="5" uuid="0b9790ad-0a77-4a02-affd-69ce61aed3a3"/>
+				<reportElement x="0" y="30" width="574" height="5" uuid="633efba9-93f1-4b1a-b6b8-f051cb11d613"/>
 				<subreportParameter name="ACCOUNT_ID">
 					<subreportParameterExpression><![CDATA[$P{STUDENT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["GET_PGC_INFO.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement mode="Opaque" x="2" y="3" width="70" height="18" forecolor="#007349" uuid="e1820ab2-96a7-4eec-b3fe-a7ce0b046027">
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Contact GP]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="73" y="2" width="475" height="19" forecolor="#949494" uuid="af00e780-ef4c-4059-a336-d41149564002"/>
+				<reportElement x="127" y="2" width="434" height="18" forecolor="#949494" uuid="7855b089-1e9b-4900-9796-5587be2727d1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Langue parlée à la maison: " + ($F{SPOKEN_AT_HOME} == null ? "Aucune information enregistrée" : $F{SPOKEN_AT_HOME})]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="46" y="2" width="81" height="18" forecolor="#007349" uuid="d427dda5-3702-49c6-8338-7e17c30f24a3">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contact GP ]]></text>
+			</staticText>
 		</band>
 		<band height="3" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<rectangle>
-				<reportElement x="1" y="1" width="560" height="1" forecolor="#FFFFFF" backcolor="#CFCFCF" uuid="6acfa7ce-ac11-4a79-8dc9-1eecaa4df92f">
+				<reportElement x="7" y="1" width="554" height="1" forecolor="#FFFFFF" backcolor="#CFCFCF" uuid="f9848b6f-4ce8-4b46-a0f7-c8c5346a5de3">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -1036,9 +861,9 @@ WHERE     p.person_id = sr.person_id
 			</rectangle>
 		</band>
 		<band height="10" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="65" y="2" width="430" height="5" uuid="e4d3def3-7624-4f47-b8ca-f35f9eaf3ba7">
+				<reportElement x="70" y="2" width="430" height="5" uuid="3290fc85-f80a-4258-bcfc-66582a9358c3">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -1050,26 +875,26 @@ WHERE     p.person_id = sr.person_id
 			</subreport>
 		</band>
 		<band height="70" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<staticText>
-				<reportElement x="-8" y="36" width="513" height="26" uuid="09c174c3-41a3-4201-815b-74fbc87b2c08"/>
+				<reportElement x="-3" y="36" width="513" height="26" uuid="bec9bd7d-4a01-4a0d-93eb-0dd1cc897ce7"/>
 				<textElement textAlignment="Left">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<text><![CDATA[À noter que une (1) absence équivaut une journée complète d'absence et que les décimales comptent comme une période d'assiduité manquée. Par exemple, s'il y a 2 périodes d'assiduité pour une école, 1 = deux périodes manquées et 1.5 = trois périodes manquées.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="11" width="250" height="20" uuid="f40562a1-f6e0-4285-940d-eb3153106d06"/>
+				<reportElement x="5" y="11" width="250" height="20" uuid="4a8fe75d-134c-4132-8938-da25e95f1728"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Assiduité par mois - élémentaire]]></text>
 			</staticText>
 			<crosstab horizontalPosition="Center">
-				<reportElement x="-10" y="68" width="580" height="2" uuid="301756a5-bfe5-48ee-ab00-2b2facb433ae"/>
+				<reportElement x="-5" y="68" width="580" height="2" uuid="b3ee5efd-3746-4b02-bf42-2df40ddecdbf"/>
 				<crosstabDataset>
 					<dataset>
-						<datasetRun subDataset="Dataset5" uuid="603c7c88-0071-4650-8c42-a2d74efb3ecd">
+						<datasetRun subDataset="Dataset5" uuid="3964c2cf-5bbb-4547-b4e3-f4d1f5b1b4c3">
 							<datasetParameter name="ACCOUNT_ID">
 								<datasetParameterExpression><![CDATA[$F{PERSON_ID}]]></datasetParameterExpression>
 							</datasetParameter>
@@ -1085,7 +910,7 @@ WHERE     p.person_id = sr.person_id
 						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-								<reportElement x="0" y="0" width="45" height="20" uuid="cc014e6a-b6f7-4ffe-a295-2aa325c3c43e"/>
+								<reportElement x="0" y="0" width="45" height="20" uuid="e7a0e121-f504-452a-a6b1-523c60d5c448"/>
 								<box>
 									<topPen lineWidth="0.1"/>
 									<leftPen lineWidth="0.1"/>
@@ -1112,7 +937,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="26cf8d8f-edd7-4298-84bd-e5cb71b03ea5"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="bf53cf67-410e-44c7-a9fb-b708e790149b"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
@@ -1126,7 +951,7 @@ WHERE     p.person_id = sr.person_id
 						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							<textField>
-								<reportElement x="0" y="0" width="25" height="20" uuid="729b7695-a1bd-4dd7-855f-c02cd8a3ebc7">
+								<reportElement x="0" y="0" width="25" height="20" uuid="529360fc-3965-4783-a011-25bdc1695425">
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1145,7 +970,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="e8b0d101-3988-461c-af84-0d9dea856de3"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="204598ef-2338-440c-a582-21b5e7aa491a"/>
 								<text><![CDATA[Total SCHOOL_CODE1]]></text>
 							</staticText>
 						</cellContents>
@@ -1159,7 +984,7 @@ WHERE     p.person_id = sr.person_id
 						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
-								<reportElement x="0" y="0" width="50" height="0" uuid="7382137d-0a07-4961-9596-1c05c0a895ef">
+								<reportElement x="0" y="0" width="50" height="0" uuid="7a7e262e-8153-4689-9d6a-b23efcb0655f">
 									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
@@ -1170,14 +995,14 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="992f35f5-1314-49ea-977a-754b15837707"/>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="6bc8f1ec-8a4f-40e4-b9b1-13efb8343d98"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<text><![CDATA[Total]]></text>
 							</staticText>
 							<staticText>
-								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="447a5a9d-be02-418e-a1eb-38493168c4ae">
+								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="8beab656-11d6-48d6-b2e1-5cfc5d820039">
 									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1192,7 +1017,7 @@ WHERE     p.person_id = sr.person_id
 								<text><![CDATA[A]]></text>
 							</staticText>
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="51d1e360-dc22-44d0-a8d4-279138c56dbf"/>
+								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="78490953-3659-4c37-82f4-14302632fa14"/>
 								<box>
 									<topPen lineWidth="0.1"/>
 									<leftPen lineWidth="0.1"/>
@@ -1215,14 +1040,14 @@ WHERE     p.person_id = sr.person_id
 						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
-								<reportElement x="0" y="0" width="50" height="20" uuid="8b1c336a-3d0f-423d-be71-77f14e07c9e0"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="9c8dc112-421e-4d30-88d0-ed7a43600963"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{MNTH1}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="dee44921-4af2-44e1-9dea-2854922952c4">
+								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="ac25294c-9764-4142-a711-2927348e0cba">
 									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1237,7 +1062,7 @@ WHERE     p.person_id = sr.person_id
 								<text><![CDATA[A]]></text>
 							</staticText>
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="2925c74c-5cde-4919-a4e7-d42e433e4e67"/>
+								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="6348ddd0-d0d8-4571-8cab-736084a4819b"/>
 								<box>
 									<topPen lineWidth="0.1"/>
 									<leftPen lineWidth="0.1"/>
@@ -1254,7 +1079,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="753e10a5-9681-4ea2-824d-6fd341ad765e"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="4cc7e907-74ea-4bbb-bb52-a3665be09a5b"/>
 								<text><![CDATA[Total MNTH1]]></text>
 							</staticText>
 						</cellContents>
@@ -1272,7 +1097,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="50" height="20">
 					<cellContents mode="Opaque" style="Style1">
 						<textField pattern="##" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-							<reportElement style="Colour ret" x="0" y="0" width="25" height="20" uuid="f524e54f-00ea-477d-9654-5dfcc723d5cd">
+							<reportElement style="Colour ret" x="0" y="0" width="25" height="20" uuid="93cb29a9-51b4-452b-8071-788265a935ba">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1300,7 +1125,7 @@ WHERE     p.person_id = sr.person_id
 							</hyperlinkParameter>
 						</textField>
 						<textField pattern="##.##" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-							<reportElement style="Colour abs" x="25" y="0" width="25" height="20" uuid="bf00a3de-74be-4d2e-9c8a-29170d010703">
+							<reportElement style="Colour abs" x="25" y="0" width="25" height="20" uuid="08fcf74c-60b0-4757-baa0-3b85caa1b2fb">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1332,7 +1157,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField pattern="##">
-							<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="42765999-2273-42d8-aebe-60ff60e454d4">
+							<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="9cfa2678-20b1-4883-b03c-8874da0c764a">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1347,7 +1172,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField pattern="##.##">
-							<reportElement mode="Opaque" x="25" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="217e8266-3f64-49e1-94da-6186c57fe3de">
+							<reportElement mode="Opaque" x="25" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="5024cccd-fb3f-41cc-b82a-96fb5892d68e">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1366,15 +1191,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" uuid="b70f656a-8e71-4c58-90de-c0d0945d375c"/>
+							<reportElement x="0" y="0" width="60" height="6" uuid="c63d27b5-6bc9-4ea5-bc71-066ddcba71b3"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" uuid="1797a015-7571-493f-a06a-7c91dcf04fce"/>
+							<reportElement x="0" y="6" width="60" height="6" uuid="fb1c52cd-7c1f-42c5-a9c0-a335649f13bd"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" uuid="c278ca44-0234-43ac-b9ff-1327175779d3"/>
+							<reportElement x="0" y="12" width="60" height="6" uuid="5b13d8e6-b430-4391-9ac6-0f1622629f56"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1382,15 +1207,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="0cc42ac9-1902-4970-b57d-3095001df8ad"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="a974237a-ba82-47c1-84f9-828fc7d43b42"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="dab15971-4a7a-4f64-9bf3-d6894cf7d473"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="48438ccf-87bc-435a-9494-27b267f6d9c6"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="2d5b6e3b-e409-4bf9-adb0-239019846958"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="600d5c24-acf2-4b3c-9152-a5be25d20d0d"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1398,15 +1223,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="abb7a015-ed9c-4b7b-a1c1-a828682ca07c"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="aedd2021-064f-4b42-9e42-70291961f707"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="206778f3-49d6-4e1e-9d81-0959b67c09be"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="b9075a23-43c4-47d0-9aae-387ac50fd61b"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="762abb4b-9348-4a17-ad77-85e6fe2a976d"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="2f829d77-32c8-47ca-a277-64abdea0ca58"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1414,15 +1239,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="7fb07eab-1b92-47e7-bcff-2ef8e42a9f43"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="2304f58a-5cb2-4304-8ea0-ac772eaa8200"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="38ad4865-88f0-4dd9-beb9-a90a34982324"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="780526fc-ed2d-4b21-8edb-a5910d5e8d84"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="b118b5d8-75d6-4790-80c0-1e72dfc4cac5"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="4dc8cc99-0ea8-40fb-867a-ad338d441acf"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1430,15 +1255,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" uuid="be7339c8-7447-453d-ac72-34bb84824831"/>
+							<reportElement x="0" y="0" width="60" height="6" uuid="81f0046c-6e3c-4681-af44-d66cce5b3bcb"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" uuid="99aa6fb5-8b68-4b62-bfa0-c17b81cec3f3"/>
+							<reportElement x="0" y="6" width="60" height="6" uuid="12c93658-9d7f-4a39-b4c4-4c79712f4230"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" uuid="61c4558d-1ca3-40dd-8f35-f508cc2d54ef"/>
+							<reportElement x="0" y="12" width="60" height="6" uuid="b5824edf-e4a0-4973-b3c0-9aefc82b98d7"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1446,15 +1271,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="12f0be44-4475-4e8f-bb6d-c88a13df3d62"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="5724c508-9095-4fc2-bd6d-4a2cd70c566a"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="d0286bc4-6c73-4a3b-beb0-a4eaae1f7cc3"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="103e3ec9-9d6e-4f81-8f2b-be2699e657e2"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="36c82738-2c67-4ff2-81bc-97e901762758"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="df81b6c4-f2a3-46a1-8dcd-f11b1740fdc3"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1462,15 +1287,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="MNTH1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" uuid="c95466fa-22a0-4dd7-a565-8e537fef6ac6"/>
+							<reportElement x="0" y="0" width="60" height="6" uuid="fc2caf18-8752-4330-bf0e-c4d53e97a685"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" uuid="3cb5e0c2-b1f0-439c-bc98-766d9559d3be"/>
+							<reportElement x="0" y="6" width="60" height="6" uuid="d5231725-631c-4bbf-ae25-9685d4c140bf"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" uuid="26f60da8-524e-4bb2-a6b4-87525392f7f8"/>
+							<reportElement x="0" y="12" width="60" height="6" uuid="5815f021-5934-4347-81a9-f6391f9a615f"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1478,9 +1303,10 @@ WHERE     p.person_id = sr.person_id
 			</crosstab>
 		</band>
 		<band height="85" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="11" width="340" height="20" uuid="5b687fbe-08b1-484c-8078-baad5bb2a29c">
+				<reportElement positionType="Float" x="5" y="11" width="340" height="20" uuid="1b0e865f-84f9-4a09-9f55-c23fa3a32a07">
 					<printWhenExpression><![CDATA[OR(EXACT( $F{GRADE}, "09" ), EXACT( $F{GRADE}, "10" ), EXACT( $F{GRADE}, "11" ), EXACT( $F{GRADE}, "12" ))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -1488,18 +1314,11 @@ WHERE     p.person_id = sr.person_id
 				</textElement>
 				<text><![CDATA[Assiduité par mois - secondaire]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="-8" y="36" width="468" height="36" uuid="3efae4d5-c34c-40f8-aec9-aab6e68cac66"/>
-				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<text><![CDATA[À noter que une (1) absence équivaut une journée complète d'absence et que les décimales comptent comme une période manquée. Donc, si l'élève prend 4 cours, 1 = quatre périodes manquées et 0.25 = une période manquée. Si l'élève prend 5 cours, 1 = cinq périodes manquées et 0.2 = une période manquée.]]></text>
-			</staticText>
 			<crosstab horizontalPosition="Center">
-				<reportElement x="-8" y="77" width="578" height="3" backcolor="#FFFFFF" uuid="f9062632-91ed-4d91-a82f-413c93264e00"/>
+				<reportElement x="-3" y="77" width="578" height="3" backcolor="#FFFFFF" uuid="98ecdc23-41c5-4530-ae11-e2bd0d1b3009"/>
 				<crosstabDataset>
 					<dataset>
-						<datasetRun subDataset="Dataset6" uuid="e55adb60-27ee-47f0-b855-7b414182287c">
+						<datasetRun subDataset="Dataset6" uuid="cb4a99fe-bee4-43c5-8abf-6abf137161b0">
 							<datasetParameter name="ACCOUNT_ID">
 								<datasetParameterExpression><![CDATA[$F{PERSON_ID}]]></datasetParameterExpression>
 							</datasetParameter>
@@ -1514,7 +1333,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabRowHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-								<reportElement x="0" y="0" width="45" height="20" uuid="7b4f6f5a-1fb5-4d31-8aaf-9f4a7bf08ccf">
+								<reportElement x="0" y="0" width="45" height="20" uuid="59fd811b-d885-4cb5-961d-435c91213b8c">
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1543,7 +1362,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="86917f4e-744f-477b-b979-f84fa360d3e0"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="59f24a8d-cf62-468c-9ed7-1d2306e9ebc1"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
@@ -1556,7 +1375,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabRowHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<textField>
-								<reportElement x="0" y="0" width="25" height="20" uuid="9f5ba796-5326-422d-8845-b288c0e1d9cf">
+								<reportElement x="0" y="0" width="25" height="20" uuid="ce7a3901-7122-49aa-b4b2-69a224f2a904">
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1575,7 +1394,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="3e4141e2-02bf-44c4-9d24-fffab06da6bf"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="2918f162-5be8-40b2-9f81-eb5a6471a5b4"/>
 								<text><![CDATA[Total SCHOOL_CODE1]]></text>
 							</staticText>
 						</cellContents>
@@ -1589,7 +1408,7 @@ WHERE     p.person_id = sr.person_id
 						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
-								<reportElement x="0" y="0" width="50" height="0" uuid="6a9740e1-ed44-42a4-888f-25ba2344f439">
+								<reportElement x="0" y="0" width="50" height="0" uuid="e34d28e5-bde5-45e0-8d49-981129418c41">
 									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								</reportElement>
 								<textFieldExpression><![CDATA[$V{NUM1}]]></textFieldExpression>
@@ -1599,14 +1418,14 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="7b5e4591-1dcc-483e-9477-b7d7f45a0672"/>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="257fd522-730c-4389-b1e2-48b9a517c653"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<text><![CDATA[Total]]></text>
 							</staticText>
 							<staticText>
-								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="8ad9da5b-0258-4cec-bd14-91f5301a29a3">
+								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="7cfa78ec-b28f-404a-9170-266d55636595">
 									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1621,7 +1440,7 @@ WHERE     p.person_id = sr.person_id
 								<text><![CDATA[A]]></text>
 							</staticText>
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="842e00c9-e98a-475e-81fe-546d73ad658d"/>
+								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="648f3693-c740-43ea-8e03-50c7d4da0cf4"/>
 								<box>
 									<topPen lineWidth="0.1"/>
 									<leftPen lineWidth="0.1"/>
@@ -1643,14 +1462,14 @@ WHERE     p.person_id = sr.person_id
 					<crosstabColumnHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<textField>
-								<reportElement x="0" y="0" width="50" height="20" uuid="215624e5-5f30-482a-8357-ba00d6f6929c"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="81944053-0563-45b1-93e4-ce1153ce3193"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{MNTH1}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="075f28bc-21e3-422c-8385-594a91d7f80d">
+								<reportElement mode="Opaque" x="25" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="4e09af9e-35f2-488b-96af-8c4e483c9980">
 									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								</reportElement>
 								<box>
@@ -1665,7 +1484,7 @@ WHERE     p.person_id = sr.person_id
 								<text><![CDATA[A]]></text>
 							</staticText>
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="c058c56c-3f08-4deb-8c65-5f98538a40a3"/>
+								<reportElement mode="Opaque" x="0" y="20" width="25" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="8a47cacc-b2ed-4b63-a7e3-f2f76c8e7222"/>
 								<box>
 									<topPen lineWidth="0.1"/>
 									<leftPen lineWidth="0.1"/>
@@ -1682,7 +1501,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="21710059-1b20-47c9-b0bc-e21bae2256e2"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="d0300ae2-8e1c-452c-bd81-a1af472d7552"/>
 								<text><![CDATA[Total MNTH1]]></text>
 							</staticText>
 						</cellContents>
@@ -1700,7 +1519,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="50" height="20">
 					<cellContents mode="Opaque" style="Style1">
 						<textField pattern="##" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-							<reportElement style="Colour ret" x="0" y="0" width="25" height="20" uuid="055fee11-9014-4cab-be8e-442d70b06387">
+							<reportElement style="Colour ret" x="0" y="0" width="25" height="20" uuid="14a5132f-3251-41f4-972d-e525a596a154">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1728,7 +1547,7 @@ WHERE     p.person_id = sr.person_id
 							</hyperlinkParameter>
 						</textField>
 						<textField pattern="##.##" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-							<reportElement style="Colour abs" x="25" y="0" width="25" height="20" uuid="4b79f394-9101-4776-bdc3-c396089f524d">
+							<reportElement style="Colour abs" x="25" y="0" width="25" height="20" uuid="94ebf301-24e7-465e-ab0b-db156bb84ebf">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1760,7 +1579,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="50" height="20" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField pattern="##">
-							<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="94ea0fda-9dc1-4050-aef5-a960593b4847">
+							<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="88a02354-bf6e-48c4-a1a2-2a8e9c8358cb">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1775,7 +1594,7 @@ WHERE     p.person_id = sr.person_id
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField pattern="##.##">
-							<reportElement mode="Opaque" x="25" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="41576eb5-c692-4d2d-a63b-3a8c80665a3c">
+							<reportElement mode="Opaque" x="25" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="69d7f447-0503-468d-9057-8a3aed2ba3dc">
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
 							<box>
@@ -1794,15 +1613,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" columnTotalGroup="MNTH1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" uuid="adf676d1-4e7d-4038-a691-ce00f1f90e50"/>
+							<reportElement x="0" y="0" width="60" height="6" uuid="37432a9f-d164-41a9-9c61-f0d9239be584"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" uuid="36b7364d-bfd8-4448-959a-a916c13f8c21"/>
+							<reportElement x="0" y="6" width="60" height="6" uuid="764995c9-dd92-4cff-9744-217b316645e1"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" uuid="5673d1e8-f57b-4d82-a9aa-4f3d4daa4d8e"/>
+							<reportElement x="0" y="12" width="60" height="6" uuid="4ba4f04c-6927-465a-a286-a297cfa961a2"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1810,15 +1629,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="d1bf729d-c7f7-4d73-9518-24a232d5d8c7"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="494e73e2-c490-4528-b963-aaf3590e510a"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="3f567ef0-030a-48a6-8478-ea794bd60f25"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="4f635c79-f829-411a-8258-b65efea20ffc"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="e18382a1-affb-4d68-9126-68104c9c0839"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="6c257c79-4124-401b-93ba-f7d4241d1c69"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1826,15 +1645,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="17d6f1ef-154c-4f4d-980d-7f5b82f6a3b8"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="894941d4-6b22-40bc-9066-fb800f79bf78"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="fcbef386-fa5d-46e0-8820-cddc690f404b"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="924725cb-3f01-4d98-adcb-52bf41de4514"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="6e968a6e-4fb4-4e2c-a41d-f6e70da21048"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="78eeec14-22ed-43b4-a071-c0572be2edc4"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1842,15 +1661,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_YEAR1" columnTotalGroup="MNTH1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="5c590cbc-0997-4066-a3f0-a7756c09d162"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="e2d5929f-eea5-4c86-b07c-f05b4c0e01d6"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="0f946817-01ef-41b6-8a9e-380551429ba2"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="7001851d-6b3a-4708-8827-ff37934ba305"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="90842df2-0d18-4703-acde-4bb03ac059c3"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="b7d959f8-6d90-4a4f-9cb1-ffa11f4bb95d"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1858,15 +1677,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" uuid="39c8bca1-8f22-4f7a-9d2e-4f1777a57180"/>
+							<reportElement x="0" y="0" width="60" height="6" uuid="b9451622-4922-4b73-b06a-556ecc67f4be"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" uuid="007ca5e2-b09f-4358-aed9-f2da11bcb6dd"/>
+							<reportElement x="0" y="6" width="60" height="6" uuid="a49fdae5-d5af-477f-8c82-98e42454c5e5"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" uuid="f2854c13-2523-4317-9690-b5326b370fb1"/>
+							<reportElement x="0" y="12" width="60" height="6" uuid="7e068cff-366d-4645-b30f-370edd4687f3"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1874,15 +1693,15 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="NUM1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="c6a00cd0-6def-4a83-afac-fde1d2b109a5"/>
+							<reportElement x="0" y="0" width="60" height="6" forecolor="#FFFFFF" uuid="a3c90f4a-2d66-4f49-b8e1-69d082ee6429"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="20d77ef7-cdcd-4696-b8e3-323795a3fdc0"/>
+							<reportElement x="0" y="6" width="60" height="6" forecolor="#FFFFFF" uuid="c2b49377-0d8b-466c-82e5-820791979f57"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="7d86dfe4-6c76-4c25-9eb6-2ea628fae1d5"/>
+							<reportElement x="0" y="12" width="60" height="6" forecolor="#FFFFFF" uuid="67178153-88ef-4e7f-b2d2-e4cd9d424159"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -1890,24 +1709,34 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SCHOOL_CODE1" columnTotalGroup="MNTH1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="6" uuid="60064b67-e9c8-485e-9348-78b206bb3955"/>
+							<reportElement x="0" y="0" width="60" height="6" uuid="4af5bff6-d8ca-40fb-8a00-d2a1aa40dd3f"/>
 							<textFieldExpression><![CDATA[$V{PERSON_ID_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="6" width="60" height="6" uuid="a9fece77-f41b-4ff9-aa53-f831325d8b34"/>
+							<reportElement x="0" y="6" width="60" height="6" uuid="18e39fad-82cb-4ff3-bcd0-e1d96f1a8c42"/>
 							<textFieldExpression><![CDATA[$V{L_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="12" width="60" height="6" uuid="c95c06af-6a74-4c56-a226-c9385f783148"/>
+							<reportElement x="0" y="12" width="60" height="6" uuid="cd566102-db21-4d07-877d-3085be9ba797"/>
 							<textFieldExpression><![CDATA[$V{A_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 			</crosstab>
+			<staticText>
+				<reportElement x="-3" y="36" width="468" height="36" uuid="977dd6a6-5f7d-403c-af57-0ad601d1b89b"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[À noter que une (1) absence équivaut une journée complète d'absence et que les décimales comptent comme une période manquée. Donc, si l'élève prend 4 cours, 1 = quatre périodes manquées et 0.25 = une période manquée. Si l'élève prend 5 cours, 1 = cinq périodes manquées et 0.2 = une période manquée.]]></text>
+			</staticText>
 		</band>
 		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="-6" y="2" width="576" height="6" uuid="78df5853-eec4-4afd-930d-52db4064bd01"/>
+				<reportElement x="-1" y="3" width="576" height="4" uuid="fcd804c5-4745-4f8d-af6b-3693762cd631">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<subreportParameter name="ACCOUNT_ID">
 					<subreportParameterExpression><![CDATA[$P{STUDENT}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -1915,11 +1744,10 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["rndmt_cycle_prep.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="9" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="121" y="2" width="320" height="4" uuid="941f5413-60c6-4230-afec-7434a20c9a45">
+				<reportElement x="126" y="4" width="320" height="4" uuid="32bdb28d-6021-426e-90c0-aa09cbddfe4d">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -1930,11 +1758,10 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["competences_ele.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="9" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="36" y="2" width="490" height="5" uuid="a7b0f8ff-9cbe-4667-9fd9-cd40835abbdf">
+				<reportElement x="41" y="3" width="490" height="5" uuid="7ce8f058-a389-44ed-a3f8-4a600e0d0feb">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 				</reportElement>
 				<subreportParameter name="ACCOUNT_ID">
@@ -1947,7 +1774,7 @@ WHERE     p.person_id = sr.person_id
 		<band height="10" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="-8" y="3" width="572" height="5" uuid="9feda025-8d46-4278-adcf-5445e5ab9fb2">
+				<reportElement x="-3" y="3" width="572" height="5" uuid="730f7206-6f0e-4494-8218-c06ff66a3f83">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
@@ -1959,8 +1786,9 @@ WHERE     p.person_id = sr.person_id
 			</subreport>
 		</band>
 		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="5" y="3" width="550" height="4" uuid="14ced200-19f5-4352-bb18-5c316fb0c8cf">
+				<reportElement x="10" y="3" width="550" height="4" uuid="46921041-8ed0-41ef-8858-0fab189b74a8">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -1971,22 +1799,22 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["Rendement_elementaire_HH.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="9" splitType="Prevent">
+		<band height="10" splitType="Prevent">
 			<subreport>
-				<reportElement x="-2" y="2" width="560" height="5" uuid="62341410-7563-4397-8564-78a1b5320d26">
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				<reportElement x="0" y="3" width="574" height="5" uuid="78301ed5-9e28-4e26-b66b-99ce6973e076">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<subreportParameter name="ACCOUNT_ID">
-					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
+				<subreportParameter name="PERSON_ID">
+					<subreportParameterExpression><![CDATA[$P{STUDENT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["gbp.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["gbp_subreport.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="9" splitType="Prevent">
+		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="155" y="2" width="250" height="4" uuid="e5a84586-c578-4a0e-a26d-ddf18121df29">
+				<reportElement x="160" y="2" width="250" height="4" uuid="6266f488-185b-462f-8218-4d667e5ac98a">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -1997,12 +1825,11 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["competances_sec.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="9" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 			<subreport>
-				<reportElement x="135" y="2" width="290" height="4" uuid="211d5c00-17b5-494f-811a-b8e35441d0bb">
+				<reportElement x="140" y="2" width="290" height="4" uuid="e1f4e25b-dfe6-4de2-b63e-8b788162b017">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -2013,12 +1840,11 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["rendement_secondaire.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="9" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE})>8]]></printWhenExpression>
 			<subreport>
-				<reportElement x="54" y="2" width="452" height="4" uuid="a2510001-1666-4fd8-a44d-6a2ecdae5ccd">
+				<reportElement x="59" y="2" width="452" height="4" uuid="9c9f5c51-7e4e-44bc-a4f2-3d93fcbd8c84">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -2029,11 +1855,24 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["rendement_secondaire_HH.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
+		<band height="10">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement x="3" y="3" width="561" height="4" uuid="98ae306d-6626-418c-b3b3-6e5863d340c6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="PERSON_ID">
+					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["accumulation_credit_eleve.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 		<band height="70" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[INTEGER_VALUE($F{GRADE}) > 8 && $F{CREDITS_SECONDAIRES} > 0]]></printWhenExpression>
 			<subreport>
-				<reportElement x="10" y="1" width="183" height="10" uuid="3606f2a0-773b-4a24-b0d3-675cea895702">
+				<reportElement x="15" y="7" width="183" height="10" uuid="1176698d-a377-4e18-b4b5-08ac7c4951a2">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -2044,10 +1883,10 @@ WHERE     p.person_id = sr.person_id
 				<subreportExpression><![CDATA["condition_obtention.jasper"]]></subreportExpression>
 			</subreport>
 			<crosstab>
-				<reportElement x="197" y="61" width="358" height="3" uuid="12b5e4b9-82e1-488e-a9cc-e05cb77a6d53"/>
+				<reportElement x="202" y="57" width="358" height="3" uuid="607974fd-bc63-49c2-8bd9-6e8d3b8f0567"/>
 				<crosstabDataset>
 					<dataset>
-						<datasetRun subDataset="Dataset4" uuid="29de21e5-3a31-4f01-99e0-ada7ec5cd409">
+						<datasetRun subDataset="Dataset4" uuid="a2a75d7e-1d92-40c2-a50b-6a7ba459033f">
 							<datasetParameter name="ACCOUNT_ID">
 								<datasetParameterExpression><![CDATA[$F{PERSON_ID}]]></datasetParameterExpression>
 							</datasetParameter>
@@ -2069,7 +1908,7 @@ WHERE     p.person_id = sr.person_id
 								<rightPen lineWidth="0.0"/>
 							</box>
 							<textField>
-								<reportElement x="0" y="0" width="0" height="20" forecolor="#FFFFFF" uuid="d8da224b-3a98-470a-9e3f-6d174d90338a">
+								<reportElement x="0" y="0" width="0" height="20" forecolor="#FFFFFF" uuid="5864288b-43e6-4d06-82be-221b6198bf73">
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
 								<textFieldExpression><![CDATA[$V{SORT_ORDER1}]]></textFieldExpression>
@@ -2079,7 +1918,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="6f9aca2e-78ca-439e-8e77-d0d5d70e12c9"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="a06508e1-8f70-4389-8017-f11f4f1c9933"/>
 								<text><![CDATA[Total SORT_ORDER1]]></text>
 							</staticText>
 						</cellContents>
@@ -2093,7 +1932,7 @@ WHERE     p.person_id = sr.person_id
 						<cellContents mode="Opaque" style="Style1">
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<textField>
-								<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="ad9a4480-3b94-475e-a8f8-e08d7d83e64d"/>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="3026bf5c-e2e5-48be-95b3-0060f930f12b"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
@@ -2104,7 +1943,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="d4ee7f02-1aad-47dd-b91c-9a864b4c98f8"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="9907916e-b7c4-458a-a877-ce712275376b"/>
 								<text><![CDATA[Total DESCRIPTION_F1]]></text>
 							</staticText>
 						</cellContents>
@@ -2117,7 +1956,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabColumnHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<textField isBlankWhenNull="true">
-								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="8e848182-e8c9-47f9-98d2-6813f139dc5f"/>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="40562085-86d8-4306-bcd5-0ac7175fed45"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
@@ -2128,7 +1967,7 @@ WHERE     p.person_id = sr.person_id
 					<crosstabTotalColumnHeader>
 						<cellContents mode="Opaque" style="Style1">
 							<staticText>
-								<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="cc618100-04ee-4acb-b05c-a27812bda30a"/>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="4d4cc0fa-c147-4ed7-974e-6ee0cc90183f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
@@ -2144,7 +1983,7 @@ WHERE     p.person_id = sr.person_id
 					<cellContents mode="Opaque" style="Style1">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<textField isBlankWhenNull="true">
-							<reportElement x="0" y="0" width="50" height="20" forecolor="#000000" uuid="c72c1da9-637f-4aee-bccf-e8b707c54bc9"/>
+							<reportElement x="0" y="0" width="50" height="20" forecolor="#000000" uuid="62875e5e-2d8d-4660-aa76-e3524ec699ce"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="Tahoma" size="8"/>
 							</textElement>
@@ -2155,7 +1994,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_YEAR1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="518a77cc-870b-41ab-8af6-463072073d4a"/>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="32d383fd-9782-451f-842e-3303cbe46cb2"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="Tahoma" size="8"/>
 							</textElement>
@@ -2166,7 +2005,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SORT_ORDER1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="d014c856-0386-4fa8-924d-0c5878bb2943"/>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="efb8a490-3c83-4213-a28f-f48aa5555117"/>
 							<textFieldExpression><![CDATA[$V{EARNED CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -2174,7 +2013,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="SORT_ORDER1" columnTotalGroup="SCHOOL_YEAR1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="a9348266-de16-45be-bd75-fd00c76abd03"/>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="e013faf7-d38d-4bfc-ac1c-caae8dcb4f98"/>
 							<textFieldExpression><![CDATA[$V{EARNED CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -2182,7 +2021,7 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="DESCRIPTION_F1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="20" uuid="a3cd2cb5-243a-48ec-ba30-cbfbd170ddf1"/>
+							<reportElement x="0" y="0" width="60" height="20" uuid="942fca3a-beed-4bb7-9795-3830a4754277"/>
 							<textFieldExpression><![CDATA[$V{EARNED CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -2190,18 +2029,17 @@ WHERE     p.person_id = sr.person_id
 				<crosstabCell width="60" height="20" rowTotalGroup="DESCRIPTION_F1" columnTotalGroup="SCHOOL_YEAR1">
 					<cellContents mode="Opaque" style="Style1">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="3544554d-dd4a-4503-a9ea-683623f085af"/>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="ff23ce0e-431e-4fd0-b1e1-c8dbb0280cf1"/>
 							<textFieldExpression><![CDATA[$V{EARNED CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 			</crosstab>
 		</band>
-		<band height="8" splitType="Prevent">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="10" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement x="180" y="2" width="200" height="4" uuid="f6c5e049-1b8f-4eb4-935c-e908c391038a"/>
+				<reportElement x="185" y="2" width="200" height="4" uuid="89df5177-9b91-4fae-97c2-ce13d043013b"/>
 				<subreportParameter name="ACCOUNT_ID">
 					<subreportParameterExpression><![CDATA[$F{PERSON_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -2212,10 +2050,8 @@ WHERE     p.person_id = sr.person_id
 	</detail>
 	<pageFooter>
 		<band height="30" splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
-				<reportElement x="511" y="0" width="44" height="30" uuid="3a88a2ae-4d40-4019-bdcd-d70e0c2db7c6"/>
+				<reportElement x="516" y="0" width="44" height="30" uuid="e5f8dbd1-0336-4e4a-a683-727823c90d6c"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

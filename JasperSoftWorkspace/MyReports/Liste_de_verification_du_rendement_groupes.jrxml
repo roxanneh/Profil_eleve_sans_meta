@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-04T14:09:39 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_de_verification_du_rendement_groupes" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4000725-791f-417b-b012-d8b781509672">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<queryString>
+		<![CDATA[SELECT student_course_achievement.school_code,
+		 schools.school_name, 
+		 regexp_replace( student_course_achievement.school_year, '(\w{4})(\w{4})', '\1-\2') school_year,
+         persons.preferred_name_upper,
+         persons.oen_number,
+         TRIM (
+            pkg_profile_élève.get_teacher_name (
+               school_classes.reporting_teacher))
+            AS teacher,
+         inner_mark,
+         inner_domaine,
+         inner_matiere,
+         student_course_achievement.class_code,
+         student_course_achievement.subject_comment,
+         student_course_achievement.report_period,
+         student_course_achievement.subject_status,
+         delivery_mode,
+         CASE WHEN inner_pei = 1 THEN 'oui' ELSE '' END as pei
+    FROM student_course_achievement,
+         (  SELECT student_course_strand_achieve.COURSE_CODE AS inner_course,
+                   student_course_strand_achieve.MARK AS inner_mark,
+                   student_course_strand_achieve.STRAND_CODE,
+                   strand.SHORT_DESCRIPTION_F AS inner_domaine,
+                   subjects.SUBJECT_DESCRIPTION_F AS inner_matiere,
+                   student_course_strand_achieve.person_id AS inner_id,
+                   student_course_strand_achieve.school_code AS inner_school,
+                   student_course_strand_achieve.school_year AS inner_year,
+                   student_course_strand_achieve.report_period AS inner_period,
+                   fs_delivery_mode_descr.description AS delivery_mode,
+                   student_course_strand_achieve.IEP_FLAG_10 AS inner_pei
+              FROM student_course_strand_achieve
+                   LEFT OUTER JOIN fs_delivery_mode_descr
+                      ON     fs_delivery_mode_descr.delivery_mode =
+                                student_course_strand_achieve.DELIVERY_MODE
+                         AND fs_delivery_mode_descr.locale = 'EN_CA',
+                   strand,
+                   course_codes,
+                   subjects
+             WHERE     (strand.STRAND_CODE =
+                           student_course_strand_achieve.STRAND_CODE)
+                   AND (subjects.SUBJECT_CODE = course_codes.SUBJECT_CODE)
+                   AND (student_course_strand_achieve.COURSE_CODE =
+                           course_codes.COURSE_CODE)
+                   AND (student_course_strand_achieve.SCHOOL_CODE =
+                           course_codes.SCHOOL_CODE)
+                   AND (student_course_strand_achieve.SCHOOL_YEAR =
+                           course_codes.SCHOOL_YEAR)
+          ORDER BY subjects.SORT_ORDER ASC,
+                   student_course_strand_achieve.STRAND_CODE ASC),
+         schools,
+         school_classes,
+         persons
+   WHERE     (student_course_achievement.school_code = schools.school_code)
+         AND (student_course_achievement.person_id = persons.person_id)
+         AND (student_course_achievement.school_code =
+                 school_classes.school_code)
+         AND (student_course_achievement.school_year =
+                 school_classes.school_year)
+         AND (student_course_achievement.class_code = school_classes.class_code)
+         AND (student_course_achievement.school_code = 'CHR')
+         AND (student_course_achievement.school_year = '20142015')
+         AND (student_course_achievement.report_period = 'I')
+         AND inner_course = student_course_achievement.course_code
+         AND inner_school = student_course_achievement.school_code
+         AND inner_year = student_course_achievement.school_year
+         AND inner_id = student_course_achievement.person_id
+         AND inner_period = student_course_achievement.report_period
+--         AND (   (student_course_achievement.class_code = 'All')
+--              OR ('All' = 'All'))
+ORDER BY class_code asc, preferred_name_upper ASC,
+         CASE
+            WHEN inner_matiere = 'Français' THEN 1
+            WHEN inner_matiere = 'Mathématiques' THEN 2
+            ELSE 3
+         END,
+         inner_domaine]]>
+	</queryString>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="SCHOOL_NAME" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="PREFERRED_NAME_UPPER" class="java.lang.String"/>
+	<field name="OEN_NUMBER" class="java.lang.String"/>
+	<field name="TEACHER" class="java.lang.String"/>
+	<field name="INNER_MARK" class="java.lang.String"/>
+	<field name="INNER_DOMAINE" class="java.lang.String"/>
+	<field name="INNER_MATIERE" class="java.lang.String"/>
+	<field name="CLASS_CODE" class="java.lang.String"/>
+	<field name="SUBJECT_COMMENT" class="java.lang.String"/>
+	<field name="REPORT_PERIOD" class="java.lang.String"/>
+	<field name="SUBJECT_STATUS" class="java.lang.String"/>
+	<field name="DELIVERY_MODE" class="java.lang.String"/>
+	<field name="PEI" class="java.lang.String"/>
+	<sortField name="CLASS_CODE"/>
+	<sortField name="TEACHER" order="Descending"/>
+	<sortField name="PREFERRED_NAME_UPPER" order="Descending"/>
+	<group name="TEACHER" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{TEACHER}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="484bedf4-f0a3-434f-a399-fef039f22719">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box topPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TEACHER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="336" y="15" width="130" height="13" forecolor="#FFFFFF" uuid="ffa3c30d-462a-4b86-a828-fd6c54c37131"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CLASS_CODE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="PREFERRED_NAME_UPPER" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{PREFERRED_NAME_UPPER}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#FFFFFF" backcolor="#84D9BA" uuid="88f41b41-6383-4da8-9641-51aae41dbad8">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PREFERRED_NAME_UPPER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="49" uuid="6e93dc26-0a3f-4603-855d-8eb8b2528c3d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SCHOOL_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="630" y="0" width="172" height="49" uuid="c2165979-9e35-44b1-b44e-0fa4e2f56439"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SCHOOL_YEAR}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="026af5e1-5588-4613-b0d1-72dbf9b3d444"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="144" y="0" width="25" height="20" uuid="9e9db921-e175-4d81-91bb-19314dbce8b7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Cote]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="0" width="72" height="20" uuid="53671fe1-8a3e-4acd-9a14-1773de6b4975"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Domaine]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="72" height="20" uuid="04681dad-ea1c-403e-bfa3-483bb043ceed"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Matiere]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="0" width="541" height="20" uuid="57632362-35ee-4ab0-8b2a-cc3d060523c1"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Commentaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="710" y="0" width="31" height="20" uuid="20629149-9b63-4f57-9f23-3d278d70922b"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Method Ens. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="771" y="0" width="31" height="20" uuid="17d0cd43-f8bd-4d17-a001-dca852908180"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="6"/>
+				</textElement>
+				<text><![CDATA[Met. Ens. Mat.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="741" y="0" width="30" height="20" uuid="1fbef778-8e5b-4a77-8194-fac878fbbd2a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[PEI]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="144" y="0" width="25" height="30" uuid="26fb2f29-7e18-45c3-8fc9-ce02bdda6e6c"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INNER_MARK}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="72" y="0" width="72" height="30" uuid="c772f1d4-fca8-446f-b252-f56f8e751634"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INNER_DOMAINE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="72" height="30" uuid="d9d711e5-7de6-4018-97d0-28f93b9a6826"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INNER_MATIERE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="169" y="0" width="541" height="30" uuid="d5731486-5676-46e8-bf81-f25979f7db85">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="10">
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBJECT_COMMENT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="710" y="0" width="31" height="30" uuid="aa3e8512-706c-4e86-93d9-d123652b53fe">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBJECT_STATUS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="771" y="0" width="31" height="30" uuid="d976ef2f-cdef-4aa5-830d-860922dcd24e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELIVERY_MODE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="741" y="0" width="30" height="30" uuid="202265bb-cd46-4c9e-a72f-17d62781fd46"/>
+				<box>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PEI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

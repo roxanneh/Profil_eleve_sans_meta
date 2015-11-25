@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-07-30T15:36:52 -->
+<!-- 2015-10-30T10:33:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GET_PGC_INFO" pageWidth="574" pageHeight="752" columnWidth="574" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3e488f48-30a1-4105-b774-2a8baea44abf">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT PREFERRED_SURNAME || ', ' || PREFERRED_FIRST_NAME as pgc_name, P.person_id, relationship_type_name_f,
        PKG_PROFILE_ÉLÈVE.GET_ADDRESS(CONTACT_PERSON_ID) AS ADDRESS, 
-       PKG_PROFILE_ÉLÈVE.get_PERSON_PHONE_HOME (contact_person_id, SYSDATE ) as phone,
+       regexp_replace(PKG_PROFILE_ÉLÈVE.get_PERSON_PHONE_HOME (contact_person_id, SYSDATE ), '(\S{8})(\w{4})', '\1-\2') as phone,
        PKG_PROFILE_ÉLÈVE.get_pgc_address_email (contact_person_id, SYSDATE ) as email, 
        PKG_PROFILE_ÉLÈVE.GET_MATERNAL_LANG(CONTACT_PERSON_ID) "Langue maternelle" 
 FROM PERSONS P, STUDENT_CONTACTS SC, relationship_types rt

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-22T15:44:52 -->
+<!-- 2015-11-02T10:58:46 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="drilldown_accumultion_credit" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a77d563e-60de-4858-b049-bb7a73c26ee9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -12,7 +12,7 @@
 	<parameter name="SEMESTER" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select distinct preferred_surname || ', ' || preferred_first_name as name, scc.school_year, scc.school_code, 
-scc.course_code, scc.earned_credit_value, COMPULSORY_FLAG, SUBSTITUTION_FLAG
+scc.course_code, scc.earned_credit_value, COMPULSORY_FLAG, SUBSTITUTION_FLAG, scc.attempted_credit_value
 
 from fs_secondary_course_credit scc, class_meetings cm, student_program_class_tracks spct, persons
 where scc.person_id = $P{STUDENT} 
@@ -31,7 +31,9 @@ and spct.school_year_track = cm.school_year_track
 and spct.class_code = cm.class_code
 
 AND CM.SEMESTER = $P{SEMESTER} 
-AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
+AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}
+
+order by scc.school_year, school_code, scc.course_code]]>
 	</queryString>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="SCHOOL_YEAR" class="java.lang.String"/>
@@ -40,11 +42,12 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 	<field name="EARNED_CREDIT_VALUE" class="java.math.BigDecimal"/>
 	<field name="COMPULSORY_FLAG" class="java.lang.String"/>
 	<field name="SUBSTITUTION_FLAG" class="java.lang.String"/>
+	<field name="ATTEMPTED_CREDIT_VALUE" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="60" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="410" height="30" uuid="17b8f659-837a-4202-946b-4cc7239fba64">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -52,10 +55,10 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="22"/>
 				</textElement>
-				<text><![CDATA[Accumulation des crédits 9e - 10e]]></text>
+				<text><![CDATA[Accumulation des crédits 9e - 10e ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="30" width="410" height="30" uuid="9b7067de-2605-41d5-afb1-2fbb41a26557"/>
+				<reportElement x="0" y="30" width="410" height="20" uuid="9b7067de-2605-41d5-afb1-2fbb41a26557"/>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
@@ -106,11 +109,13 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Valeur du crédit]]></text>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Crédit obtenu]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="283" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2a92bd5a-ba22-4dd5-95b8-6582c04ca731"/>
+				<reportElement mode="Opaque" x="346" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2a92bd5a-ba22-4dd5-95b8-6582c04ca731"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -121,7 +126,7 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 				<text><![CDATA[Obli.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="323" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="933f9c3c-c604-459d-8254-95fd9d63f387"/>
+				<reportElement mode="Opaque" x="386" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="933f9c3c-c604-459d-8254-95fd9d63f387"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -130,6 +135,19 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Subs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="283" y="0" width="63" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="ca568186-b3f2-4be7-b86a-2c16b92e1905">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Valeur du crédit]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -180,7 +198,7 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 				<textFieldExpression><![CDATA[$F{EARNED_CREDIT_VALUE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="283" y="0" width="40" height="30" uuid="730e90cb-00bd-44a2-b5ff-74bbcd70aecb"/>
+				<reportElement x="346" y="0" width="40" height="30" uuid="730e90cb-00bd-44a2-b5ff-74bbcd70aecb"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -191,7 +209,7 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 				<textFieldExpression><![CDATA[$F{COMPULSORY_FLAG}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="323" y="0" width="40" height="30" uuid="f0a2cf7a-b5e1-4055-984b-46b35b3e44c0">
+				<reportElement x="386" y="0" width="40" height="30" uuid="f0a2cf7a-b5e1-4055-984b-46b35b3e44c0">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -202,6 +220,19 @@ AND SCC.SCHOOL_YEAR = $P{SCHOOL_YEAR}]]>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{SUBSTITUTION_FLAG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="0" width="63" height="30" uuid="5bfcb6fc-9c84-4132-a743-05f4522827a6">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ATTEMPTED_CREDIT_VALUE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

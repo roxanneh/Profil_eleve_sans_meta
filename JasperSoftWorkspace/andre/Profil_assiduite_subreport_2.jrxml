@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-10-16T13:56:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Profil_assiduite_subreport_2" pageWidth="70" pageHeight="752" columnWidth="70" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ed1b6a68-24af-4f1d-b8f8-91678406ca09">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="P_PERSON_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT PT.AREA_CODE,
+PT.PHONE_NO
+FROM PERSON_TELECOM PT
+WHERE PT.PERSON_ID = $P{P_PERSON_ID}
+AND PT.TELECOM_TYPE_NAME = 'Home'
+AND PT.START_DATE <= SYSDATE
+AND PT.END_DATE IS NULL OR PT.END_DATE >= SYSDATE]]>
+	</queryString>
+	<field name="AREA_CODE" class="java.lang.String"/>
+	<field name="PHONE_NO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="70" height="11" uuid="90693375-244b-4b9b-95e6-395cfd4a39d6"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(" + $F{AREA_CODE} + ") " + $F{PHONE_NO}.substring(0,3) + "-" + $F{PHONE_NO}.substring(3,7)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

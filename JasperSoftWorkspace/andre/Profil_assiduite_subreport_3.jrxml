@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-10-19T10:52:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Profil_assiduite_subreport_3" pageWidth="202" pageHeight="752" columnWidth="202" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d3f4f7b4-c4d7-40c5-9984-af8279da6fae">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="P_PERSON_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT SC.CONTACT_PERSON_ID,
+P.LEGAL_FIRST_NAME,
+P.LEGAL_SURNAME,
+RT.RELATIONSHIP_TYPE_NAME_F,
+SC.PRIMARY_CONTACT_PRIORITY
+
+FROM STUDENT_CONTACTS SC
+INNER JOIN PERSONS P
+ON SC.CONTACT_PERSON_ID = P.PERSON_ID
+INNER JOIN RELATIONSHIP_TYPES RT
+ON SC.RELATIONSHIP_TYPE_NAME = RT.RELATIONSHIP_TYPE_NAME
+
+WHERE SC.STUDENT_PERSON_ID = $P{P_PERSON_ID}
+AND SC.GUARDIAN_FLAG = 'x'
+ORDER BY SC.PRIMARY_CONTACT_PRIORITY]]>
+	</queryString>
+	<field name="CONTACT_PERSON_ID" class="java.lang.String"/>
+	<field name="LEGAL_FIRST_NAME" class="java.lang.String"/>
+	<field name="LEGAL_SURNAME" class="java.lang.String"/>
+	<field name="RELATIONSHIP_TYPE_NAME_F" class="java.lang.String"/>
+	<field name="PRIMARY_CONTACT_PRIORITY" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="11" uuid="c8c280fb-2c0f-48a5-8413-af4c475dea9e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEGAL_FIRST_NAME} + " " + $F{LEGAL_SURNAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="11" width="100" height="11" uuid="02446a32-9de0-41b8-953b-7d272d3c3982"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(" + $F{RELATIONSHIP_TYPE_NAME_F} + ")"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="100" y="0" width="102" height="22" uuid="815abfd7-c23c-4883-b711-949ef5cb048d"/>
+				<subreportParameter name="P_PERSON_ID">
+					<subreportParameterExpression><![CDATA[$F{CONTACT_PERSON_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Assiduite/Profil_assiduite/Profil_assiduite_subreport_4"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
