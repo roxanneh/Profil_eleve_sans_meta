@@ -1,0 +1,2469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-09-18T09:16:45 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SOM_REND_PROG_NUM_LIT_GLOBAL" pageWidth="1224" pageHeight="792" orientation="Landscape" columnWidth="1184" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25d82054-8744-4c9d-a42a-e48f736b4306">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rapports_de_rendement/Rapport_elementaire_progres/SOM_REND_PROG_NUM_LIT_GLOBAL_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rapports_de_rendement/Rapport_elementaire_progres/SOM_REND_PROG_NUM_LIT_GLOBAL"/>
+	<parameter name="SCHOOL_YEAR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_DATE" class="java.sql.Date" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT SR.PERSON_ID,
+S.SCHOOL_NAME,
+SR.GRADE,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_REPORT_PEI(SR.PERSON_ID, SR.SCHOOL_CODE, $P{P_DATE}) AS PEI,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_REPORT_ANOMALIE(SR.PERSON_ID, $P{P_DATE}) AS ANOMALIE,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_REPORT_ALF(SR.PERSON_ID, SR.SCHOOL_CODE, $P{P_DATE}) AS ALF,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NATIVE_FLAG(SR.PERSON_ID) AS PNMI,
+SUM(CASE WHEN SUB.SUBJECT_DESCRIPTION_F LIKE 'Français' THEN TO_NUMBER(SCSA.MARK) END) AS COTE_FRANCAIS, 
+SUM(CASE WHEN SUB.SUBJECT_DESCRIPTION_F LIKE 'Mathématiques' THEN TO_NUMBER(SCSA.MARK) END) AS COTE_MATHS, 
+DECODE(SA.LS_USE_OF_ORAL_FRE,  'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS FRANCAIS_ORAL, 
+DECODE(SA.LS_RESPONSIBILITY,   'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS FIABILITE, 
+DECODE(SA.LS_ORGANIZATION,     'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS ORGANISATION, 
+DECODE(SA.LS_INDEPENDENT_WORK, 'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS AUTONOMIE, 
+DECODE(SA.LS_COLLABORATION,    'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS COLLABORATION, 
+DECODE(SA.LS_INITIATIVE,       'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS INITIATIVE, 
+DECODE(SA.LS_SELF_REGULATION,  'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?') AS AUTOREGULATION
+FROM STUDENT_REGISTRATIONS SR
+INNER JOIN SCHOOLS S
+ON S.SCHOOL_CODE = SR.SCHOOL_CODE
+INNER JOIN STUDENT_ACHIEVEMENT SA
+ON SA.SCHOOL_CODE = SR.SCHOOL_CODE
+AND SA.SCHOOL_YEAR = SR.SCHOOL_YEAR
+AND SA.PERSON_ID = SR.PERSON_ID
+INNER JOIN STUDENT_COURSE_STRAND_ACHIEVE SCSA
+ON SCSA.PERSON_ID = SA.PERSON_ID
+AND SCSA.SCHOOL_YEAR = SA.SCHOOL_YEAR
+AND SCSA.SCHOOL_CODE = SA.SCHOOL_CODE
+AND SCSA.REPORT_PERIOD = SA.REPORT_PERIOD
+INNER JOIN COURSE_CODES CC
+ON CC.COURSE_CODE = SCSA.COURSE_CODE
+INNER JOIN SUBJECTS SUB
+ON SUB.SUBJECT_CODE = CC.SUBJECT_CODE
+WHERE SR.SCHOOL_YEAR = $P{SCHOOL_YEAR}
+AND SR.SCHOOL_CODE NOT IN ('ESA','ESF','ESE')
+AND SR.GRADE IN ('01','02','03','04','05','06','07','08')
+AND SR.ARRIVAL_DATE = (
+	SELECT MAX(SR2.ARRIVAL_DATE)
+	FROM STUDENT_REGISTRATIONS SR2
+	WHERE SR.STATUS_INDICATOR_CODE IN ('Active', 'Inactive')
+	AND SR2.OSR_FLAG = 'x'
+	AND SR2.PERSON_ID = SR.PERSON_ID
+	AND SR2.ARRIVAL_DATE <= $P{P_DATE}
+	AND SR2.SCHOOL_YEAR = SR.SCHOOL_YEAR
+)
+AND (
+	SELECT COUNT(*)
+	FROM STUDENT_ENROLMENTS SE
+	WHERE SE.SCHOOL_YEAR = SR.SCHOOL_YEAR
+	AND SE.SCHOOL_CODE = SR.SCHOOL_CODE
+	AND SE.PERSON_ID = SR.PERSON_ID
+	AND SE.TRANSACTION_TYPE_IND = 5
+	AND SE.ACTIVE_FLAG = 'x'
+	AND SE.EFFECTIVE_DATE <> PKG_RAPPORT_DE_RENDEMENT_ELE.GET_SCHOOL_YEAR_END( SE.SCHOOL_YEAR, SE.SCHOOL_CODE )
+	AND SE.EFFECTIVE_DATE = (
+		SELECT MAX(SE2.EFFECTIVE_DATE)
+		FROM STUDENT_ENROLMENTS SE2
+		WHERE SE2.SCHOOL_YEAR = SE.SCHOOL_YEAR
+		AND SE2.SCHOOL_CODE = SE.SCHOOL_CODE
+		AND SE2.PERSON_ID = SE.PERSON_ID
+		AND SE2.ACTIVE_FLAG = 'x'
+		AND SE2.EFFECTIVE_DATE <= $P{P_DATE}
+	)
+) = 0
+AND SR.OSR_FLAG = 'x'
+AND SR.STATUS_INDICATOR_CODE IN ('Active', 'Inactive')
+AND SA.REPORT_PERIOD = 'P'
+AND SUB.SUBJECT_CODE IN ('9999000000030','009')
+
+GROUP BY SR.PERSON_ID, S.SCHOOL_NAME, SR.GRADE, SR.SCHOOL_CODE, SR.SCHOOL_YEAR,
+DECODE(SA.LS_USE_OF_ORAL_FRE,  'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?'),
+DECODE(SA.LS_RESPONSIBILITY,   'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?'),
+DECODE(SA.LS_ORGANIZATION,     'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?'),
+DECODE(SA.LS_INDEPENDENT_WORK, 'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?'),
+DECODE(SA.LS_COLLABORATION,    'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?'),
+DECODE(SA.LS_INITIATIVE,       'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?'),
+DECODE(SA.LS_SELF_REGULATION,  'E', 'E', 'G', 'T', 'S', 'S', 'N', 'N', '?')
+
+ORDER BY SR.GRADE ASC]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="SCHOOL_NAME" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="PEI" class="java.lang.String"/>
+	<field name="ANOMALIE" class="java.lang.String"/>
+	<field name="ALF" class="java.lang.String"/>
+	<field name="PNMI" class="java.lang.String"/>
+	<field name="COTE_FRANCAIS" class="java.lang.Integer"/>
+	<field name="COTE_MATHS" class="java.lang.Integer"/>
+	<field name="FRANCAIS_ORAL" class="java.lang.String"/>
+	<field name="FIABILITE" class="java.lang.String"/>
+	<field name="ORGANISATION" class="java.lang.String"/>
+	<field name="AUTONOMIE" class="java.lang.String"/>
+	<field name="COLLABORATION" class="java.lang.String"/>
+	<field name="INITIATIVE" class="java.lang.String"/>
+	<field name="AUTOREGULATION" class="java.lang.String"/>
+	<variable name="NUM_ETUDIANTS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[$F{PERSON_ID}]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!$F{PEI}.equals("x") ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!$F{ALF}.equals("ALF") ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_FRANCAIS_ORAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FRANCAIS_ORAL}.equals("E") || $F{FRANCAIS_ORAL}.equals("T") || $F{FRANCAIS_ORAL}.equals("S") ||$F{FRANCAIS_ORAL}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_FIABILITE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FIABILITE}.equals("E") || $F{FIABILITE}.equals("T") || $F{FIABILITE}.equals("S") ||$F{FIABILITE}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_ORGANISATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ORGANISATION}.equals("E") || $F{ORGANISATION}.equals("T") || $F{ORGANISATION}.equals("S") ||$F{ORGANISATION}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_AUTONOMIE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTONOMIE}.equals("E") || $F{AUTONOMIE}.equals("T") || $F{AUTONOMIE}.equals("S") ||$F{AUTONOMIE}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_COLLABORATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COLLABORATION}.equals("E") || $F{COLLABORATION}.equals("T") || $F{COLLABORATION}.equals("S") ||$F{COLLABORATION}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_INITIATIVE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{INITIATIVE}.equals("E") || $F{INITIATIVE}.equals("T") || $F{INITIATIVE}.equals("S") ||$F{INITIATIVE}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ETUDIANTS_AUTOREGULATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTOREGULATION}.equals("E") || $F{AUTOREGULATION}.equals("T") || $F{AUTOREGULATION}.equals("S") ||$F{AUTOREGULATION}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_FRANCAIS_ORAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{FRANCAIS_ORAL}.equals("E") || $F{FRANCAIS_ORAL}.equals("T") || $F{FRANCAIS_ORAL}.equals("S") || $F{FRANCAIS_ORAL}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_FIABILITE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{FIABILITE}.equals("E") || $F{FIABILITE}.equals("T") || $F{FIABILITE}.equals("S") || $F{FIABILITE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_ORGANISATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{ORGANISATION}.equals("E") || $F{ORGANISATION}.equals("T") || $F{ORGANISATION}.equals("S") || $F{ORGANISATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_AUTONOMIE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{AUTONOMIE}.equals("E") || $F{AUTONOMIE}.equals("T") || $F{AUTONOMIE}.equals("S") || $F{AUTONOMIE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_COLLABORATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{COLLABORATION}.equals("E") || $F{COLLABORATION}.equals("T") || $F{COLLABORATION}.equals("S") || $F{COLLABORATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_INITIATIVE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{INITIATIVE}.equals("E") || $F{INITIATIVE}.equals("T") || $F{INITIATIVE}.equals("S") || $F{INITIATIVE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_AUTOREGULATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{AUTOREGULATION}.equals("E") || $F{AUTOREGULATION}.equals("T") || $F{AUTOREGULATION}.equals("S") || $F{AUTOREGULATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_FRANCAIS_ORAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{FRANCAIS_ORAL}.equals("E") || $F{FRANCAIS_ORAL}.equals("T") || $F{FRANCAIS_ORAL}.equals("S") || $F{FRANCAIS_ORAL}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_FIABILITE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{FIABILITE}.equals("E") || $F{FIABILITE}.equals("T") || $F{FIABILITE}.equals("S") || $F{FIABILITE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_ORGANISATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{ORGANISATION}.equals("E") || $F{ORGANISATION}.equals("T") || $F{ORGANISATION}.equals("S") || $F{ORGANISATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_AUTONOMIE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{AUTONOMIE}.equals("E") || $F{AUTONOMIE}.equals("T") || $F{AUTONOMIE}.equals("S") || $F{AUTONOMIE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_COLLABORATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{COLLABORATION}.equals("E") || $F{COLLABORATION}.equals("T") || $F{COLLABORATION}.equals("S") || $F{COLLABORATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_INITIATIVE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{INITIATIVE}.equals("E") || $F{INITIATIVE}.equals("T") || $F{INITIATIVE}.equals("S") || $F{INITIATIVE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_AUTOREGULATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{AUTOREGULATION}.equals("E") || $F{AUTOREGULATION}.equals("T") || $F{AUTOREGULATION}.equals("S") || $F{AUTOREGULATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_FRANCAIS_ORAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{FRANCAIS_ORAL}.equals("E") || $F{FRANCAIS_ORAL}.equals("T") || $F{FRANCAIS_ORAL}.equals("S") || $F{FRANCAIS_ORAL}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_FIABILITE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{FIABILITE}.equals("E") || $F{FIABILITE}.equals("T") || $F{FIABILITE}.equals("S") || $F{FIABILITE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_ORGANISATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{ORGANISATION}.equals("E") || $F{ORGANISATION}.equals("T") || $F{ORGANISATION}.equals("S") || $F{ORGANISATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_AUTONOMIE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{AUTONOMIE}.equals("E") || $F{AUTONOMIE}.equals("T") || $F{AUTONOMIE}.equals("S") || $F{AUTONOMIE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_COLLABORATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{COLLABORATION}.equals("E") || $F{COLLABORATION}.equals("T") || $F{COLLABORATION}.equals("S") || $F{COLLABORATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_INITIATIVE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{INITIATIVE}.equals("E") || $F{INITIATIVE}.equals("T") || $F{INITIATIVE}.equals("S") || $F{INITIATIVE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_AUTOREGULATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{AUTOREGULATION}.equals("E") || $F{AUTOREGULATION}.equals("T") || $F{AUTOREGULATION}.equals("S") || $F{AUTOREGULATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_FRANCAIS_ORAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{FRANCAIS_ORAL}.equals("E") || $F{FRANCAIS_ORAL}.equals("T") || $F{FRANCAIS_ORAL}.equals("S") || $F{FRANCAIS_ORAL}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_FIABILITE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{FIABILITE}.equals("E") || $F{FIABILITE}.equals("T") || $F{FIABILITE}.equals("S") || $F{FIABILITE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_ORGANISATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{ORGANISATION}.equals("E") || $F{ORGANISATION}.equals("T") || $F{ORGANISATION}.equals("S") || $F{ORGANISATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_AUTONOMIE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{AUTONOMIE}.equals("E") || $F{AUTONOMIE}.equals("T") || $F{AUTONOMIE}.equals("S") || $F{AUTONOMIE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_COLLABORATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{COLLABORATION}.equals("E") || $F{COLLABORATION}.equals("T") || $F{COLLABORATION}.equals("S") || $F{COLLABORATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_INITIATIVE" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{INITIATIVE}.equals("E") || $F{INITIATIVE}.equals("T") || $F{INITIATIVE}.equals("S") || $F{INITIATIVE}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_AUTOREGULATION" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{AUTOREGULATION}.equals("E") || $F{AUTOREGULATION}.equals("T") || $F{AUTOREGULATION}.equals("S") || $F{AUTOREGULATION}.equals("N"))) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_ORAL_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FRANCAIS_ORAL}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_ORAL_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FRANCAIS_ORAL}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_ORAL_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FRANCAIS_ORAL}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_ORAL_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FRANCAIS_ORAL}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FIABILITE_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FIABILITE}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FIABILITE_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FIABILITE}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FIABILITE_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FIABILITE}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FIABILITE_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{FIABILITE}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ORGANISATION_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ORGANISATION}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ORGANISATION_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ORGANISATION}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ORGANISATION_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ORGANISATION}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ORGANISATION_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ORGANISATION}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTONOMIE_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTONOMIE}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTONOMIE_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTONOMIE}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTONOMIE_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTONOMIE}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTONOMIE_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTONOMIE}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_COLLABORATION_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COLLABORATION}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_COLLABORATION_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COLLABORATION}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_COLLABORATION_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COLLABORATION}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_COLLABORATION_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COLLABORATION}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_INITIATIVE_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{INITIATIVE}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_INITIATIVE_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{INITIATIVE}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_INITIATIVE_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{INITIATIVE}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_INITIATIVE_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{INITIATIVE}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTOREGULATION_N" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTOREGULATION}.equals("N")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTOREGULATION_S" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTOREGULATION}.equals("S")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTOREGULATION_T" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTOREGULATION}.equals("T")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_AUTOREGULATION_E" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{AUTOREGULATION}.equals("E")) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_TOTAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_FRANCAIS} == 1 || $F{COTE_FRANCAIS} == 2 || $F{COTE_FRANCAIS} == 3) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_FRANCAIS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{COTE_FRANCAIS} == 1 || $F{COTE_FRANCAIS} == 2 || $F{COTE_FRANCAIS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_FRANCAIS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{COTE_FRANCAIS} == 1 || $F{COTE_FRANCAIS} == 2 || $F{COTE_FRANCAIS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_FRANCAIS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{COTE_FRANCAIS} == 1 || $F{COTE_FRANCAIS} == 2 || $F{COTE_FRANCAIS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_FRANCAIS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{COTE_FRANCAIS} == 1 || $F{COTE_FRANCAIS} == 2 || $F{COTE_FRANCAIS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_FRANCAIS} == 1 ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_FRANCAIS} == 2 ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_FRANCAIS_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_FRANCAIS} == 3 ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_MATHS_TOTAL" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_MATHS} == 1 || $F{COTE_MATHS} == 2 || $F{COTE_MATHS} == 3) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_MATHS_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_MATHS} == 1 ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_MATHS_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_MATHS} == 2 ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_MATHS_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{COTE_MATHS} == 3 ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PNMI_MATHS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!(($F{PNMI}.equals("PN") || $F{PNMI}.equals("M") || $F{PNMI}.equals("I")) && ($F{COTE_MATHS} == 1 || $F{COTE_MATHS} == 2 || $F{COTE_MATHS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ALF_MATHS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ALF}.equals("ALF") && ($F{COTE_MATHS} == 1 || $F{COTE_MATHS} == 2 || $F{COTE_MATHS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_ANOMALIE_MATHS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(($F{ANOMALIE}.equals("") || $F{ANOMALIE}.equals("Aucune anomalie")) || !($F{COTE_MATHS} == 1 || $F{COTE_MATHS} == 2 || $F{COTE_MATHS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="NUM_PEI_MATHS" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PEI}.equals("x") && ($F{COTE_MATHS} == 1 || $F{COTE_MATHS} == 2 || $F{COTE_MATHS} == 3)) ? null : 1]]></variableExpression>
+	</variable>
+	<group name="G_GRADE" keepTogether="true">
+		<groupExpression><![CDATA[$F{GRADE}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement mode="Opaque" x="1104" y="11" width="40" height="11" backcolor="#FFA64D" uuid="a52d3635-2442-4c79-92d4-d6e1cc536fd1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="700" y="11" width="40" height="11" backcolor="#00B95C" uuid="f861990d-293d-4a65-b8a0-b83c09a86e4e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[E]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="810" y="11" width="40" height="22" backcolor="#C0C0C0" uuid="3255385e-d5a7-43f2-a7bf-9291713927bf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# d'élèves
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="140" y="11" width="50" height="22" backcolor="#FFCB97" uuid="6ceeb858-250c-4a5c-9c1f-a76d158b0d24"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# anomalies
+total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="580" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="06b7f5c1-fe49-49db-bfa2-c92149d27608">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="530" y="11" width="40" height="22" backcolor="#FFB7B7" uuid="acdf635c-2793-4787-981f-0d9936380151">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PNMI
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="640" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="244ad0be-d6ab-4e59-b9aa-d6e7461be285">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="750" y="0" width="434" height="11" backcolor="#8E8E8E" uuid="f8864830-a52c-4c9a-aa04-d66b2ba3a755"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Matière / Cote]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="1124" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="3b84c60e-f340-42a3-955c-1c85252e0fe5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="230" y="11" width="40" height="22" backcolor="#73D1FF" uuid="71a6eb1d-8edb-4caf-ab83-02cf3ea3a801"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ALF
+total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="660" y="11" width="40" height="11" backcolor="#FFA64D" uuid="1c94f6a3-3729-493f-aac2-927eb59543e1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[T]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1020" y="11" width="40" height="22" backcolor="#FFB7B7" uuid="62bc73fa-a646-429b-923c-c8c641e704d0">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PNMI
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="270" y="11" width="40" height="22" backcolor="#FFB7B7" uuid="6457174e-5d9d-4ed1-952b-fcc749553337">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PNMI
+total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="890" y="11" width="50" height="22" backcolor="#FFCB97" uuid="5e00a582-e8c3-4fd9-92f9-47d1dec083b9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# anomalies
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="490" y="11" width="40" height="22" backcolor="#73D1FF" uuid="d06be773-047a-43a5-ba52-1a3f45e9a123">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ALF
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="60" y="11" width="40" height="22" backcolor="#C0C0C0" uuid="b086c3aa-830c-45d6-93fb-f9a2a67917c4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# d'élèves
+total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="400" y="11" width="50" height="22" backcolor="#FFCB97" uuid="b74eb66f-d416-4aa2-9283-8449a3baf5f2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# anomalies
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="1144" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="273049b6-42a6-406b-be24-e7ae9a352148">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="750" y="11" width="60" height="22" uuid="5c3bf2b0-5daf-4338-a94e-50e1d895ca19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[
+Matière]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="660" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="371bee0a-5eda-40fb-9b4f-a6a0ee5cec27">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="450" y="11" width="40" height="22" backcolor="#FFCB97" uuid="7b26d73a-dc3b-4b69-97cb-bc9edacc32cd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PEI sans
+anomalie]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1064" y="11" width="40" height="11" backcolor="#FF8080" uuid="e3c0d2a9-425b-4e22-a319-134a6eeaae90">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="980" y="11" width="40" height="22" backcolor="#73D1FF" uuid="b9b6b572-6f25-4f2d-9f64-7833c8def069">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ALF
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="1104" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="c54c0ba9-55b9-40d2-ad46-92b36d697f40">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="100" y="11" width="40" height="22" backcolor="#FFCB97" uuid="e7a512f9-4169-4c6c-bfc6-a02c2a7030e4">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# PEI
+total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="320" y="11" width="40" height="22" backcolor="#C0C0C0" uuid="35e721a0-b289-4fab-a95f-e7083e6964de"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# d'élèves
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="940" y="11" width="40" height="22" backcolor="#FFCB97" uuid="d1719d88-bbcd-445a-936d-38efec594b5f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PEI sans
+anomalie]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="700" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="97d1ea2a-b835-4bfe-9708-f6599f98a847">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="1064" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="3d73c57c-f2f8-4dee-8cfd-30f1cedb10e3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="320" y="0" width="420" height="11" backcolor="#8E8E8E" uuid="0da0ac14-12c1-4d3c-9882-1c0c4490cc77"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Habiletés]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="0" width="60" height="11" uuid="ce9b5914-dcb4-44bf-931a-c37384c26af1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["GRADE - " + $F{GRADE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="720" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="f000e898-1cd0-430a-b2a1-647e7de0d164">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="620" y="11" width="40" height="11" backcolor="#FF8080" uuid="2ee7bdba-ce45-4f4b-9ba9-4cb5053f53a7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[S]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="360" y="11" width="40" height="22" backcolor="#FFCB97" uuid="54971eb8-e5ae-4dd2-aa14-171b84e05f8e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# PEI
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="580" y="11" width="40" height="11" backcolor="#FFB0FF" uuid="dc0b6afd-f308-49ef-99e4-39452a56efdb">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="600" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="279a1e44-0f29-404a-b633-4a27b22113e6">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="1084" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="aa026eb6-4403-4373-a8a3-1e0ae3f8f34e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="850" y="11" width="40" height="22" backcolor="#FFCB97" uuid="9ac21391-dd7f-46af-a50b-00f144c14958">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[# PEI
+évalués]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="680" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="a81e0429-7fd1-4d93-9dda-9871a326bc21">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="1164" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="e4b37c82-4671-479e-b02a-a098b80cd0ef">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="620" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="38b7bade-1d92-4b28-bd8e-744919094e8a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="190" y="11" width="40" height="22" backcolor="#FFCB97" uuid="a1312f00-251b-48f5-96cb-8a6abc15edaa"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PEI sans
+anomalie]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1144" y="11" width="40" height="11" backcolor="#00B95C" uuid="88148c54-0f13-43c7-859e-ba3da1418078">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PTB]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="720" y="22" width="1" height="11" backcolor="#666666" uuid="78c4c00f-44ef-4e47-8a3e-4fe360ccab52">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="700" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="72744d2c-10f5-40c7-bd16-58f977073ec8">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="680" y="22" width="1" height="11" backcolor="#666666" uuid="f938cec6-0bc2-48d6-8ef3-6da00ce56fe3"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="660" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="7e9ff748-2bc8-4ea1-9bed-9acc52fcbd46">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="640" y="22" width="1" height="11" backcolor="#666666" uuid="6e3525fe-a917-4045-969c-3dd8da871508"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="620" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="3363392b-611a-4f1d-947e-2e98a6faac18">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="600" y="22" width="1" height="11" backcolor="#666666" uuid="981d60e3-b007-45f9-8b59-f42dc50b3c21">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1084" y="22" width="1" height="11" backcolor="#666666" uuid="62bfb37e-c074-4977-a83f-d393cc9024bf"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1104" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="45c0877d-6f9f-43b2-99cb-17a53994e12b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1124" y="22" width="1" height="11" backcolor="#666666" uuid="71af7239-7533-46ac-b1fb-ca01e043ae4e"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1144" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="3dfd5b93-7334-4a5b-93a0-dd42dae37a81">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1164" y="22" width="1" height="11" backcolor="#666666" uuid="42a6a799-9631-4983-8499-bedfa245a813">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="530" y="11" width="1" height="22" backcolor="#666666" uuid="c0d1f89a-49ea-4db8-954f-f37a98fd050e">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="490" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="23b65f75-ae98-4cf2-a2ae-472c04eb0f23">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="450" y="11" width="1" height="22" backcolor="#666666" uuid="4359056a-3ff1-4616-903b-4a3d09e8af8e"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="400" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="a76aa124-7b75-4b07-95e7-6dc2391ffad9">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="360" y="11" width="1" height="22" backcolor="#666666" uuid="43d65a22-368d-4f71-843f-7c3ac24962b7">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="270" y="11" width="1" height="22" backcolor="#666666" uuid="bd25168f-4f27-435e-a778-75abeea439cf"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="230" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="b4830b0b-5dd4-4e74-9753-724bdd96e2fc">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="190" y="11" width="1" height="22" backcolor="#666666" uuid="599e725f-c194-4d23-8c61-668d58c3ce49"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="140" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="a63cfc2b-d602-49dd-b5c1-76f0801dc69b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="100" y="11" width="1" height="22" backcolor="#666666" uuid="da739409-1292-415c-8e24-21feeddd3f49">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1020" y="11" width="1" height="22" backcolor="#666666" uuid="13f85338-f034-41db-b4f6-34e36000b669">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="980" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="63dc59c1-3d02-4ba8-9a05-f1db6578583f">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="940" y="11" width="1" height="22" backcolor="#666666" uuid="be87d34c-a9d6-446a-b1ec-80852cd3ad0c"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="890" y="11" width="1" height="22" backcolor="#2E2E2E" uuid="30574bf4-dbf2-4c79-9886-51e672dfbbd5">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="850" y="11" width="1" height="22" backcolor="#666666" uuid="ba746fb4-644c-464b-a9f6-e08ba8df6301">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="88">
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="750" y="0" width="434" height="11" backcolor="#CDCDCD" uuid="43f02657-8410-4d10-bdcd-65cf977d3aa2">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="22" width="740" height="11" backcolor="#CDCDCD" uuid="5847e45c-1071-4ef2-aa5d-6eeeef1e4aca">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="66" width="740" height="11" backcolor="#CDCDCD" uuid="1d8f1d9d-28fd-4ce6-b06d-990f3ad6cfca">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="740" height="11" backcolor="#CDCDCD" uuid="b4ff1f1d-fade-44ad-95fa-da4eab0d3135">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="44" width="740" height="11" backcolor="#CDCDCD" uuid="756e5e82-dbd4-4b67-ae00-40a47db825b0">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="ad23ab38-d6ac-4ee5-bac2-884dd627a82a"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_ORAL_N}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="b995af13-5a9c-4027-b89f-3653a60814c2"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_ORAL_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="026d73f5-be4f-4c76-8082-929cf8526112"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_INITIATIVE_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="22" width="40" height="11" backcolor="#CDB196" uuid="a7d05c95-b843-46c3-957e-6d5e937f7b76"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_ORGANISATION} - $V{NUM_ANOMALIE_ORGANISATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="16410214-5559-41a5-96dd-4411415a38ca"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_INITIATIVE_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="33" width="40" height="11" backcolor="#C0C0C0" uuid="082eacdd-966c-4dec-a543-6f7d7075a343"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTONOMIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="11" width="40" height="11" backcolor="#C0C0C0" uuid="0b2040f3-00b6-4bc4-8ade-d69b9af3b860"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FIABILITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="c86c0780-ca9f-448a-80e3-d0caf36c6c20"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_ORAL_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="33" width="40" height="11" backcolor="#FFE3C8" uuid="b512fa99-d504-437b-b80d-7dcf70378b32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="94539089-ec3c-4a3a-9c01-9f44f945224e"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTONOMIE_N}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="66" width="40" height="11" backcolor="#8E8E8E" uuid="0b24e71d-da1e-4fdf-9475-4b6fc9c87829"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTOREGULATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="3d439a03-d083-4ad4-96a6-780ed730f1a9"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_COLLABORATION} == 0 ? "-" : ((int)( ((double)$V{NUM_COLLABORATION_N}/(double)$V{NUM_ETUDIANTS_COLLABORATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="66" width="40" height="11" backcolor="#CD8585" uuid="668f9f3e-7c77-46bd-8eb1-1d6ae64c4a04"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_AUTOREGULATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="33" width="40" height="11" backcolor="#FFB7B7" uuid="2a53e316-5b1c-4f76-a91f-c426e59ea8b3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_AUTONOMIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="22" width="40" height="11" backcolor="#CDB196" uuid="30605985-6599-4a44-8455-781d71a073e2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="22" width="40" height="11" backcolor="#419FCD" uuid="8d58880b-d3e8-4620-8e0b-16fdfd54a721"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_ORGANISATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="0" width="50" height="11" backcolor="#CDB196" uuid="9d4fd6e8-152e-4543-93d7-bdccd4f99d9f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_FRANCAIS_ORAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="9df8a4fb-3676-4e00-a7ae-0ab2a958abea"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FRANCAIS_ORAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_ORAL_S}/(double)$V{NUM_ETUDIANTS_FRANCAIS_ORAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="11" width="40" height="11" backcolor="#FFB7B7" uuid="ae278b84-f035-4a55-b053-2ee83a8c5b81"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_FIABILITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="44" width="40" height="11" backcolor="#CD8585" uuid="7d178637-ac77-4449-a809-1ffa115f7929"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_COLLABORATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="33" width="40" height="11" backcolor="#FFE3C8" uuid="1b968c20-d341-4f0e-aa94-b3d65f4cbf6e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_AUTONOMIE} - $V{NUM_ANOMALIE_AUTONOMIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="146dc9c6-dafa-40d0-b471-50d64dc098f9"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTOREGULATION_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="66" width="40" height="11" backcolor="#CDB196" uuid="67e1742e-d931-4cc4-a7ef-dfeb506f33d1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_AUTOREGULATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="66" width="40" height="11" backcolor="#419FCD" uuid="9db5e302-883d-4f4f-a52f-d57afdeddfbb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_AUTOREGULATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="44" width="40" height="11" backcolor="#8E8E8E" uuid="9aeb3c5d-8ea9-4720-8be1-7be2edefdbc0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="22" width="40" height="11" backcolor="#8E8E8E" uuid="29abdc98-72f8-4abd-8096-35ef90cbbcb1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="0ed8296b-42e5-4f2c-a65b-1a1bd5bdeffc"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_COLLABORATION} == 0 ? "-" : ((int)( ((double)$V{NUM_COLLABORATION_S}/(double)$V{NUM_ETUDIANTS_COLLABORATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="ac0ab48e-9018-43e4-94d5-cc77c2541b76"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ORGANISATION_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="48941e1d-3a90-498c-b389-912b025c7bac"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_COLLABORATION_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="0" width="40" height="11" backcolor="#CD8585" uuid="d7946db5-3abe-43d3-8d9a-f83776d266eb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_FRANCAIS_ORAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="908bd512-e0a5-4a4e-9d41-3ab678e51859"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ORGANISATION_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="33" width="40" height="11" backcolor="#73D1FF" uuid="fb1622fb-4b90-40e6-8d12-a8936994a96c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_AUTONOMIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="33" width="40" height="11" backcolor="#FFB7B7" uuid="c4b74952-1140-420d-bc4a-ea0c5e3d7bdf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="44" width="40" height="11" backcolor="#CDB196" uuid="21730378-38fc-4199-b173-f9a4ccc065ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_COLLABORATION} - $V{NUM_ANOMALIE_COLLABORATION}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="66" width="60" height="11" uuid="2b5eccbe-0eaf-4c0e-be0f-614d2a7f156e"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Autorégulation]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="8816525f-852b-4d24-bd40-cb5e98a218fc"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FIABILITE_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="66" width="50" height="11" backcolor="#CDB196" uuid="351d44e9-4515-4c69-a356-60916b6ab30e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="d373f7c1-8399-4b68-991f-a4e5add5e57d"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FIABILITE} == 0 ? "-" : ((int)( ((double)$V{NUM_FIABILITE_N}/(double)$V{NUM_ETUDIANTS_FIABILITE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="11" width="60" height="11" uuid="ee410c8f-0991-498e-9315-44eb47a37eec"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fiabilité]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="22" width="60" height="11" uuid="a2980a67-593a-4f75-9f4e-e86f332012bd"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Organisation]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="55" width="50" height="11" backcolor="#FFE3C8" uuid="2f963222-b12c-4d1d-b14d-3f48791b596c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="55" width="40" height="11" backcolor="#73D1FF" uuid="a408c7ab-ad1f-4bf8-b7ba-8f9c76eb838b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="55" width="40" height="11" backcolor="#FFE3C8" uuid="92cc10d8-3dc8-494c-bcfd-76a92fbb39aa"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_INITIATIVE} - $V{NUM_ANOMALIE_INITIATIVE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="0" width="40" height="11" backcolor="#CD8585" uuid="24d11504-09b6-4081-a200-141b979adf14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="66" width="40" height="11" backcolor="#CDB196" uuid="524b984c-36cb-4aed-94c1-7b2910ec6e33"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="44" width="60" height="11" uuid="573ce746-ab26-470a-ac64-dd1f0d7eb1a0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Collaboration]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="0" width="50" height="11" backcolor="#CDB196" uuid="a77d9574-8d55-460a-b62b-cb9baaa9269b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="7e4d2b8f-b15d-4704-9f9e-1ded7ad54434"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ORGANISATION_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="55" width="40" height="11" backcolor="#FFE3C8" uuid="d0fef38a-5dd0-4c70-aaf0-5d4f2345951c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_INITIATIVE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="44" width="40" height="11" backcolor="#CDB196" uuid="1a3cf1e9-e687-4f47-bce8-617438058745"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="0" width="40" height="11" backcolor="#CDB196" uuid="5cc71aa3-b4c9-47e9-b25b-f83072061d76"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_FRANCAIS_ORAL} - $V{NUM_ANOMALIE_FRANCAIS_ORAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="69171318-de26-4188-988c-f89caa9c0db2"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_INITIATIVE_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="0" width="40" height="11" backcolor="#419FCD" uuid="9090d2a4-2951-42d5-83f8-2008bb7fc186"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="33" width="40" height="11" backcolor="#C0C0C0" uuid="344ab0a8-7cfd-41c3-9cce-ced3d2b2d822"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="89841842-910b-442e-818b-634a590c7526"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTONOMIE_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="8fe52b29-aa42-4bec-bf8e-cb64771dc4e0"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTONOMIE} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTONOMIE_E}/(double)$V{NUM_ETUDIANTS_AUTONOMIE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="7e7c1c7f-8f56-4739-9a2c-9b7b3810fa61"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTONOMIE} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTONOMIE_T}/(double)$V{NUM_ETUDIANTS_AUTONOMIE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="b92a5f6e-9344-4efd-9f85-f13c9d6f292a"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FIABILITE} == 0 ? "-" : ((int)( ((double)$V{NUM_FIABILITE_T}/(double)$V{NUM_ETUDIANTS_FIABILITE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="55" width="40" height="11" backcolor="#C0C0C0" uuid="c824ddd5-9295-4efc-8a36-553822a6ed0a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_INITIATIVE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="55" width="40" height="11" backcolor="#FFE3C8" uuid="604f14cd-7f41-45b2-9db0-0325e50b7f72"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="22" width="40" height="11" backcolor="#CDB196" uuid="4afcba2c-cfaf-4113-8f45-5e7502e64edf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="f2f3721d-9437-45f8-9e38-970b7167113d"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTONOMIE_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="92fcd4c7-c7e5-4c2e-bac9-c39b949139c0"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTOREGULATION} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTOREGULATION_E}/(double)$V{NUM_ETUDIANTS_AUTOREGULATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="60" height="11" uuid="0f27cbf8-3f97-426f-b43e-b629708c838c"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Français Oral]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="33" width="40" height="11" backcolor="#FFE3C8" uuid="b177a977-26f2-46ca-a6df-0997b2d2aab9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_AUTONOMIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="44" width="50" height="11" backcolor="#CDB196" uuid="3f6f78fe-6f84-4e14-a827-1cd0b73cfd0d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_COLLABORATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="49a246b9-acdf-42f3-8851-41c0ba1c7d6e"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FIABILITE_N}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="5af119f3-2d71-43ff-8ea8-0f53f84b73c5"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_COLLABORATION_N}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="33" width="60" height="11" uuid="385b7749-7921-4e0d-9cff-42fd3527b816"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Autonomie]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="0" width="40" height="11" backcolor="#8E8E8E" uuid="fa0f2edc-2d96-40ae-81cc-c895ad83e7f6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FRANCAIS_ORAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="55" width="40" height="11" backcolor="#FFB7B7" uuid="8758c8b1-e881-4c59-a276-a69d3e22f0d0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_INITIATIVE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="0" width="40" height="11" backcolor="#CDB196" uuid="c75a2fff-4a08-4480-afcb-d3da7caab18e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_FRANCAIS_ORAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="0" width="40" height="11" backcolor="#8E8E8E" uuid="b1b59cd3-1948-4d1d-9696-67680511331e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="44" width="50" height="11" backcolor="#CDB196" uuid="0ee1223b-4f0f-4a85-9526-b863ca0dfab0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="22" width="40" height="11" backcolor="#419FCD" uuid="755db0a4-3fba-4abe-a002-1433088567b8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="63da9aae-121f-43df-8bec-a13d0d3c5252"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ORGANISATION_N}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="63e23c24-3001-49a4-a619-ecd50775925c"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTONOMIE} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTONOMIE_N}/(double)$V{NUM_ETUDIANTS_AUTONOMIE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="66" width="40" height="11" backcolor="#419FCD" uuid="339d68aa-83eb-43df-bae3-124815544941"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="11" width="50" height="11" backcolor="#FFE3C8" uuid="1fc2ffaa-a96b-4f2b-b5c9-392a625ddfe2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="44" width="40" height="11" backcolor="#419FCD" uuid="48cd1337-03a7-484c-ba87-d6e1fc474591"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_COLLABORATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="11" width="40" height="11" backcolor="#73D1FF" uuid="f9e941e5-0294-458d-b51f-13f54dec3ef1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_FIABILITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="483e1102-83b5-4859-97df-dbde7a89bc02"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_INITIATIVE} == 0 ? "-" : ((int)( ((double)$V{NUM_INITIATIVE_S}/(double)$V{NUM_ETUDIANTS_INITIATIVE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="02bf0e03-b35c-4ba4-b184-34c256e89fab"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTONOMIE} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTONOMIE_S}/(double)$V{NUM_ETUDIANTS_AUTONOMIE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="71b4dea0-5ecc-4c5f-87f9-51196725745f"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTOREGULATION} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTOREGULATION_S}/(double)$V{NUM_ETUDIANTS_AUTOREGULATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="82b80392-de8a-4a44-b8ee-6acf24e2d331"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FRANCAIS_ORAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_ORAL_E}/(double)$V{NUM_ETUDIANTS_FRANCAIS_ORAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="66" width="50" height="11" backcolor="#CDB196" uuid="16b3bb84-ac91-4198-9c93-56641eeacd27"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_AUTOREGULATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="c99c0494-b7e1-45b1-bb2b-4efb7f22afad"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FIABILITE_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="adce2435-8c46-482a-9169-79fb18314573"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTOREGULATION_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="44" width="40" height="11" backcolor="#8E8E8E" uuid="3d98719d-a2b9-4e00-b3ef-5c18c4303d85"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_COLLABORATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="a513d552-fcb5-4cbb-99f2-d627bafbcada"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FRANCAIS_ORAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_ORAL_T}/(double)$V{NUM_ETUDIANTS_FRANCAIS_ORAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="48d46646-2507-4749-9d2e-40425d3e3696"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_INITIATIVE} == 0 ? "-" : ((int)( ((double)$V{NUM_INITIATIVE_T}/(double)$V{NUM_ETUDIANTS_INITIATIVE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="4fde052b-3ad2-411b-9707-addb28d2cbb2"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FIABILITE} == 0 ? "-" : ((int)( ((double)$V{NUM_FIABILITE_E}/(double)$V{NUM_ETUDIANTS_FIABILITE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="0" width="40" height="11" backcolor="#CDB196" uuid="b95f66c3-f4fb-46d6-a096-ba96c3eb4ca0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="22" width="50" height="11" backcolor="#CDB196" uuid="0a88bb49-5ec4-4625-abac-4eccab46f942"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="66" width="40" height="11" backcolor="#CDB196" uuid="31a0ed68-ef99-4ea3-9c22-5f8c478a2d21"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="44" width="40" height="11" backcolor="#CD8585" uuid="4280fd9e-adc8-4de3-9894-42e6f16077a1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="11" width="40" height="11" backcolor="#FFE3C8" uuid="b2ce068d-c10f-4c3a-a8d7-4360a2c135af"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="530" y="22" width="40" height="11" backcolor="#CD8585" uuid="99398a11-aa12-4ae1-ac01-5efd1f48b378"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_ORGANISATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="11" width="40" height="11" backcolor="#FFE3C8" uuid="6b398ef2-49d5-4961-bfff-9838b76c6fe4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="298f7793-e154-4300-9493-a1b94d824e57"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_COLLABORATION} == 0 ? "-" : ((int)( ((double)$V{NUM_COLLABORATION_T}/(double)$V{NUM_ETUDIANTS_COLLABORATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="3ac46dd7-6c9d-4bcd-8c6c-6fc32f616b6c"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_ORGANISATION} == 0 ? "-" : ((int)( ((double)$V{NUM_ORGANISATION_E}/(double)$V{NUM_ETUDIANTS_ORGANISATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="aeb62a13-6472-4c29-944c-4b8a864c7d21"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_INITIATIVE_N}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="33" width="40" height="11" backcolor="#FFE3C8" uuid="3313477a-6319-4990-a084-67e8e131a14d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="33f98a25-a15b-466f-a0d9-74e421a77940"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_ORGANISATION} == 0 ? "-" : ((int)( ((double)$V{NUM_ORGANISATION_T}/(double)$V{NUM_ETUDIANTS_ORGANISATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="d11bdcc5-a7a1-4930-be45-db220b1413ee"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FIABILITE_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="680" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="bc779469-a5e2-4cd7-8ce6-27b06706ce3e"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTOREGULATION} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTOREGULATION_T}/(double)$V{NUM_ETUDIANTS_AUTOREGULATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="22" width="50" height="11" backcolor="#CDB196" uuid="ab90735e-6b97-4c72-bde5-d3257a64371c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_ORGANISATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="1b40abb6-3258-479b-a04e-23a6d39192b4"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FRANCAIS_ORAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_ORAL_N}/(double)$V{NUM_ETUDIANTS_FRANCAIS_ORAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="c5a98768-a95e-4797-b40e-21ee67a16ac5"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTOREGULATION_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="66" width="40" height="11" backcolor="#CDB196" uuid="88a67af7-4b21-4919-8a80-3c6d1ff6f6f0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_AUTOREGULATION} - $V{NUM_ANOMALIE_AUTOREGULATION}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="55" width="60" height="11" uuid="b9063bbf-b68f-45d6-83ed-164304392ab2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Initiative]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="33" width="50" height="11" backcolor="#FFE3C8" uuid="5a4d2577-9189-4409-a1ab-3609f87faa18"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_AUTONOMIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="8a7fced8-2314-47dc-b098-bce5abf57b9a"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_ORGANISATION} == 0 ? "-" : ((int)( ((double)$V{NUM_ORGANISATION_S}/(double)$V{NUM_ETUDIANTS_ORGANISATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="40" height="11" backcolor="#CDB196" uuid="76a1b3e0-0cf1-4313-8b10-884e1eee8d11"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="620" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="bd279405-3439-4f36-89cc-2c4f81412820"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_COLLABORATION_S}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="44" width="40" height="11" backcolor="#419FCD" uuid="15c3ff5a-7305-4fa8-81aa-7f2d4ef364f3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="11" width="50" height="11" backcolor="#FFE3C8" uuid="e98d3b4e-abaf-4da9-95a0-fe50e2010961"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_FIABILITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="11" width="40" height="11" backcolor="#C0C0C0" uuid="7c63e803-d97e-48f1-8bb1-62ee16b1db83"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="11" width="40" height="11" backcolor="#FFB7B7" uuid="3cfcedf4-e4df-4a6c-adf9-fa6ccf380ac7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="55" width="40" height="11" backcolor="#73D1FF" uuid="7859e9f6-3d8f-4e54-a601-2a45f472e04d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_INITIATIVE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="190" y="55" width="40" height="11" backcolor="#FFE3C8" uuid="895f989d-0668-4805-a63c-b5fa0960a5c0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI} - $V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="640" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="7ee71b7f-7497-4007-adbb-17cb37dc52b9"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_FIABILITE} == 0 ? "-" : ((int)( ((double)$V{NUM_FIABILITE_S}/(double)$V{NUM_ETUDIANTS_FIABILITE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="5ba6a467-eefa-4da2-bc74-7fa9b8abeee2"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_COLLABORATION_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="22" width="20" height="11" backcolor="#FFFFFF" uuid="299447f0-0d48-40e4-a6af-69e3efabb102"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_ORGANISATION} == 0 ? "-" : ((int)( ((double)$V{NUM_ORGANISATION_N}/(double)$V{NUM_ETUDIANTS_ORGANISATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="700" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="0a6281cf-afb2-4ffc-86da-9a8015c0774d"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_ORAL_E}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="580" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="76d0dd6a-f51e-4d1a-a735-f1c4cf69d23b"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTOREGULATION_N}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="66" width="40" height="11" backcolor="#8E8E8E" uuid="6132f5b9-cada-4658-8b96-026940bc0993"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="22" width="40" height="11" backcolor="#CD8585" uuid="5a0002b8-fc8a-4591-9cd3-6bce15a5f087"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="400" y="55" width="50" height="11" backcolor="#FFE3C8" uuid="9b19b2bb-6391-4bab-8033-7485ca5139d2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_INITIATIVE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="450" y="11" width="40" height="11" backcolor="#FFE3C8" uuid="d71bd248-1430-4ec0-857b-299a33f27ccb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_FIABILITE} - $V{NUM_ANOMALIE_FIABILITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="320" y="22" width="40" height="11" backcolor="#8E8E8E" uuid="dc3f54df-3281-49c5-92a4-8fbb5011ad82"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_ORGANISATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="48d70722-89e4-4b44-b679-b48d3d98ddef"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_INITIATIVE} == 0 ? "-" : ((int)( ((double)$V{NUM_INITIATIVE_N}/(double)$V{NUM_ETUDIANTS_INITIATIVE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="11" width="40" height="11" backcolor="#73D1FF" uuid="c1979b57-8f8d-45fe-890c-09450a6ddfeb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="44" width="40" height="11" backcolor="#CDB196" uuid="6991d12b-750c-40c4-bfb9-351835e14c32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="55" width="40" height="11" backcolor="#FFB7B7" uuid="a5944924-0ffc-41e1-a2ea-9a2b514fb4c7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="60" y="55" width="40" height="11" backcolor="#C0C0C0" uuid="0c06dce8-186f-48aa-9c44-8f4d61320431"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="44" width="20" height="11" backcolor="#FFFFFF" uuid="6691e7c8-eaf1-4dbf-9d52-e3a0d6813641"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_COLLABORATION} == 0 ? "-" : ((int)( ((double)$V{NUM_COLLABORATION_E}/(double)$V{NUM_ETUDIANTS_COLLABORATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="11" width="40" height="11" backcolor="#FFE3C8" uuid="e06b0ecb-b535-438f-b3fb-7e2275034dce"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_FIABILITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="270" y="66" width="40" height="11" backcolor="#CD8585" uuid="4024766b-162f-462b-8a0e-e38f5bf02425"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="44" width="40" height="11" backcolor="#CDB196" uuid="fef49adc-3519-40af-bc52-48356bffe3d5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_COLLABORATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="360" y="22" width="40" height="11" backcolor="#CDB196" uuid="4b955c81-4c40-4f25-a1aa-855152f318f5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_ORGANISATION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="660" y="33" width="20" height="11" backcolor="#FFFFFF" uuid="4bc954ae-53ca-4726-b938-742dd11ded02"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_AUTONOMIE_T}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="600" y="66" width="20" height="11" backcolor="#FFFFFF" uuid="929af72e-f645-4b2c-be27-ec45c13de70f"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_AUTOREGULATION} == 0 ? "-" : ((int)( ((double)$V{NUM_AUTOREGULATION_N}/(double)$V{NUM_ETUDIANTS_AUTOREGULATION}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="230" y="33" width="40" height="11" backcolor="#73D1FF" uuid="b3d5a7dc-86df-4e95-92ed-d3662be22f7e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="140" y="33" width="50" height="11" backcolor="#FFE3C8" uuid="269668c6-e213-4bd3-b817-426f267693f2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="490" y="0" width="40" height="11" backcolor="#419FCD" uuid="d50a4de7-db8d-4903-b1da-51e4ead80ba6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_FRANCAIS_ORAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="720" y="55" width="20" height="11" backcolor="#FFFFFF" uuid="195769a7-b3d0-488d-bb51-de68367d28c0"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ETUDIANTS_INITIATIVE} == 0 ? "-" : ((int)( ((double)$V{NUM_INITIATIVE_E}/(double)$V{NUM_ETUDIANTS_INITIATIVE}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1144" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="20982699-1189-4f3d-a22a-77fa9bad8e62"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1084" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="514e47f8-b143-4a96-9e81-36e708396ac3"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_TOTAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_1}/(double)$V{NUM_FRANCAIS_TOTAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="890" y="0" width="50" height="11" backcolor="#CDB196" uuid="85753902-8840-448e-8199-997101a694d6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_FRANCAIS}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="750" y="0" width="60" height="11" backcolor="#CD4E4E" uuid="e8e938e8-c7cf-4e67-8030-bbfaa299fada"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Français]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="940" y="11" width="40" height="11" backcolor="#FFE3C8" uuid="99f51f30-4817-48ce-9f1d-11d0896e4b39"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_MATHS} - $V{NUM_ANOMALIE_MATHS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="1020" y="0" width="40" height="11" backcolor="#CD8585" uuid="b2b519e7-6baa-443d-a1f0-05efb7114420"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_FRANCAIS}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="750" y="11" width="60" height="11" backcolor="#00B95C" uuid="0c5550d5-c1c9-4012-b74e-6405a09fd014"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Mathématiques]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="1020" y="11" width="40" height="11" backcolor="#FFB7B7" uuid="11eade3a-9f2d-4449-909b-d53eb309c779"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PNMI_MATHS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1104" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="daff96a1-98b6-434c-ba55-90604da1b011"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="980" y="11" width="40" height="11" backcolor="#73D1FF" uuid="c2442689-0d39-4b19-8bac-d1f4a30d5eec"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_MATHS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1124" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="12eccb8d-9208-4fa5-8502-cc06b53889a9"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_TOTAL} == 0 ? "-" : ((int)( ((double)$V{NUM_MATHS_2}/(double)$V{NUM_MATHS_TOTAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1064" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="a00ab31c-49b8-4ecb-8fd1-9364619de807"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1164" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="437c7777-660b-462d-9a17-e45a59cab43d"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_TOTAL} == 0 ? "-" : ((int)( ((double)$V{NUM_MATHS_3}/(double)$V{NUM_MATHS_TOTAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="890" y="11" width="50" height="11" backcolor="#FFE3C8" uuid="d16fc528-6160-43f1-944a-644c239aba7e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ANOMALIE_MATHS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="850" y="0" width="40" height="11" backcolor="#CDB196" uuid="16478201-7f10-40d2-a95e-11243ac895be"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_FRANCAIS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1084" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="29c0a453-1e10-468e-8d61-7c8d8c539dda"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_TOTAL} == 0 ? "-" : ((int)( ((double)$V{NUM_MATHS_1}/(double)$V{NUM_MATHS_TOTAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="810" y="0" width="40" height="11" backcolor="#8E8E8E" uuid="0d596731-8a14-4901-b9c4-a7beae8924ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="940" y="0" width="40" height="11" backcolor="#CDB196" uuid="58789d64-ab9e-4f12-ac4f-8e58ec117bb6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_FRANCAIS} - $V{NUM_ANOMALIE_FRANCAIS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="980" y="0" width="40" height="11" backcolor="#419FCD" uuid="81584e00-4ed2-47b6-8e36-7f85c788ac09"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_ALF_FRANCAIS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1144" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="fe0dc77a-6189-4f74-ba98-40326328eea6"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1104" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="0f95c2b6-411d-4da0-b93b-0ff69ac18509"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1164" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="ec1fe62e-832a-4eab-859d-18d2bf5fc0e4"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_TOTAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_3}/(double)$V{NUM_FRANCAIS_TOTAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1124" y="0" width="20" height="11" backcolor="#FFFFFF" uuid="125f39b3-0aca-49f1-b489-ef72c438cf34"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_FRANCAIS_TOTAL} == 0 ? "-" : ((int)( ((double)$V{NUM_FRANCAIS_2}/(double)$V{NUM_FRANCAIS_TOTAL}) * 100.0 + 0.5 ) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="1064" y="11" width="20" height="11" backcolor="#FFFFFF" uuid="e3a122db-21fa-4e7b-bc3d-b494aede45b9"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="810" y="11" width="40" height="11" backcolor="#C0C0C0" uuid="7ec2182e-8cb9-4f78-869c-21b92ab04cee"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_MATHS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="850" y="11" width="40" height="11" backcolor="#FFE3C8" uuid="14c9d1c9-e706-4037-bfb0-110dfa9514dc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NUM_PEI_MATHS}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="700" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="7753f5f0-0684-477b-938e-f3d16c71a7e9">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="720" y="0" width="1" height="77" backcolor="#666666" uuid="84a9388f-47ac-43e8-92ea-2668dcbcb59f"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="660" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="17746125-a843-482d-b52e-4a808332ffcf">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="680" y="0" width="1" height="77" backcolor="#666666" uuid="a676d104-2185-42c4-94d3-5cb2059a8a30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="620" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="c73a8a14-f925-4eac-96a1-bbf1bbbe8dd1">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="640" y="0" width="1" height="77" backcolor="#666666" uuid="96be53df-6d82-4942-8a5d-c1b0bca2556b"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="600" y="0" width="1" height="77" backcolor="#666666" uuid="ffe7373e-de6d-4bd7-9403-895634e74a32"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="530" y="0" width="1" height="77" backcolor="#666666" uuid="1712b607-2d6c-4f44-8686-be1ead4b5721"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="490" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="f57d79d1-d66a-494a-8b9e-9c86345dbf1b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="450" y="0" width="1" height="77" backcolor="#666666" uuid="b96d9804-f9d8-4133-a7f5-a717ae644c9e"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="400" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="99b976c4-9fd1-4ad5-941b-601ec9928c34">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="360" y="0" width="1" height="77" backcolor="#666666" uuid="d8de7667-9721-4bff-a812-86694dade7a4">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="100" y="0" width="1" height="77" backcolor="#666666" uuid="97a3924d-3f1e-4f2a-8e04-9bc45d50e608">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="140" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="908d16c2-e28c-4f1a-b825-e902536298d1">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="190" y="0" width="1" height="77" backcolor="#666666" uuid="17bdd301-e1f6-4069-9a00-4f7cb9d74845"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="230" y="0" width="1" height="77" backcolor="#2E2E2E" uuid="c6e523e4-1c78-4d87-8ed7-e4f44b0aaba2">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="270" y="0" width="1" height="77" backcolor="#666666" uuid="6aa83e26-76aa-4513-a53f-4da1bec3e89f"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1144" y="0" width="1" height="22" backcolor="#2E2E2E" uuid="bede6583-0301-4399-9d75-f3ab98a0d657">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1124" y="0" width="1" height="22" backcolor="#666666" uuid="e45c087e-f36e-4279-9139-0744a8c46f0e"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1084" y="0" width="1" height="22" backcolor="#666666" uuid="4c5e396e-1dbb-4367-a912-040e4b41f787">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1020" y="0" width="1" height="22" backcolor="#666666" uuid="94a236d2-52e3-4308-83c6-1fb194a7a700">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1104" y="0" width="1" height="22" backcolor="#2E2E2E" uuid="728a8b98-1f2e-403f-9646-ecbbeec2237e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="890" y="0" width="1" height="22" backcolor="#2E2E2E" uuid="b3fa7032-964e-44e5-b096-125d65d848ac">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="980" y="0" width="1" height="22" backcolor="#2E2E2E" uuid="57d54527-a71f-4c82-9c00-589661f5d4f4">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1164" y="0" width="1" height="22" backcolor="#666666" uuid="5e9917d9-b6b8-40b6-ba2f-f9ae10da1cd0">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="850" y="0" width="1" height="22" backcolor="#666666" uuid="cb0318c1-0ca5-4e5e-bf02-6480eec1c0e6">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="940" y="0" width="1" height="22" backcolor="#666666" uuid="77285f9f-bd47-4f33-be49-bbf6985c55d5"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="79" y="0" width="201" height="11" uuid="f7b54dcc-946e-4b53-a421-35d934ba9bc9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Généré le : " + DATEFORMAT(NOW( ), "dd-MM-yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="1105" height="32" uuid="a78ebc31-7a2c-4848-8af7-e324abdfeda4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sommaire Progrès - HH & Matière - GLOBAL - " + $P{SCHOOL_YEAR}.substring( 0, 4 ) + "/" + $P{SCHOOL_YEAR}.substring( 4, 8 )]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="4a82c284-7ad9-4aa4-9302-0a291f89209c"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+</jasperReport>

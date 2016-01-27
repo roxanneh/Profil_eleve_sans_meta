@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-26T09:32:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rapport_Assiduite_ESA_Eleve_subreport_primaire" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="08856ea7-37b1-488a-a6d4-1f566446ce8d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#149966">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#CDCDCD"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Dataset1" uuid="3a7d5684-0a4f-4ef5-a721-d367b3401403">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="P_SCHOOL_YEAR" class="java.lang.String"/>
+		<parameter name="P_DATE_DEBUT" class="java.sql.Date"/>
+		<parameter name="P_DATE_FIN" class="java.sql.Date"/>
+		<parameter name="P_SCHOOL_CODE" class="java.lang.String"/>
+		<parameter name="P_PERSON_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT DISTINCT 
+CASE WHEN SPCT.START_DATE > SYSDATE
+	OR (
+		SPCT.END_DATE IS NOT NULL
+		AND SPCT.END_DATE < SYSDATE
+	) THEN '*' END AS "Active",
+SC.CLASS_CODE AS "Classe",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'L'
+    ), 0
+) AS "Retards période",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'A'
+    ), 0
+) AS "Abs A période",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'E'
+    ), 0
+) AS "Abs J période",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'G'
+    ), 0
+) AS "Abs G période",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'L'
+    ), 0
+) AS "Retards année",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'A'
+    ), 0
+) AS "Abs A année",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'E'
+    ), 0
+) AS "Abs J année",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'G'
+    ), 0
+) AS "Abs G année"
+    
+FROM SCHOOL_CLASSES SC
+INNER JOIN STUDENT_PROGRAM_CLASS_TRACKS SPCT
+ON  SC.SCHOOL_CODE = SPCT.SCHOOL_CODE
+AND SC.SCHOOL_YEAR = SPCT.SCHOOL_YEAR
+AND SC.CLASS_CODE  = SPCT.CLASS_CODE
+    
+WHERE SC.SCHOOL_CODE = $P{P_SCHOOL_CODE}
+AND SC.SCHOOL_YEAR = $P{P_SCHOOL_YEAR}
+AND SC.CLASS_CODE IS NOT NULL
+AND SC.TAKE_ATTENDANCE_FLAG = 'x'
+AND SPCT.PERSON_ID = $P{P_PERSON_ID}]]>
+		</queryString>
+		<field name="Active" class="java.lang.String"/>
+		<field name="Classe" class="java.lang.String"/>
+		<field name="Retards période" class="java.lang.Integer"/>
+		<field name="Abs A période" class="java.lang.Integer"/>
+		<field name="Abs J période" class="java.lang.Integer"/>
+		<field name="Abs G période" class="java.lang.Integer"/>
+		<field name="Retards année" class="java.lang.Integer"/>
+		<field name="Abs A année" class="java.lang.Integer"/>
+		<field name="Abs J année" class="java.lang.Integer"/>
+		<field name="Abs G année" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="P_SCHOOL_YEAR" class="java.lang.String"/>
+	<parameter name="P_DATE_DEBUT" class="java.sql.Date"/>
+	<parameter name="P_DATE_FIN" class="java.sql.Date"/>
+	<parameter name="P_SCHOOL_CODE" class="java.lang.String"/>
+	<parameter name="P_PERSON_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT P.PERSON_ID
+FROM PERSONS P
+WHERE ROWNUM = 1]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="600" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="572" height="600" uuid="cf523f39-5063-4d70-92ba-215083507bec">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="9ea1a8ff-1694-42b7-8e7c-e49481826eb1">
+						<datasetParameter name="P_DATE_DEBUT">
+							<datasetParameterExpression><![CDATA[$P{P_DATE_DEBUT}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_DATE_FIN">
+							<datasetParameterExpression><![CDATA[$P{P_DATE_FIN}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_PERSON_ID">
+							<datasetParameterExpression><![CDATA[$P{P_PERSON_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_SCHOOL_CODE">
+							<datasetParameterExpression><![CDATA[$P{P_SCHOOL_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_SCHOOL_YEAR">
+							<datasetParameterExpression><![CDATA[$P{P_SCHOOL_YEAR}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="10" uuid="198747bf-511e-4e9a-9598-7741491e025e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="10" height="20" uuid="17b1af60-1419-43ee-afb4-d8809d48b5cd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Active}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="62" uuid="19898868-69e2-4963-be85-348854bc7b95">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="62" height="30" forecolor="#FFFFFF" uuid="63191e4b-2a82-4462-86ce-8c26a8290873"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Classe]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="62" height="20" uuid="c08bcdd5-0bf4-458a-a9be-e0552dc5edd6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Classe}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="3b488b14-bfa6-4e5d-8de0-120546f06a9e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="8f190738-6b90-4377-84d0-5c63c4514a70"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Retards
+période]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="4e111451-87ea-40dd-b4fd-993c691881ba"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Retards période})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="49cb691f-57c6-4008-8608-8e5142b6dad7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="baca51ca-de12-45db-a1fc-dfdcfd1b5af3">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs total
+période]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="32af8096-4e64-4f6d-ab18-0a675622eb00"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs A période} + $F{Abs J période} + $F{Abs G période})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="2761e1ea-c819-4743-9aa0-556fa6880224">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="5cf7c1ad-fe64-4fbe-924c-b31814c9ea23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs A
+période]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="25450f37-e59c-4f9d-b6ea-77da7ccfcb4a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs A période})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="c6026992-5060-4655-95fe-3e89bf3b4186">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="eabaeccb-749f-4235-be1d-0a1a2d275fb4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs J
+période]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="f1e028fd-f41c-4c80-9a92-adb755d25544"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs J période})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="98864976-b55c-4cc0-b3e4-da99d76a1d4d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="0f5c24c6-b3b6-40d2-b009-262a82592fb0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs G
+période]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="fa634857-29f2-43c1-853f-48bfecf098d9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs G période})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="769527d3-3bc3-4f13-99d2-dce97fabc34a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="749f4281-5d34-4816-ae4c-353e8ca370d0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Retards
+année]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="d6e2c4ad-c9fe-41dd-8ec3-d8b0dabb7322"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Retards année})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="dfa66a6b-ae81-4f08-a8cc-911057bdf68f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="6e0a1522-e024-4055-9a42-a06f56f13c32">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs total
+année]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="f25e11e2-0f80-43cd-85d7-e1b2153e0fa7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs A année} + $F{Abs J année} + $F{Abs G année})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="09b73b35-849a-4dfb-97df-3fda148518df">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="f3606efd-cc63-4030-935d-90069a978c0c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs A
+année]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="6b59c1c8-5c9f-4b8b-9ec8-e2fd56354eff"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs A année})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="23e14ad9-2e5c-4c10-96f2-1cc36f7f4948">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="2bfe2ea1-daee-4fac-875b-79beb07ae284"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs J
+année]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="7936a8fb-e289-461b-9f39-abfa50373952"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs J année})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="53ce071e-bc5a-4251-b872-8d8f484ea878">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="e4444523-1328-45b5-9508-50192b404b05"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<text><![CDATA[Abs G
+année]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="d9b58745-9e0d-4095-95d5-224e05a6d288"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[String.valueOf($F{Abs G année})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</title>
+</jasperReport>
