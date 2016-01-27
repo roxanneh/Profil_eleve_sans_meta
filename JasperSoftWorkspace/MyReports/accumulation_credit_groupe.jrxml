@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-02T10:31:43 -->
+<!-- 2015-12-07T10:37:45 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accumulation_credit" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="68f2455a-e20d-4b05-b651-612dc4892b02">
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
@@ -13,43 +13,7 @@
 			<style forecolor="#D11C19"/>
 		</conditionalStyle>
 	</style>
-	<style name="Crosstab_CH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CG" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CT" mode="Opaque" backcolor="#005FB3">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<parameter name="SCHOOL_CODE" class="java.lang.String" isForPrompting="false">
+	<parameter name="P_SECONDARY_SCHOOL_CODE" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
 	<parameter name="NIVEAU_9_10" class="java.lang.String" isForPrompting="false">
@@ -59,12 +23,14 @@
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
 	<queryString>
-		<![CDATA[select person_id, name, school_year, school_code, grade, semester, 
+		<![CDATA[select sorter, person_id, name, school_year, school_code, grade, semester, 
 sum(earned_credit_value) as credit, sum(attempted_credit_value), ALF, ANOM, PEI, PNMI
 
 from( 
 select distinct 
-scc.person_id, preferred_surname || ', ' || preferred_first_name as name, 
+scc.person_id, 
+preferred_name_upper as sorter,
+preferred_name_upper as name, 
 scc.school_year, scc.school_code, grade, 
 PKG_PROFILE_ÉLÈVE.GET_ALF(SCC.PERSON_ID) AS ALF, 
 PKG_PROFILE_ÉLÈVE.GET_ANOMALIE(SCC.PERSON_ID) AS ANOM,
@@ -74,7 +40,7 @@ semester, scc.course_code, scc.earned_credit_value, scc.attempted_credit_value
 
 from fs_secondary_course_credit scc, class_meetings cm, student_program_class_tracks spct, persons, student_registrations sr
 where scc.person_id =  persons.person_id
-and scc.school_code = $P{SCHOOL_CODE} 
+and scc.school_code = $P{P_SECONDARY_SCHOOL_CODE} 
 and grade = $P{NIVEAU_9_10}
 and scc.school_year =$P{SCHOOL_YEAR}  
 
@@ -95,13 +61,15 @@ and spct.class_code = cm.class_code
 
 order by semester
 ) 
-group by person_id, name, school_year, school_code, grade, semester, attempted_credit_value, ALF, ANOM, PEI, PNMI
+group by sorter, person_id, name, school_year, school_code, grade, semester, attempted_credit_value, ALF, ANOM, PEI, PNMI
 
-union select person_id, name, school_year, school_code,grade, semester, 
+union select sorter, person_id, name, school_year, school_code,grade, semester, 
 sum(earned_credit_value) as credit, sum(attempted_credit_value), ALF, ANOM, PEI, PNMI
 from(
 select distinct 
-scc.person_id, preferred_surname || ', ' || preferred_first_name as name, 
+scc.person_id, 
+preferred_name_upper as sorter,
+preferred_name_upper as name, 
 scc.school_year, scc.school_code,grade, semester, scc.course_code, 
 PKG_PROFILE_ÉLÈVE.GET_ALF(SCC.PERSON_ID) AS ALF, 
 PKG_PROFILE_ÉLÈVE.GET_ANOMALIE(SCC.PERSON_ID) AS ANOM,
@@ -111,7 +79,7 @@ scc.earned_credit_value, scc.attempted_credit_value
 
 from fs_secondary_course_credit scc, class_meetings cm, student_program_class_tracks spct, persons, student_registrations sr
 where scc.person_id =  persons.person_id
-and scc.school_code =  $P{SCHOOL_CODE} 
+and scc.school_code =  $P{P_SECONDARY_SCHOOL_CODE} 
 and to_number(grade) = to_number($P{NIVEAU_9_10}) - 1
 and scc.school_year = to_char(to_number(substr($P{SCHOOL_YEAR}  , 0, 4)) - 1) || to_char(to_number(substr($P{SCHOOL_YEAR}  , 5, 8)) - 1) 
 
@@ -132,10 +100,11 @@ and spct.class_code = cm.class_code
 
 order by semester
 )
-group by person_id, name, school_year, school_code, grade, semester, attempted_credit_value, ALF, ANOM, PEI, PNMI
+group by sorter, person_id, name, school_year, school_code, grade, semester, attempted_credit_value, ALF, ANOM, PEI, PNMI
 
-order by name, school_year, grade, semester]]>
+order by sorter, school_year, grade, semester]]>
 	</queryString>
+	<field name="SORTER" class="java.lang.String"/>
 	<field name="PERSON_ID" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="SCHOOL_YEAR" class="java.lang.String"/>
@@ -165,13 +134,13 @@ order by name, school_year, grade, semester]]>
 		</band>
 	</title>
 	<summary>
-		<band height="119" splitType="Stretch">
+		<band height="238" splitType="Stretch">
 			<crosstab>
-				<reportElement x="0" y="9" width="561" height="100" uuid="c0ec1fa2-224e-4eff-873d-d7992da53a68"/>
+				<reportElement x="0" y="9" width="561" height="100" uuid="cc913fcc-6b9d-44f5-a477-b54709de6ece"/>
 				<crosstabHeaderCell>
 					<cellContents>
 						<staticText>
-							<reportElement x="125" y="60" width="40" height="20" uuid="210b689c-8bd7-4073-8653-abec2b04d65d">
+							<reportElement x="305" y="60" width="40" height="20" uuid="4c613fc1-8e08-4323-8d4c-b411cc8f8be3">
 								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
@@ -184,10 +153,25 @@ order by name, school_year, grade, semester]]>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="Tahoma"/>
 							</textElement>
-							<text><![CDATA[ALS]]></text>
+							<text><![CDATA[PNMI]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="165" y="60" width="100" height="20" uuid="0dfe171c-7f78-4809-bed8-d7ce1cd697ab">
+							<reportElement x="265" y="60" width="40" height="20" uuid="a5d91020-d740-4780-b405-c0ec5e28a9c2">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.3"/>
+								<leftPen lineWidth="0.3"/>
+								<bottomPen lineWidth="0.3"/>
+								<rightPen lineWidth="0.3"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma"/>
+							</textElement>
+							<text><![CDATA[PEI]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="165" y="60" width="100" height="20" uuid="6d91e963-6cbf-432e-82bf-4857b9e4bce3">
 								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
@@ -203,22 +187,7 @@ order by name, school_year, grade, semester]]>
 							<text><![CDATA[Anomalie]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="265" y="60" width="40" height="20" uuid="c6449d35-557a-4a8f-8479-a869c73c6b17">
-								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							</reportElement>
-							<box>
-								<topPen lineWidth="0.3"/>
-								<leftPen lineWidth="0.3"/>
-								<bottomPen lineWidth="0.3"/>
-								<rightPen lineWidth="0.3"/>
-							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Tahoma"/>
-							</textElement>
-							<text><![CDATA[PEI]]></text>
-						</staticText>
-						<staticText>
-							<reportElement x="305" y="60" width="40" height="20" uuid="f31c67f4-410b-4cc4-be00-721a631b7da7">
+							<reportElement x="125" y="60" width="40" height="20" uuid="ad9a9761-7027-4d03-8b22-f1aaeb83fa37">
 								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 							</reportElement>
@@ -231,32 +200,45 @@ order by name, school_year, grade, semester]]>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="Tahoma"/>
 							</textElement>
-							<text><![CDATA[PNMI]]></text>
+							<text><![CDATA[ALF]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="60" width="125" height="20" uuid="fa4e3f21-3258-4118-b40f-f4b3ca07f181">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.3"/>
+								<leftPen lineWidth="0.3"/>
+								<bottomPen lineWidth="0.3"/>
+								<rightPen lineWidth="0.3"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma"/>
+							</textElement>
+							<text><![CDATA[Nom]]></text>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
-				<rowGroup name="NAME1" width="125">
+				<rowGroup name="SORTER1" width="0">
 					<bucket class="java.lang.String">
-						<bucketExpression><![CDATA[$F{NAME}]]></bucketExpression>
+						<bucketExpression><![CDATA[$F{SORTER}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="125" height="20" uuid="26c2c9d9-1c6c-4dae-be00-4e55457c020c">
+								<reportElement x="0" y="0" width="0" height="20" uuid="a25ac83e-40ed-4a2c-8d7b-62cefb5d02a6">
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{NAME1}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{SORTER1}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="3f9d24d9-7b35-4b8c-9382-309367697d00"/>
-								<text><![CDATA[Total NAME1]]></text>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="49a03b6b-6d96-454d-8b55-2ec79eef68f5"/>
+								<text><![CDATA[Total SORTER1]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
@@ -266,15 +248,11 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{PERSON_ID}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
 							<textField>
-								<reportElement x="0" y="0" width="0" height="0" uuid="09704a9d-f8b7-4ed9-a9e6-da2bdd905e0c">
-									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<reportElement x="0" y="0" width="0" height="20" uuid="96989953-a937-4bab-9c0b-0ee7493bde7b">
 									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 								</reportElement>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma"/>
-								</textElement>
 								<textFieldExpression><![CDATA[$V{PERSON_ID1}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -282,8 +260,44 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="4fea45ef-a35b-440a-8914-6bd26de7cd2d"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="664d4ff5-db55-4d06-8bc0-7ae751997ff1"/>
 								<text><![CDATA[Total PERSON_ID1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="NAME1" width="125">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{NAME}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="125" height="20" uuid="3c967642-802a-4916-a590-66f02651f4f3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{NAME1}]]></textFieldExpression>
+								<hyperlinkParameter name="_report">
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Drilldowns_partages/profil_crosstab"]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="STUDENT">
+									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID1}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<staticText>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="5bd01d7b-30f6-46c5-8ff7-5292e57c96a3"/>
+								<text><![CDATA[Total NAME1]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
@@ -293,29 +307,26 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{ALF}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
-							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-							<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-								<reportElement mode="Opaque" x="0" y="0" width="40" height="20" uuid="61e4ad0c-ec03-4721-b224-81d8d2d6e919">
-									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								</reportElement>
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="20" uuid="8556e3d1-f058-409d-aee2-bce42641a6a3"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{ALF1}]]></textFieldExpression>
-								<hyperlinkParameter name="P_PERSON_ID">
-									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID1}]]></hyperlinkParameterExpression>
-								</hyperlinkParameter>
-								<hyperlinkParameter name="_report">
-									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Drilldowns_partages/details_alf"]]></hyperlinkParameterExpression>
-								</hyperlinkParameter>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="9deeed78-5c49-46e0-90b1-972d83f71f52"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="e9f52e4c-6607-43a9-8549-e3d32e8633c8"/>
 								<text><![CDATA[Total ALF1]]></text>
 							</staticText>
 						</cellContents>
@@ -326,9 +337,15 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{ANOM}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
-							<textField isBlankWhenNull="true">
-								<reportElement mode="Opaque" x="0" y="0" width="100" height="20" uuid="1785a8b7-0c01-4b67-8ab0-a621dfca75f2"/>
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="c5385087-08d5-4f61-8a1e-d734f82adf86"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -339,7 +356,7 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="f0d35e9b-6497-4ddc-b5b8-a4c307689af3"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="267013d8-94ef-4d22-a0a5-d9ffcbbae312"/>
 								<text><![CDATA[Total ANOM1]]></text>
 							</staticText>
 						</cellContents>
@@ -350,26 +367,29 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{PEI}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
-							<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-								<reportElement mode="Opaque" x="0" y="0" width="40" height="20" uuid="a12f7415-0885-438f-9d4b-a50349165f66"/>
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="20" uuid="5042efb4-b109-4015-a96b-f3d4c4fa0acd">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{PEI1}]]></textFieldExpression>
-								<hyperlinkParameter name="P_PERSON_ID">
-									<hyperlinkParameterExpression><![CDATA[$V{PERSON_ID1}]]></hyperlinkParameterExpression>
-								</hyperlinkParameter>
-								<hyperlinkParameter name="_report">
-									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rapports_de_Rendement/Drilldown_PEI"]]></hyperlinkParameterExpression>
-								</hyperlinkParameter>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="b3c01c9b-1c1b-4fe0-8382-22d750ee5bc5"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="4be69729-aac7-4589-aa95-8817c6245355"/>
 								<text><![CDATA[Total PEI1]]></text>
 							</staticText>
 						</cellContents>
@@ -380,9 +400,18 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{PNMI}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
-							<textField isBlankWhenNull="true">
-								<reportElement mode="Opaque" x="0" y="0" width="40" height="20" uuid="369fbbf7-f16d-491d-b3a3-f10e66ba2886"/>
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="20" uuid="ca4f09fe-3f52-4eff-9e08-abeef8d6b289">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -393,7 +422,7 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalRowHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="e6685b24-d78b-483e-92aa-0c0fff129f33"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="f3f898b8-5a8a-4d2c-a99d-f3b85958607f"/>
 								<text><![CDATA[Total PNMI1]]></text>
 							</staticText>
 						</cellContents>
@@ -404,9 +433,15 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{SCHOOL_YEAR}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="60" height="20" uuid="40ac2b83-9f21-47a6-935c-363ef2ba6cf7"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="211dec16-50c4-4276-94e3-734a0312272b"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -417,7 +452,7 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="698d13d8-cc45-4120-b5b7-959cc9199ed4"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="73172391-178b-45e3-929e-bb83f54b4052"/>
 								<text><![CDATA[Total SCHOOL_YEAR1]]></text>
 							</staticText>
 						</cellContents>
@@ -428,9 +463,15 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{SCHOOL_CODE}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="60" height="20" uuid="68e4279e-f3c7-466c-b7eb-b71064f589f5"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="c9e9414f-2a14-4e8b-aeee-98c3c278a353"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -441,7 +482,7 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="e7ce7029-8765-46bb-93a4-22d34fde0cc0"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="12f09bab-33da-49a5-bbc5-8f7d0865f78a"/>
 								<text><![CDATA[Total SCHOOL_CODE1]]></text>
 							</staticText>
 						</cellContents>
@@ -452,9 +493,15 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{GRADE}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="60" height="20" uuid="1dbbccac-cb5c-4b46-a2ec-2f3eefcd6125"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="7d9cdc2d-70af-4a3f-ab86-7be05abab16f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -465,7 +512,7 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="42a695a0-062a-4373-a336-677ddcd71bf9"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="c3d48c44-0059-40f0-94be-e8674a32b4e3"/>
 								<text><![CDATA[Total GRADE1]]></text>
 							</staticText>
 						</cellContents>
@@ -476,9 +523,15 @@ order by name, school_year, grade, semester]]>
 						<bucketExpression><![CDATA[$F{SEMESTER}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CH">
+						<cellContents mode="Opaque">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textField>
-								<reportElement mode="Opaque" x="0" y="0" width="60" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="3826691c-ac90-4ecd-b764-623255268d28"/>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#149966" uuid="77cb113b-0641-4bef-99ce-d0af35b1cd84"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -489,7 +542,7 @@ order by name, school_year, grade, semester]]>
 					<crosstabTotalColumnHeader>
 						<cellContents>
 							<staticText>
-								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="b13aa505-c0da-45c2-8c44-7e1c2f461b1e"/>
+								<reportElement x="0" y="0" width="-2147483648" height="-2147483648" uuid="95618fc5-710f-4025-afba-b62453d20868"/>
 								<text><![CDATA[Total SEMESTER1]]></text>
 							</staticText>
 						</cellContents>
@@ -501,10 +554,28 @@ order by name, school_year, grade, semester]]>
 				<measure name="SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1" class="java.lang.Double" calculation="Sum">
 					<measureExpression><![CDATA[$F{SUM(ATTEMPTED_CREDIT_VALUE)}]]></measureExpression>
 				</measure>
-				<crosstabCell width="60" height="20">
-					<cellContents mode="Opaque" style="Crosstab_CD">
-						<textField isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
-							<reportElement style="4_CREDIT" x="30" y="0" width="30" height="20" uuid="b9a7d795-3489-4b33-8f10-66fa7d231894"/>
+				<crosstabCell width="50" height="20">
+					<cellContents mode="Opaque">
+						<box>
+							<topPen lineWidth="0.5"/>
+							<leftPen lineWidth="0.5"/>
+							<bottomPen lineWidth="0.5"/>
+							<rightPen lineWidth="0.5"/>
+						</box>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="25" height="20" uuid="a1cd9b40-808e-4f9d-ac9e-0f699ae72097">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Tahoma"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1} + " /"]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+							<reportElement style="4_CREDIT" stretchType="RelativeToBandHeight" x="25" y="0" width="25" height="20" uuid="e3a2d342-4cc1-4ced-8959-62ae2be9a934">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+							</reportElement>
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="Tahoma"/>
 							</textElement>
@@ -522,419 +593,472 @@ order by name, school_year, grade, semester]]>
 								<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/Accumulation_des_credits_secondaire_drilldown"]]></hyperlinkParameterExpression>
 							</hyperlinkParameter>
 						</textField>
-						<textField isBlankWhenNull="true">
-							<reportElement x="0" y="0" width="30" height="20" uuid="228a5bf6-4418-49a0-82b9-0011d2892cf9"/>
-							<textElement textAlignment="Right" verticalAlignment="Middle">
-								<font fontName="Tahoma"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1} + " /"]]></textFieldExpression>
-						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="6d3b70ed-da7b-43cd-8ab8-da2fa3656a06"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="69aab70d-bcf5-4a2a-953e-bd1066975a60"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="47d577bb-0ef5-4d3a-bbfb-fc3bbe5f1efe"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="c289b651-fde7-46f5-ae46-65b7b8a5325e"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="fc603f70-4fab-4169-887b-59dec952a6ff"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="c0fba92f-2135-41e9-896f-e5231efd65ca"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="a3a75973-bdc0-41f9-a735-2afd3f6a70b6"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="c8c79d28-9497-4f4d-b3c8-cbf367920697"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="146c9c30-5237-4b84-922a-fa09dff3ed1a"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="83e2d155-f99c-4051-9e00-ee85789b5462"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="83982471-77be-4327-975a-087810ad7908"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="29dbe11b-3df2-4ceb-901d-dd9e38f022d3"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="9018e069-ad59-4bee-9951-b1700b9be499"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="a66b8d75-eedf-4941-8161-38d5d75877a8"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="c346cf5d-c023-48cc-a2de-d66b35876de3"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="95e3aba5-434a-446c-9ec1-4dca5fd6b635"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="NAME1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+				<crosstabCell width="60" height="20" rowTotalGroup="SORTER1">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="4971fdfd-defb-4bd6-a679-4c0495cc42bd"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="87427d72-f909-4832-8acc-0fe3f119c20c"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="4d62f2c8-16ca-4d17-94a9-dfb10823c1ee"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="48ce0963-ca23-471d-83f4-d2a41f94f415"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+				<crosstabCell width="60" height="20" rowTotalGroup="SORTER1" columnTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="969827a0-5449-4eb4-890f-08e68bdd18dd"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="cd17015e-dc8d-43a7-bcfa-2263fb4e7691"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="b8f8f9bc-d5b9-4bd5-b6a7-6e9d6ae4e911"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="c6d163df-cd52-493e-ae76-f97fd7e5fc9d"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+				<crosstabCell width="60" height="20" rowTotalGroup="SORTER1" columnTotalGroup="SCHOOL_CODE1">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="3dbb4a5d-9234-4876-a326-1281f1fa8b47"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="ac1e3889-6d26-4307-86e0-f17af0972075"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="7a908bcb-a5d7-4832-abdd-218846b10973"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="491157dd-7211-477d-9819-ecd6287751b8"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+				<crosstabCell width="60" height="20" rowTotalGroup="SORTER1" columnTotalGroup="GRADE1">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="f1a05699-377e-44cf-9ef0-cc4f3ac66aeb"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="9523d21c-7c71-47d9-88f3-e73120030f74"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="3a774d1d-f10a-4323-91f8-92323327975e"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="9b33ccef-8afb-4f04-9495-9463add88c72"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+				<crosstabCell width="60" height="20" rowTotalGroup="SORTER1" columnTotalGroup="SEMESTER1">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="b635070c-f8a1-4c3e-bdc5-fdced67cf094"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="8fa00ab2-5363-4006-ae85-a0e12b0a6551"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="5630528e-db8d-4b4d-bd0c-8fa31f0c2b64"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="89c693ad-4250-4649-b86a-b5020d566ee2"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="56831480-61b5-47c7-a80f-00dfe359125c"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="ada0a3d4-0231-4851-ae39-24a2e5a24ba4"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="4f5a465a-77b5-4a22-9c60-2572d286102f"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="43f0a397-aa60-431e-8489-2026c8c130d2"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="4a888724-823b-4cab-855d-aae8a2ee0232"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="04510d4e-c82f-47bd-8f57-b454d158289a"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="5d8719a2-6868-426b-b9f2-209c34752435"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="ab7959a5-b1a3-4645-a7ed-a73ddba76ec3"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="e69fd5af-0cf5-4232-aded-58416674d1e0"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="e09e62c7-75c1-4bf8-bf1e-4729a69ddee3"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="3b34f973-950b-4b05-acd0-1af7bd312be6"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="7713e66a-739d-465f-92c0-62bad34a2515"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="c6d71d02-d8c1-4b23-ada2-9034c0437ca5"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="9a052785-8fbd-458d-982a-c3f38aa63824"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="ccbfad9b-ff9b-45b6-ab87-d32ce74c0576"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="2b464a72-5833-4a26-bcf6-7aa7bd01c1a7"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PERSON_ID1" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="4e9a67c7-7a8e-4ed1-ba58-31ed43b95179"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="13786b61-1853-468c-b4d4-0555e74b4284"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="08fd034f-d5cd-478b-8104-e0d4f62e530c"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="4e87681a-1b64-4498-a57a-2458bf04888f"/>
+							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="NAME1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="a0658d3b-a524-4e98-a0e1-9e564774470a"/>
+							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="a1238f18-02fe-4226-9b0a-ab87d95bfe70"/>
+							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="SCHOOL_YEAR1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="29c4bc44-44ae-4b00-8587-d1e0512ada3b"/>
+							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="5abff6fc-cef3-4b51-994e-24de2276c4ac"/>
+							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="SCHOOL_CODE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="e366eeeb-130d-4282-9bca-314547b74bfb"/>
+							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="3536bef6-2ddb-4a6e-b6e7-0b5a74d1443e"/>
+							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="GRADE1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="bf62f5ef-dba2-46ed-b400-405c9f735736"/>
+							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="f6a569fd-dad1-4d00-8f35-92c5e33218bb"/>
+							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="NAME1" columnTotalGroup="SEMESTER1">
+					<cellContents mode="Opaque">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="10" uuid="0cae2a5d-450c-48f9-834f-35b25645be2f"/>
+							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="10" width="60" height="10" uuid="99114ca5-df0a-411f-9b0b-ed56d702c23f"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ALF1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="fb4c4953-b769-48ae-9258-3dc568ff2f76"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="a2951da0-4e10-4d14-bff4-f7cb59566fcb"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="08b65729-f28b-46d8-a57e-9e452ee6b0e8"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="b7ba69d3-bc07-4913-ad46-9777728caa3e"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ALF1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="f0d90092-daf7-4084-af1d-2c7541fd7086"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="004e6f27-2c62-4a0c-b8e3-553f3975642a"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="56c9ecb9-b36c-4301-9180-43fb350a33b7"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="a2b4dfe6-9580-4a52-9438-4e3bd08de570"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ALF1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="50dcfd77-01e6-4626-ab16-0e0a8c471c6f"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="a56c6efc-afd9-4997-aaf4-639111915aeb"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="589955f8-cffd-4556-a822-c8862a8e0355"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="6f1283f6-c34d-477e-aeba-f736e84d2bb8"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ALF1" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="fd67b4b6-3c48-4ec9-9043-16246fbec721"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="fd016223-a595-4003-a31a-604e2f6777e4"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="f4c5cf1d-0428-424a-8698-12dbe1008c7c"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="95f5f34d-ddb7-46e5-9b83-4bb2a7efe6ae"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ALF1" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="1af164e9-4fc4-4193-9b26-6a3ae71592b7"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="82029d6c-6610-4304-948f-d091628fde60"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="98db7790-7cef-48cc-99fb-9def31033209"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="98f74630-2513-4c91-b783-81113d09f1fd"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ANOM1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="4efa97d2-cb3b-46c1-8d10-0cfa5851e62f"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="f134ffe2-1fb4-41ab-9213-9864b4e34c5b"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="5c9b743c-4a61-48df-af8b-84396c551fc6"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="e0b9c35e-d9be-4ddc-9352-1c37695bc023"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ANOM1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="b43a9adc-abdb-4b26-9346-56fff0213751"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="48f8248c-5445-4efd-a936-f87d4d575936"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="65d94990-036b-40e9-87ad-6196735f11ab"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="c2c75e50-1621-433d-a070-1b57090d9755"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ANOM1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="db6f6b02-e3b2-4a95-9b16-c323e20cac7b"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="ce3ceaa7-6213-4876-b04f-020b54e7531d"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="305de341-9c6c-4c38-bc13-bde70ec1b444"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="f1260326-4000-4c86-b813-d0fcf2a85e08"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ANOM1" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="f07a0e35-a2c3-4f79-a0f0-86e89c8f714e"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="9a37038b-00e8-4bb3-8d9b-dea9e46d53d3"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="41a98b89-14a4-48da-8758-bd6af4650959"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="1a5c88cf-de81-4cf0-b1a3-1115444f0c32"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="ANOM1" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="53a4bbeb-7639-412b-9408-780ce8cc7d9e"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="217109b1-2477-4414-9782-fdb7fb0b3295"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="de71a6a7-e5b3-4d9c-8810-928f9c92d6ea"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="ccce1009-5247-4670-a5e0-b99056499678"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PEI1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="b9bbccf1-cde1-4827-aca1-3c8d7bae8c53"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="990ccd13-05b7-4f71-9454-d4b658e5cda1"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="9e7390d9-08c4-4b36-bfa6-d8f822350c0b"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="c83cf50b-94ee-4d4e-a1e6-2dc9bbaef28a"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PEI1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="2ca522a5-dbd7-4e77-bfc5-bc4e8d317133"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="f5113903-93b6-49e5-a104-27b3f0d34616"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="0038447c-408b-49a0-bed4-df6990bd0d28"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="3bde3efb-a2a3-4efe-9ec5-52747d9044a4"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PEI1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="34a2487d-8971-4f59-a169-e9d5ecc5ef7e"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="2fc5ed0b-9f3b-4716-b104-20027f425010"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="a622aea8-1dc9-43b3-b7db-4ede8b7662cd"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="75094a96-f8bf-4bcf-b1ee-c6729eedb5ec"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PEI1" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="468a8a31-8545-4663-b7f2-86342171d110"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="03267c14-f6dc-4eab-b4e8-b15875952569"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="c991b1d8-74d4-4272-8b4a-10542bed7cc1"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="c1086c12-0635-4f86-95da-89e6cee728f3"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PEI1" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="6227b65d-00c1-4bba-b2b1-47c8c782395b"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="fbc362a9-7f98-4895-aace-a3e9ab43c1ea"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="abbfbf4d-0adb-4bd5-90a3-589dba7c0779"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="680c167d-8217-453d-abba-15bd4552dbab"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PNMI1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="46478d66-89ac-4d3c-b7ac-921dd916cb25"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="788bf8d7-e0fa-4a9d-91aa-bb174bb26ad1"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="96913490-215a-4e53-91a9-b1ca68f5a870"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="3235e83a-86fb-4833-b3dd-424e5cccdfeb"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PNMI1" columnTotalGroup="SCHOOL_YEAR1">
-					<cellContents mode="Opaque" style="Crosstab_CT">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="e3567ee9-ddc7-4103-a10e-0209312e67c7"/>
+							<reportElement x="0" y="0" width="60" height="10" forecolor="#FFFFFF" uuid="71cb7146-babb-4a70-8759-c70bb5357d59"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="40119ddb-0c0e-4262-a561-f6b235f05428"/>
+							<reportElement x="0" y="10" width="60" height="10" forecolor="#FFFFFF" uuid="fbe372e0-3e93-49fd-a4fc-a01890919485"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PNMI1" columnTotalGroup="SCHOOL_CODE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="880b9c0e-7a44-4efb-acb0-04907ddf138c"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="8d83fdb0-be07-40ea-9681-1bed5bda1201"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="35bbf529-770b-4b43-b08c-fcdbe08633a8"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="1b3730c8-a0ec-4396-809e-1f5ab715fd31"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PNMI1" columnTotalGroup="GRADE1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="4b171a9a-523f-41a7-9730-09ba031c43e0"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="36be83f4-ffb5-433e-8d15-97ba93fe57f5"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="f5aedbd8-f8dc-492f-87f5-7ae2281554e0"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="2a9a8359-7750-4c31-8c79-5875643d2f32"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" rowTotalGroup="PNMI1" columnTotalGroup="SEMESTER1">
-					<cellContents mode="Opaque" style="Crosstab_CG">
+					<cellContents mode="Opaque">
 						<textField>
-							<reportElement x="0" y="0" width="60" height="10" uuid="1a939790-06f7-4633-9a18-982075e74355"/>
+							<reportElement x="0" y="0" width="60" height="10" uuid="393740d7-0d2b-4509-a7ef-01aa3610ab60"/>
 							<textFieldExpression><![CDATA[$V{CREDIT_MEASURE1}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="10" width="60" height="10" uuid="171f3991-5db5-43a5-9276-de54599433b8"/>
+							<reportElement x="0" y="10" width="60" height="10" uuid="11cb3754-a206-49a8-b0b1-0a4f4d2b94dc"/>
 							<textFieldExpression><![CDATA[$V{SUM(ATTEMPTED_CREDIT_VALUE)_MEASURE1}]]></textFieldExpression>
 						</textField>
 					</cellContents>

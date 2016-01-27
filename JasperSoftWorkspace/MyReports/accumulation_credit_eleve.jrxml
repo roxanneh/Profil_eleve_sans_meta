@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-05T14:08:35 -->
+<!-- 2015-12-07T10:38:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accumulation_credit" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="68f2455a-e20d-4b05-b651-612dc4892b02">
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
@@ -189,6 +189,22 @@ order by name, school_year, grade, semester]]>
 								<font fontName="Tahoma"/>
 							</textElement>
 							<text><![CDATA[PNMI]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="60" width="125" height="20" uuid="70048685-7808-4d2a-9ee6-0a1b06b20616">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.3"/>
+								<leftPen lineWidth="0.3"/>
+								<bottomPen lineWidth="0.3"/>
+								<rightPen lineWidth="0.3"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Tahoma"/>
+							</textElement>
+							<text><![CDATA[Nom]]></text>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>

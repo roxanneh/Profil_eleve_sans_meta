@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-05T14:06:53 -->
+<!-- 2015-11-26T10:38:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Moyenne_comp_parannee" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2d8ce845-00c9-4370-9796-ada839eaf78c">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
 	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
-	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rox/Tests/Moyenne_comp_parannee_files/main_jrxml"/>
-	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rox/Tests/Moyenne_comp_parannee"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/Moyenne_comp_parannee_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Rox/Moyenne_comp_parannee"/>
 	<style name="cc" mode="Opaque" isBlankWhenNull="true">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[OR(EXACT("2-", $V{MOY_CC_MEASURE1}), EXACT("2", $V{MOY_CC_MEASURE1}.toString()), EXACT("2+", $V{MOY_CC_MEASURE1}.toString()))]]></conditionExpression>

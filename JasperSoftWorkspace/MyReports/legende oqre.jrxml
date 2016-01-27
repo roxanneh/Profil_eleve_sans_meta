@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2016-01-21T10:35:59 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="legende oqre" pageWidth="842" pageHeight="250" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7b5e03f6-3e20-41ea-a765-378d44265bd2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/Ressources_CSCFN/Resources_variees/legende_oqre_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/Ressources_CSCFN/Resources_variees/legende_oqre"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString>
+		<![CDATA[select person_id from persons where rownum = 1]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="800" height="30" uuid="dfeade91-caa6-4e91-afe1-61f3053dbb1b"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Légende]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="130" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="30" width="250" height="100" uuid="06583e37-8768-49ff-9a89-762460650c9e"/>
+				<box padding="7">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["0 - manque d'indices du niveau 1" + "<br/>" +
+"1 - niveau 1" + "<br/>" +
+"2 - niveau 2" + "<br/>" +
+"3 - niveau 3" + "<br/>" +
+"4 - niveau 4" + "<br/>" +
+"P - aucune donnée" + "<br/>" +
+"B - Résultats en cours de révision" + "<br/>" +
+"Q - s. o." + "<br/>" +
+"W/R - Résultats retenus" + "<br/>" +
+"X - exemption"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="500" y="30" width="300" height="100" uuid="49974305-5b04-4bc6-9b24-5e1dcaa2ca09"/>
+				<box padding="10">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1 - L'élève a réussi le test." + "<br/>" +
+"2 - L'élève n'a pas réussi le test." + "<br/>" +
+"3 - L'élève était absent(e)." + "<br/>" +
+"4 - L'élève admissible antérieurement remplit la condition en suivant le CCLESO." + "<br/>" +
+"5 - L'élève a bénéficié d'un report; l'élève participera à la prochaine administration du test. " + "<br/>" +
+"6 - L'élève a bénéficié d'une exemption pour cette administration du TPCL." + "<br/>" +
+"10 - Les résultats de l'élève sont retenus par l'OQRE. Pour de plus amples renseignements, veuillez communiquer avec la directrice ou le directeur de l'école."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="0" width="250" height="30" uuid="cc6dcd14-da31-4cdf-b95f-c3c00d3708a9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TPCM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="300" height="30" uuid="ebfeb551-316c-4f6a-b43d-d975c6dd5c34"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TPCL]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="250" y="30" width="250" height="100" uuid="dd22e6f2-f4f4-4ebf-a179-0531bf6e0b4f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="7">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["0 - Inférieur au niveau 1" + "<br/>" +
+"1 - niveau 1" + "<br/>" +
+"2 - niveau 2" + "<br/>" +
+"3 - niveau 3" + "<br/>" +
+"4 - niveau 4" + "<br/>" +
+"P - Test non terminé (aucune donnée)" + "<br/>" +
+"B - Résultats en cours de révision" + "<br/>" +
+"V - Vulgaire, obscène ou sinon les cahiers soumis ne peuvent pas être notés" + "<br/>" +
+"W/R - Résultats retenus"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="250" height="30" uuid="0afa18f3-8597-49f6-b8e6-c30a251de3ee"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OQRE 3 et 6]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

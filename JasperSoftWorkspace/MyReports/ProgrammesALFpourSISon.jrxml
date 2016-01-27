@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2016-01-25T12:03:15 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgrammesALFpourSISon" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e83e7968-8903-4afe-8fe0-ce5cf3910939">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Verification_SISon/ProgrammesALFpourSISon_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Verification_SISon/ProgrammesALFpourSISon"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#149966">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="8618dfce-62aa-4a83-8836-5ac64afaea7a">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+		<parameter name="SCHOOL_CODE" class="java.util.List"/>
+		<queryString>
+			<![CDATA[select preferred_name_upper, 
+
+case 
+when grade = 'SK' then 'Jardin' 
+when grade = 'JK' then 'Maternelle'
+else grade end as grade,
+
+ gender, full_name "Programme", first_moi as "Minutes ALF", fsfp.school_code, 
+       case when besoins = 1 then 'Très grand besoin'
+            when besoins = 2 then 'Grand besoin'
+            when besoins = 3 then 'Besoin modéré'
+            when besoins = 4 then 'Besoin léger'
+            else 'N/A' end as "Besoins",
+            
+       case when mesure_dappui = 1 then 'Appui intensif' 
+            when mesure_dappui = 2 then 'Appui occasionnel'
+            when mesure_dappui = 3 then 'Appui soutenu' 
+            when mesure_dappui = 4 then 'Appui ponctuel'
+            else 'N/A' end as "Appui",
+       
+       case when type_de_regroupement = 1 then 'Classe ALF'
+            when type_de_regroupement = 4 then 'Classe ordinaire'
+            when type_de_regroupement = 6 then 'Autre'
+            else 'N/A' end as "Regroupement",
+       
+
+            
+      case when autre_matiere_mesure = 2 then 'Appui soutenu'
+           when autre_matiere_mesure = 3 then 'Appui occasionnel'
+           when autre_matiere_mesure = 4 then 'Appui ponctuel'
+           else 'N/A' end as "Appui - autres matières"
+
+from trill02.student_alf_pana sap, fs_student_fsl_programs fsfp, fs_fsl_programs ffp, persons p, student_registrations sr
+
+where  p.person_id = sap.person_id
+and sr.person_id = p.person_id
+and sap.person_id = fsfp.person_id
+and sap.date_en_vigueur = fsfp.start_date
+and sap.school_code = fsfp.school_code
+and sap.school_year = fsfp.school_year
+and sr.school_year = sap.school_year 
+and sr.school_code = fsfp.school_code
+and ffp.fsl_instruction_code = fsfp.other_fsl_instruction
+and language = 'F'
+and active_flag_10 = 1
+and (fsfp.end_date is null or fsfp.end_date > sysdate)
+and $X{IN, fsfp.school_code, SCHOOL_CODE}
+
+order by fsfp.school_code asc, preferred_name_upper asc]]>
+		</queryString>
+		<field name="PREFERRED_NAME_UPPER" class="java.lang.String"/>
+		<field name="GENDER" class="java.lang.String"/>
+		<field name="Programme" class="java.lang.String"/>
+		<field name="Minutes ALF" class="java.lang.Integer"/>
+		<field name="GRADE" class="java.lang.String"/>
+		<field name="SCHOOL_CODE" class="java.lang.String"/>
+		<field name="Besoins" class="java.lang.String"/>
+		<field name="Appui" class="java.lang.String"/>
+		<field name="Regroupement" class="java.lang.String"/>
+		<field name="Appui - autres matières" class="java.lang.String"/>
+		<variable name="CountAll" class="java.lang.Integer">
+			<variableExpression><![CDATA[NOT($F{PREFERRED_NAME_UPPER} == null) ? $V{CountAll}+1 : $V{CountAll}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_ClasseALF" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Regroupement}.equals("Classe ALF") ? $V{Count_ClasseALF}+1 : $V{Count_ClasseALF}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_ClasseOrdi" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Regroupement}.equals("Classe ordinaire") ? $V{Count_ClasseOrdi}+1 : $V{Count_ClasseOrdi}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_AppuiAutre_Sout" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui - autres matières}.equals("Appui soutenu") ? $V{Count_AppuiAutre_Sout}+1 : $V{Count_AppuiAutre_Sout}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_AppuiAutre_Ponct" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui - autres matières}.equals("Appui ponctuel") ? $V{Count_AppuiAutre_Ponct}+1 : $V{Count_AppuiAutre_Ponct}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_AppuiAutre_Occ" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui - autres matières}.equals("Appui occasionnel") ? $V{Count_AppuiAutre_Occ}+1 : $V{Count_AppuiAutre_Occ}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Minutes300" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Minutes ALF} == 300 ? $V{Count_Minutes300}+1 : $V{Count_Minutes300}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Minutes150-300" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Minutes ALF} >= 150 && $F{Minutes ALF} < 300 ? $V{Count_Minutes150-300}+1 : $V{Count_Minutes150-300}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Minutes51-149" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Minutes ALF} >= 51 && $F{Minutes ALF} <= 149 ? $V{Count_Minutes51-149}+1 : $V{Count_Minutes51-149}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Minutes50" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Minutes ALF} == 50 ? $V{Count_Minutes50}+1 : $V{Count_Minutes50}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Minutes30" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Minutes ALF} == 30 ? $V{Count_Minutes30}+1 : $V{Count_Minutes30}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Appui_Sout" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui}.equals("Appui soutenu") ? $V{Count_Appui_Sout}+1 : $V{Count_Appui_Sout}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Appui_Ponct" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui}.equals("Appui ponctuel") ? $V{Count_Appui_Ponct}+1 : $V{Count_Appui_Ponct}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Appui_Occ" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui}.equals("Appui occasionnel") ? $V{Count_Appui_Occ}+1 : $V{Count_Appui_Occ}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Appui_Int" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Appui}.equals("Appui intensif") ? $V{Count_Appui_Int}+1 : $V{Count_Appui_Int}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Besoin_Leger" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Besoins}.equals("Besoin léger")? $V{Count_Besoin_Leger}+1 : $V{Count_Besoin_Leger}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Besoin_Mod" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Besoins}.equals("Besoin modéré")? $V{Count_Besoin_Mod}+1 : $V{Count_Besoin_Mod}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Besoin_Grand" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Besoins}.equals("Grand besoin")? $V{Count_Besoin_Grand}+1 : $V{Count_Besoin_Grand}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Count_Besoin_TGrand" class="java.lang.Integer">
+			<variableExpression><![CDATA[$F{Besoins}.equals("Très grand besoin")? $V{Count_Besoin_TGrand}+1 : $V{Count_Besoin_TGrand}+0]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<parameter name="SCHOOL_CODE" class="java.util.List" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select person_id from persons where rownum = 1]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="751" height="58" uuid="80670d87-b64a-4a4f-bd4e-cc7d88437ce7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Détails ALF de l'élève]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-1" y="0" width="90" height="58" uuid="18f67bd1-739e-4dab-aee4-4a40c7134b16"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<summary>
+		<band height="60" splitType="Stretch">
+			<componentElement>
+				<reportElement x="10" y="0" width="730" height="60" uuid="80c0163a-d50a-4549-9caa-ede18bd2c763"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="8691e6ed-0677-4340-ba8c-f91cc69460c9">
+						<datasetParameter name="SCHOOL_CODE">
+							<datasetParameterExpression><![CDATA[$P{SCHOOL_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="110" uuid="a6f45763-65ef-4b58-838b-99742ed6ed8c">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="110" height="90" uuid="b71fbcd4-8dfd-4bdc-bbeb-299f078575c3">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Total: " + $V{CountAll}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="110" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="0df50d21-0296-408d-9f3e-a9b887234f3a"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Nom de l'élève]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="110" height="30" uuid="1642b6ec-d2ab-41cb-b18f-4934ec24c374"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PREFERRED_NAME_UPPER}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="bc7746bc-283d-4447-b8df-9000bc42265f">
+						<jr:tableFooter height="90">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="96a0f7bf-ea0b-44da-ac78-f8b9919d07c5"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Sexe]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="cb0074d7-65a5-45ed-8d99-714511f821eb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{GENDER}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="4908fe81-e548-407c-8127-744cd3c5288e">
+						<jr:tableFooter height="90">
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="a6aa41c1-a899-4a0f-aac2-1b35720e5b7e"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Niveau scolaire]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="8b011b01-5bc3-4c74-9219-0abe0db04732"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="30ae5281-8547-489f-976f-a9fe656c3d07">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="9153093f-384c-448d-ac80-9633c7654e50"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[École]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="30" uuid="75385bcc-9dda-42b4-a697-fd2ed3c71ba5"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{SCHOOL_CODE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="19a85ca5-9b48-4123-8d52-471a1505a9bd">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="97ba8195-c29d-4def-a47f-5bb32961cbda"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Programme]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="30" uuid="3749f5cb-f005-495a-b23d-e3433c9ef016"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Programme}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="9f63ea0b-de1d-4382-8cbf-3ce3e752bfa5">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="18" uuid="1244a98d-f418-4686-9076-94bc5e835eb1">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["300: " + $V{Count_Minutes300}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="18" width="60" height="18" uuid="b899849f-e0bc-47df-b8b1-5a2e08e20545">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["150-299: " + $V{Count_Minutes150-300}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="36" width="60" height="18" uuid="19083650-6aa6-4b2e-b4d9-1b896ec4cbc0">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["51-149: " + $V{Count_Minutes51-149}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="54" width="60" height="18" uuid="928cc63f-49cf-4525-b628-47b29cb2a490">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["50: " + $V{Count_Minutes50}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="72" width="60" height="18" uuid="6b4b9dcf-80e7-4b83-9ef4-33f4c9c3b63e">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["30: " + $V{Count_Minutes30}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="8e324d42-0739-4cf5-afe4-9c3b1d859db2"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Minutes ALF]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="6402c76d-7796-4eef-ae79-dacf90029fb2">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Minutes ALF}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c9f638d2-827f-48c4-ba73-d9c06f7ae7ed">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="90" height="22" uuid="8642b985-4a71-4b68-9484-e2f7d03e0018"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Léger: " + $V{Count_Besoin_Leger}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="22" width="90" height="22" uuid="75d75c3b-872b-4ead-9afb-69ad7a052164">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Modéré: " + $V{Count_Besoin_Mod}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="44" width="90" height="22" uuid="dc3fbfed-9f5e-4607-a832-896eef596fac"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Grand: " + $V{Count_Besoin_Grand}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="66" width="90" height="22" uuid="cfbb6d7e-0919-462a-8961-75a2fdb028f3"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Très grand: " + $V{Count_Besoin_TGrand}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="841523aa-3145-4b87-a765-8c515605b09c"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Besoins]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="30" uuid="3b084885-f787-47de-bdba-b78ed96af2e7"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Besoins}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="87" uuid="514e447a-a83b-45df-99ef-cd7e457e0da5">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="44" width="87" height="22" uuid="bf951be1-d846-4132-b155-f705422ff578"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui occasionnel: " + $V{Count_Appui_Occ}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="22" width="87" height="22" uuid="9e6784b5-09cb-419d-b710-e2a6809f9d85">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui ponctuel: " + $V{Count_Appui_Ponct}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="0" width="87" height="22" uuid="62e7309d-8d3a-4f1e-a464-73d987113c58"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui soutenu: " + $V{Count_Appui_Sout}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="66" width="87" height="22" uuid="87db0cc7-91ed-4ab7-b5e3-7144ff22710d"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui intensif: " + $V{Count_Appui_Int}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="87" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="d0c5ff81-5138-4a3d-8d08-db8397cb3d79"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Appui]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="87" height="30" uuid="63c42fc6-f91c-4b3e-97fc-62f8560e5324"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Appui}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="0c4bd1e8-ff46-4e33-9811-a57ad89b556d">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="71" height="45" uuid="4371f5b1-a420-433a-8dda-200729140e23">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<box padding="3">
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Total classe ALF: " + $V{Count_ClasseALF}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="45" width="71" height="45" uuid="2235b21a-e0dd-42c1-91aa-43f46266ea67"/>
+								<box padding="3">
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Total classe ordinaire: " + $V{Count_ClasseOrdi}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="71" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="142be849-8b60-4192-aed5-f1da0a5915a9"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Regroupement]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="71" height="30" uuid="2951a16b-14cc-4714-b94e-006b18212767"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Regroupement}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="87" uuid="c523da5d-930e-4c91-8a31-28d3d8be313a">
+						<jr:tableFooter height="90">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="87" height="30" uuid="06bb51a8-7749-4f7f-90f5-006c76aae6f3">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui soutenu: " + $V{Count_AppuiAutre_Sout}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="30" width="87" height="30" uuid="b1430c32-5dc9-484d-a7f9-fc27705ef14f">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui ponctuel: " + $V{Count_AppuiAutre_Ponct}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="60" width="87" height="30" uuid="f98483bf-9b71-492b-847f-b710cc207933"/>
+								<box>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Appui occasionnel: " + $V{Count_AppuiAutre_Occ}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="87" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="06e1df94-8d24-40bf-9206-2f442a6f9bbf"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Appui - autres matières]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="87" height="30" uuid="d7e01311-25a0-4fff-8215-c954c74855e6"/>
+								<box padding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Appui - autres matières}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

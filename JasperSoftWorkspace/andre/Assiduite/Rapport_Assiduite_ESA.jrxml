@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-12-04T15:01:28 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rapport_Assiduite_ESA" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="293df520-8f2b-4e0f-9a35-aecc4a4a7563">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Assiduite/Rapport_Assiduite_ESA_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Assiduite/Rapport_Assiduite_ESA"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#149966">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#CDCDCD"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Dataset1" uuid="97e9b38b-d5cf-4be3-827c-f4016862304b">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="P_SCHOOL_YEAR" class="java.lang.String"/>
+		<parameter name="P_DATE_DEBUT" class="java.sql.Date"/>
+		<parameter name="P_DATE_FIN" class="java.sql.Date"/>
+		<parameter name="P_SCHOOL_CODE" class="java.util.List"/>
+		<parameter name="P_CLASS_CODE" class="java.util.List"/>
+		<parameter name="P_TYPE_ABSENCES" class="java.util.List"/>
+		<parameter name="P_NOMBRE_ABSENCES" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[SELECT SR.PERSON_ID,
+SR.SCHOOL_CODE,
+SR.SCHOOL_YEAR AS "Année scolaire",
+S.SCHOOL_NAME AS "Nom de l'école",
+SR.GRADE AS "Grade",
+P.LEGAL_SURNAME || ', ' || P.LEGAL_FIRST_NAME AS "Nom",
+PKG_RAPPORT_ASSIDUITÉ.GET_AGE( SR.PERSON_ID, SYSDATE ) AS "Age",
+SC.CLASS_CODE AS "Classe Foyer",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_NOMBRE_ABS(
+        SR.SCHOOL_YEAR,
+        SR.SCHOOL_CODE,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SR.PERSON_ID,
+        '$P!{P_TYPE_ABSENCES}'
+    ), 0
+) AS "Abs prériode",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_NOMBRE_ABS(
+        SR.SCHOOL_YEAR,
+        SR.SCHOOL_CODE,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SR.SCHOOL_YEAR, SR.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SR.PERSON_ID,
+        '$P!{P_TYPE_ABSENCES}'
+    ), 0
+) AS "Abs année"
+
+FROM  STUDENT_REGISTRATIONS SR
+INNER JOIN PERSONS P
+ON  SR.PERSON_ID = P.PERSON_ID
+INNER JOIN STUDENT_PROGRAMS SP
+ON  SR.PERSON_ID   = SP.PERSON_ID
+AND SR.SCHOOL_CODE = SP.SCHOOL_CODE
+AND SR.SCHOOL_YEAR = SP.SCHOOL_YEAR
+INNER JOIN SCHOOLS S
+ON  SR.SCHOOL_CODE = S.SCHOOL_CODE
+INNER JOIN STUDENT_PROGRAM_CLASS_TRACKS SPCT
+ON  SR.SCHOOL_CODE = SPCT.SCHOOL_CODE
+AND SR.SCHOOL_YEAR = SPCT.SCHOOL_YEAR
+AND SR.PERSON_ID   = SPCT.PERSON_ID
+INNER JOIN SCHOOL_CLASSES SC
+ON  SPCT.SCHOOL_CODE = SC.SCHOOL_CODE
+AND SPCT.SCHOOL_YEAR = SC.SCHOOL_YEAR
+AND SPCT.CLASS_CODE  = SC.CLASS_CODE
+
+WHERE SR.SCHOOL_YEAR = $P{P_SCHOOL_YEAR}
+AND $X{IN, SR.SCHOOL_CODE, P_SCHOOL_CODE}
+AND $X{IN, SC.CLASS_CODE, P_CLASS_CODE}
+AND SR.STATUS_INDICATOR_CODE IN ('Active')
+AND SR.OSR_FLAG = 'x'
+AND SP.PROGRAM_NAME = 'Regular'
+AND SC.CLASS_HOMEROOM_FLAG = 'p'
+AND SC.CLASS_CODE IS NOT NULL
+AND SPCT.END_DATE = (
+    SELECT MAX(SPCT2.END_DATE)
+    
+    FROM SCHOOL_CLASSES SC2
+    INNER JOIN STUDENT_PROGRAM_CLASS_TRACKS SPCT2
+    ON  SC2.SCHOOL_CODE = SPCT2.SCHOOL_CODE
+    AND SC2.SCHOOL_YEAR = SPCT2.SCHOOL_YEAR
+    AND SC2.CLASS_CODE  = SPCT2.CLASS_CODE
+    
+    WHERE SC2.SCHOOL_CODE = SC.SCHOOL_CODE
+    AND SC2.SCHOOL_YEAR = SC.SCHOOL_YEAR
+    AND SPCT2.PERSON_ID = SPCT.PERSON_ID
+    AND SPCT2.END_DATE >= $P{P_DATE_DEBUT}
+    AND SPCT2.START_DATE <= $P{P_DATE_FIN}
+    AND SC.CLASS_CODE IS NOT NULL
+    AND SC2.CLASS_HOMEROOM_FLAG = 'p'
+)
+AND (SELECT MAX(
+        PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+            PA.SCHOOL_YEAR,
+            PA.SCHOOL_CODE,
+            PA.PERSON_ID,
+            $P{P_DATE_DEBUT},
+            $P{P_DATE_FIN},
+            PA.CLASS_CODE,
+            '$P!{P_TYPE_ABSENCES}'
+        )
+    )
+    FROM PERIOD_ATTENDANCE PA
+    WHERE PA.CLASS_CODE IS NOT NULL
+    AND PA.CALENDAR_DATE BETWEEN
+        $P{P_DATE_DEBUT}
+        AND $P{P_DATE_FIN}
+    AND UPPER(PA.SCHOOL_PERIOD) NOT IN ('DÎNER', 'DINER', 'ACCEUIL', 'ACC.', 'FOYER')
+    AND PA.SCHOOL_YEAR = SR.SCHOOL_YEAR
+    AND PA.SCHOOL_CODE = SR.SCHOOL_CODE
+    AND PA.PERSON_ID = SR.PERSON_ID
+    GROUP BY PA.PERSON_ID
+) >= $P{P_NOMBRE_ABSENCES}
+
+GROUP BY SR.SCHOOL_YEAR,
+SR.SCHOOL_CODE,
+SC.CLASS_CODE,
+S.SCHOOL_NAME,
+SR.GRADE,
+SR.PERSON_ID,
+P.LEGAL_SURNAME,
+P.LEGAL_FIRST_NAME
+
+ORDER BY SR.SCHOOL_CODE ASC, SR.GRADE ASC, P.LEGAL_SURNAME ASC]]>
+		</queryString>
+		<field name="PERSON_ID" class="java.lang.String"/>
+		<field name="SCHOOL_CODE" class="java.lang.String"/>
+		<field name="Année scolaire" class="java.lang.String"/>
+		<field name="Nom de l&apos;école" class="java.lang.String"/>
+		<field name="Grade" class="java.lang.String"/>
+		<field name="Nom" class="java.lang.String"/>
+		<field name="Prénom" class="java.lang.String"/>
+		<field name="Age" class="java.lang.Integer"/>
+		<field name="Classe Foyer" class="java.lang.String"/>
+		<field name="Abs prériode" class="java.lang.Double"/>
+		<field name="Abs année" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="P_DATE_DEBUT" class="java.sql.Date" isForPrompting="false"/>
+	<parameter name="P_DATE_FIN" class="java.sql.Date" isForPrompting="false"/>
+	<parameter name="P_SCHOOL_YEAR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_SCHOOL_CODE" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_CLASS_CODE" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_TYPE_ABSENCES" class="java.util.List" isForPrompting="false"/>
+	<parameter name="P_NOMBRE_ABSENCES" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT P.PERSON_ID
+FROM PERSONS P
+WHERE ROWNUM = 1]]>
+	</queryString>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="752">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<componentElement>
+				<reportElement x="0" y="45" width="571" height="706" uuid="1d4ba3b4-fcb2-4b03-b46f-418b15022463">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="63289f52-0423-4c13-b1ed-d93942e4775d">
+						<datasetParameter name="P_SCHOOL_YEAR">
+							<datasetParameterExpression><![CDATA[$P{P_SCHOOL_YEAR}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_DATE_DEBUT">
+							<datasetParameterExpression><![CDATA[$P{P_DATE_DEBUT}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_DATE_FIN">
+							<datasetParameterExpression><![CDATA[$P{P_DATE_FIN}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_SCHOOL_CODE">
+							<datasetParameterExpression><![CDATA[$P{P_SCHOOL_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_CLASS_CODE">
+							<datasetParameterExpression><![CDATA[$P{P_CLASS_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_NOMBRE_ABSENCES">
+							<datasetParameterExpression><![CDATA[$P{P_NOMBRE_ABSENCES}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="P_TYPE_ABSENCES">
+							<datasetParameterExpression><![CDATA[$P{P_TYPE_ABSENCES}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="150" uuid="10b905df-7244-4bea-b03d-f53c2fe458f1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="150" height="20" forecolor="#FFFFFF" uuid="89f05230-7766-48ff-bd03-e538e6d36bbc">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Nom]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="150" height="20" uuid="fcb39aa4-5ee9-4345-a521-57b00cb2f721">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Nom}]]></textFieldExpression>
+								<hyperlinkParameter name="_report">
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Drilldowns_partages/profil_crosstab"]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="STUDENT">
+									<hyperlinkParameterExpression><![CDATA[$F{PERSON_ID}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="83237e6e-3641-431d-be43-8790f11c21c9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="3a8f10e8-a3d2-4472-a085-63d40c02e476"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Nom de l'école]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkTarget="Blank">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="100" height="20" uuid="9c32183b-1ade-4141-9c8d-6c751b691c1b">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Nom de l'école}]]></textFieldExpression>
+								<hyperlinkParameter name="_report">
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Drilldowns_partages/profil_crosstab"]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="STUDENT">
+									<hyperlinkParameterExpression><![CDATA[$F{PERSON_ID}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="ab3a81eb-f97f-472c-a37f-1a6acd1095c5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="8fad9877-49fb-4237-8d49-486ca306535a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Grade]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="40" height="20" uuid="dd62ad13-2bb3-4794-b987-6b09cd1833d1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Grade}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30" uuid="a766cd24-3710-402d-bec8-77c557758748">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="20" forecolor="#FFFFFF" uuid="0089d0b8-1e77-4a7f-9243-828c99b145e9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Age]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="30" height="20" uuid="aef86065-f14d-48ab-88f3-e6dd02fbe671"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Age}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="6897a0f2-249a-4591-b42e-1e5b9fd38b23">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="20" forecolor="#FFFFFF" uuid="08e266f1-b035-4ead-bf46-9872095da32f">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Classe foyer]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="70" height="20" uuid="f3e726a6-d762-4604-87d5-a1e23dae19f5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Classe Foyer}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="2d5fa80c-8ea5-4b11-bb57-188bfde6e1b4">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="20" forecolor="#FFFFFF" uuid="1095931a-166b-422b-abcd-6c5b871f9739"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Abs période]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="55" height="20" uuid="fb3a902a-5d05-40a1-982e-a3744241e582"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Abs prériode}]]></textFieldExpression>
+								<hyperlinkParameter name="_report">
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Assiduite/Rapport_Assiduite_ESA/Rapport_Assiduite_ESA_Eleve"]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_PERSON_ID">
+									<hyperlinkParameterExpression><![CDATA[$F{PERSON_ID}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_SCHOOL_CODE">
+									<hyperlinkParameterExpression><![CDATA[$F{SCHOOL_CODE}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_SCHOOL_YEAR">
+									<hyperlinkParameterExpression><![CDATA[$P{P_SCHOOL_YEAR}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_DATE_DEBUT">
+									<hyperlinkParameterExpression><![CDATA[$P{P_DATE_DEBUT}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_DATE_FIN">
+									<hyperlinkParameterExpression><![CDATA[$P{P_DATE_FIN}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="9ef41a55-79fa-4a15-bd4f-f514b1e091d4">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="20" forecolor="#FFFFFF" uuid="4024d5e5-5d32-4fb6-8983-8c5264bf1a4b">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<text><![CDATA[Abs année]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="ReportExecution" hyperlinkTarget="Blank">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="55" height="20" uuid="481452e1-123c-4b9e-ac30-5223885a2565">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Abs année}]]></textFieldExpression>
+								<hyperlinkParameter name="_report">
+									<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Assiduite/Rapport_assiduite_par_bloc/Profil_assiduite"]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_DATE_DEBUT">
+									<hyperlinkParameterExpression><![CDATA[$P{P_DATE_DEBUT}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_DATE_FIN">
+									<hyperlinkParameterExpression><![CDATA[$P{P_DATE_FIN}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_SCHOOL_YEAR">
+									<hyperlinkParameterExpression><![CDATA[$P{P_SCHOOL_YEAR}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_SCHOOL_CODE">
+									<hyperlinkParameterExpression><![CDATA[$P{P_SCHOOL_CODE}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_CLASS_CODE">
+									<hyperlinkParameterExpression><![CDATA[$P{P_CLASS_CODE}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_GRADE">
+									<hyperlinkParameterExpression><![CDATA[$F{Grade}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+								<hyperlinkParameter name="P_PERSON_ID">
+									<hyperlinkParameterExpression><![CDATA[$F{PERSON_ID}]]></hyperlinkParameterExpression>
+								</hyperlinkParameter>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="93e3d610-f456-431c-bb10-450d0abdf3fd"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="0" width="492" height="30" uuid="6679a84d-3e0e-4494-8b82-01e5a4c7b10a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rapport d'assiduité du " + DATEFORMAT( $P{P_DATE_DEBUT}, "dd MMM yyyy" ) + " au " + DATEFORMAT( $P{P_DATE_FIN}, "dd MMM yyyy" )]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

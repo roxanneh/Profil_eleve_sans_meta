@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-26T14:10:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rapport_Assiduite_ESA_Eleve" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25052a99-d125-490c-bae5-e4a9f03f74d7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Assiduite/Rapport_Assiduite_ESA/Rapport_Assiduite_ESA_Eleve_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/Ressources_CSCFN/Drilldowns/Assiduite/Rapport_Assiduite_ESA/Rapport_Assiduite_ESA_Eleve"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#149966">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#CDCDCD"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Dataset1" uuid="4621f2a3-2aff-465d-b21a-6af83c2e3476">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="P_SCHOOL_YEAR" class="java.lang.String"/>
+		<parameter name="P_DATE_DEBUT" class="java.sql.Date"/>
+		<parameter name="P_DATE_FIN" class="java.sql.Date"/>
+		<parameter name="P_SCHOOL_CODE" class="java.lang.String"/>
+		<parameter name="P_PERSON_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT DISTINCT 
+CASE WHEN SPCT.START_DATE > SYSDATE
+	OR (
+		SPCT.END_DATE IS NOT NULL
+		AND SPCT.END_DATE < SYSDATE
+	) THEN '*' END AS "Active",
+SC.CLASS_CODE AS "Classe",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'L'
+    ), 0
+) AS "Retards prériode",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'A'
+    ), 0
+) AS "Abs A prériode",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'E'
+    ), 0
+) AS "Abs J prériode",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'G'
+    ), 0
+) AS "Abs G prériode",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'L'
+    ), 0
+) AS "Retards année",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'A'
+    ), 0
+) AS "Abs A année",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'E'
+    ), 0
+) AS "Abs J année",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_ABS_TYPE_CLASS_INTERV(
+        SC.SCHOOL_YEAR,
+        SC.SCHOOL_CODE,
+        SPCT.PERSON_ID,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START( SC.SCHOOL_YEAR, SC.SCHOOL_CODE ),
+        $P{P_DATE_FIN},
+        SC.CLASS_CODE,
+        'G'
+    ), 0
+) AS "Abs G année"
+    
+FROM SCHOOL_CLASSES SC
+INNER JOIN STUDENT_PROGRAM_CLASS_TRACKS SPCT
+ON  SC.SCHOOL_CODE = SPCT.SCHOOL_CODE
+AND SC.SCHOOL_YEAR = SPCT.SCHOOL_YEAR
+AND SC.CLASS_CODE  = SPCT.CLASS_CODE
+    
+WHERE SC.SCHOOL_CODE = $P{P_SCHOOL_CODE}
+AND SC.SCHOOL_YEAR = $P{P_SCHOOL_YEAR}
+AND SC.CLASS_CODE IS NOT NULL
+AND SC.TAKE_ATTENDANCE_FLAG = 'x'
+AND SPCT.PERSON_ID = $P{P_PERSON_ID}]]>
+		</queryString>
+		<field name="Active" class="java.lang.String"/>
+		<field name="Classe" class="java.lang.String"/>
+		<field name="Retards prériode" class="java.lang.Integer"/>
+		<field name="Abs A prériode" class="java.lang.Integer"/>
+		<field name="Abs J prériode" class="java.lang.Integer"/>
+		<field name="Abs G prériode" class="java.lang.Integer"/>
+		<field name="Retards année" class="java.lang.Integer"/>
+		<field name="Abs A année" class="java.lang.Integer"/>
+		<field name="Abs J année" class="java.lang.Integer"/>
+		<field name="Abs G année" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="P_SCHOOL_YEAR" class="java.lang.String"/>
+	<parameter name="P_DATE_DEBUT" class="java.sql.Date"/>
+	<parameter name="P_DATE_FIN" class="java.sql.Date"/>
+	<parameter name="P_SCHOOL_CODE" class="java.lang.String"/>
+	<parameter name="P_PERSON_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT SR.SCHOOL_YEAR AS "Année scolaire",
+S.SCHOOL_NAME AS "Nom de l'école",
+SR.GRADE AS "Grade",
+P.LEGAL_SURNAME AS "Nom",
+P.LEGAL_FIRST_NAME AS "Prénom",
+PKG_RAPPORT_ASSIDUITÉ.GET_AGE( SR.PERSON_ID, SYSDATE ) AS "Age",
+PKG_RAPPORT_ASSIDUITÉ.GET_CLASSE_FOYER(
+    SR.SCHOOL_YEAR,
+    SR.SCHOOL_CODE,
+    SR.PERSON_ID,
+    $P{P_DATE_DEBUT},
+    $P{P_DATE_FIN} 
+) AS "Classe Foyer",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_NOMBRE_ABS(
+        SR.SCHOOL_YEAR,
+        SR.SCHOOL_CODE,
+        $P{P_DATE_DEBUT},
+        $P{P_DATE_FIN},
+        SR.PERSON_ID,
+        'AEG'
+    ), 0
+) AS "Abs prériode",
+NVL(PKG_RAPPORT_ASSIDUITÉ.GET_NOMBRE_ABS(
+        SR.SCHOOL_YEAR,
+        SR.SCHOOL_CODE,
+        PKG_RAPPORT_ASSIDUITÉ.GET_SCHOOL_YEAR_START('20142015', 'ESA' ),
+        $P{P_DATE_FIN},
+        SR.PERSON_ID,
+        'AEG'
+    ), 0
+) AS "Abs année"
+
+FROM  STUDENT_REGISTRATIONS SR
+INNER JOIN PERSONS P
+ON  SR.PERSON_ID = P.PERSON_ID
+INNER JOIN STUDENT_PROGRAMS SP
+ON  SR.PERSON_ID   = SP.PERSON_ID
+AND SR.SCHOOL_CODE = SP.SCHOOL_CODE
+AND SR.SCHOOL_YEAR = SP.SCHOOL_YEAR
+INNER JOIN SCHOOLS S
+ON  SR.SCHOOL_CODE = S.SCHOOL_CODE
+
+WHERE SR.SCHOOL_YEAR = $P{P_SCHOOL_YEAR}
+AND SR.SCHOOL_CODE = $P{P_SCHOOL_CODE}
+AND SR.PERSON_ID = $P{P_PERSON_ID}
+AND SR.STATUS_INDICATOR_CODE IN ('Active')
+AND SR.OSR_FLAG = 'x'
+AND SP.PROGRAM_NAME = 'Regular'
+
+GROUP BY SR.SCHOOL_YEAR,
+SR.SCHOOL_CODE,
+S.SCHOOL_NAME,
+SR.GRADE,
+SR.PERSON_ID,
+P.LEGAL_SURNAME,
+P.LEGAL_FIRST_NAME
+
+ORDER BY SR.SCHOOL_CODE ASC, SR.GRADE ASC, P.LEGAL_SURNAME ASC]]>
+	</queryString>
+	<field name="Année scolaire" class="java.lang.String"/>
+	<field name="Nom de l&apos;école" class="java.lang.String"/>
+	<field name="Grade" class="java.lang.String"/>
+	<field name="Nom" class="java.lang.String"/>
+	<field name="Prénom" class="java.lang.String"/>
+	<field name="Age" class="java.lang.Integer"/>
+	<field name="Classe Foyer" class="java.lang.String"/>
+	<field name="Abs prériode" class="java.lang.Double"/>
+	<field name="Abs année" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="751" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="0" width="492" height="30" uuid="3cacb47c-2d14-465c-93c1-273b8d1c10a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rapport d'assiduité pour " + $F{Nom} + ", " + $F{Prénom}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="049b2b0a-6c40-4547-93dc-89ccd8e40f69"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="71" width="70" height="21" uuid="e440a72e-606e-4406-8d64-8f087a2d6967">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Année scolaire :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="71" width="100" height="21" uuid="7c5af5dc-6391-4cea-9532-5fb15124ef45"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Année scolaire}.substring( 0, 4 ) + "/" + $F{Année scolaire}.substring(4,8)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="70" height="21" uuid="6b6d17c5-3e19-4c0a-9a0d-497e1071f9fb"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[École :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="50" width="300" height="21" uuid="9a26e696-270a-47ec-8c5f-79f6e885e6db"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nom de l'école}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="30" width="492" height="14" uuid="df2eae28-c220-457b-b566-c718f986df2b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Du " + DATEFORMAT( $P{P_DATE_DEBUT}, "dd MMM yyyy" ) + " au " + DATEFORMAT( $P{P_DATE_FIN}, "dd MMM yyyy" )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="92" width="100" height="21" uuid="c10253ea-3d6f-40ce-9996-8da74c412df9"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Grade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="92" width="70" height="21" uuid="b82c6fe3-4fc5-45ea-9cd6-ff40c687bfbf"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Grade :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="71" width="60" height="21" uuid="558d77ad-0289-452a-9f82-324e88046027"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Age :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="230" y="71" width="80" height="21" uuid="dcb7e6e3-d6a5-4812-8fe3-4e3538f4071d"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Age}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="230" y="92" width="80" height="21" uuid="a20bb7a3-aed0-42d6-a359-d70bee697e5e"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Classe Foyer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="170" y="92" width="60" height="21" uuid="3ab89102-248e-4716-b4b5-4536dd9b1abe"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Classe foyer :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="50" width="160" height="21" uuid="a1df1a17-94ed-42bb-be27-ee0b9617d231">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Absences totales durant cette période :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="530" y="50" width="42" height="21" uuid="502475c6-ecc1-4369-8599-f8ffd1e9b4d4"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Abs prériode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="70" width="160" height="21" uuid="9463b91a-65fb-4c30-b0f7-0099444bc23c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Absences totales depuis septembre :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="530" y="70" width="42" height="21" uuid="b59c54e1-639e-45ad-962f-cff9c4748711"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Abs année}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="730" width="100" height="21" uuid="8706b991-95bd-4519-8d81-c3e31081db8c"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[* = Cours inactif]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="130" width="572" height="600" uuid="a86ba4f8-05e2-4ce9-a68e-6d3b7764a6f8">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="P_SCHOOL_YEAR">
+					<subreportParameterExpression><![CDATA[$P{P_SCHOOL_YEAR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{P_DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{P_DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_SCHOOL_CODE">
+					<subreportParameterExpression><![CDATA[$P{P_SCHOOL_CODE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PERSON_ID">
+					<subreportParameterExpression><![CDATA[$P{P_PERSON_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{P_SCHOOL_CODE}.startsWith("ES") ? "repo:/Ressources_CSCFN/Drilldowns/Assiduite/Rapport_Assiduite_ESA/Rapport_Assiduite_ESA_Eleve_subreport_secondaire" : "repo:/Ressources_CSCFN/Drilldowns/Assiduite/Rapport_Assiduite_ESA/Rapport_Assiduite_ESA_Eleve_subreport_primaire"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+</jasperReport>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-05T12:03:31 -->
+<!-- 2015-12-01T14:29:29 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rendement_ele_autrematieres" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3292d631-58fe-4c51-b0fd-3e2aba5b0c83">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Notes" scaleImage="FillFrame">
@@ -9,7 +9,7 @@
 			<style mode="Opaque" backcolor="#FFFF99" scaleImage="FillFrame"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[OR(OR( EXACT($V{MARK_MEASURE1}, "49"), EXACT($V{MARK_MEASURE1}, "50"), EXACT($V{MARK_MEASURE1}, "51"), EXACT($V{MARK_MEASURE1}, "52"), EXACT($V{MARK_MEASURE1}, "53"), EXACT($V{MARK_MEASURE1}, "54"), EXACT($V{MARK_MEASURE1}, "55"), EXACT($V{MARK_MEASURE1}, "56"), EXACT($V{MARK_MEASURE1}, "57"), EXACT($V{MARK_MEASURE1}, "58"), EXACT($V{MARK_MEASURE1}, "59")),OR(EXACT($V{MARK_MEASURE1}, "D"),EXACT($V{MARK_MEASURE1}, "D+"),EXACT($V{MARK_MEASURE1}, "D-"), AND(EXACT($V{REPORT_PERIOD1}, "P"), EXACT($V{MARK_MEASURE1}, "2"))))]]></conditionExpression>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{MARK_MEASURE1}, "49"), EXACT($V{MARK_MEASURE1}, "50"), EXACT($V{MARK_MEASURE1}, "51"), EXACT($V{MARK_MEASURE1}, "52"), EXACT($V{MARK_MEASURE1}, "53"), EXACT($V{MARK_MEASURE1}, "54"), EXACT($V{MARK_MEASURE1}, "55"), EXACT($V{MARK_MEASURE1}, "56"), EXACT($V{MARK_MEASURE1}, "57"), EXACT($V{MARK_MEASURE1}, "58"), EXACT($V{MARK_MEASURE1}, "59")),OR(EXACT($V{MARK_MEASURE1}, "D"),EXACT($V{MARK_MEASURE1}, "D+"),EXACT($V{MARK_MEASURE1}, "D-")))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#EDA979" scaleImage="FillFrame"/>
 		</conditionalStyle>
 		<conditionalStyle>
@@ -17,7 +17,7 @@
 			<style mode="Opaque" backcolor="#E05A58" scaleImage="FillFrame"/>
 		</conditionalStyle>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[OR(OR( EXACT($V{MARK_MEASURE1}, "48"), EXACT($V{MARK_MEASURE1}, "47"), EXACT($V{MARK_MEASURE1}, "46"), EXACT($V{MARK_MEASURE1}, "45"), EXACT($V{MARK_MEASURE1}, "44"), EXACT($V{MARK_MEASURE1}, "40"), EXACT($V{MARK_MEASURE1}, "39"), EXACT($V{MARK_MEASURE1}, "38"), EXACT($V{MARK_MEASURE1}, "37"), EXACT($V{MARK_MEASURE1}, "36"), EXACT($V{MARK_MEASURE1}, "35")),OR( EXACT($V{MARK_MEASURE1}, "34"), EXACT($V{MARK_MEASURE1}, "33"), EXACT($V{MARK_MEASURE1}, "32"), EXACT($V{MARK_MEASURE1}, "31"), EXACT($V{MARK_MEASURE1}, "30"), EXACT($V{MARK_MEASURE1}, "29"), EXACT($V{MARK_MEASURE1}, "28"), EXACT($V{MARK_MEASURE1}, "27"), EXACT($V{MARK_MEASURE1}, "26"), EXACT($V{MARK_MEASURE1}, "25"), EXACT($V{MARK_MEASURE1}, "24")),OR( EXACT($V{MARK_MEASURE1}, "23"), EXACT($V{MARK_MEASURE1}, "22"), EXACT($V{MARK_MEASURE1}, "21"), EXACT($V{MARK_MEASURE1}, "20"), EXACT($V{MARK_MEASURE1}, "19"), EXACT($V{MARK_MEASURE1}, "18"), EXACT($V{MARK_MEASURE1}, "17"), EXACT($V{MARK_MEASURE1}, "16"), EXACT($V{MARK_MEASURE1}, "15"), EXACT($V{MARK_MEASURE1}, "14"), EXACT($V{MARK_MEASURE1}, "13")),OR( EXACT($V{MARK_MEASURE1}, "12"), EXACT($V{MARK_MEASURE1}, "11"), EXACT($V{MARK_MEASURE1}, "10"), EXACT($V{MARK_MEASURE1}, "09"), EXACT($V{MARK_MEASURE1}, "08"), EXACT($V{MARK_MEASURE1}, "07"), EXACT($V{MARK_MEASURE1}, "06"), EXACT($V{MARK_MEASURE1}, "05"), EXACT($V{MARK_MEASURE1}, "04"), EXACT($V{MARK_MEASURE1}, "03"), EXACT($V{MARK_MEASURE1}, "02")),OR( EXACT($V{MARK_MEASURE1}, "01"), EXACT($V{MARK_MEASURE1}, "00"), EXACT($V{MARK_MEASURE1}, "0")))]]></conditionExpression>
+			<conditionExpression><![CDATA[OR(OR( EXACT($V{MARK_MEASURE1}, "48"), EXACT($V{MARK_MEASURE1}, "47"), EXACT($V{MARK_MEASURE1}, "46"), EXACT($V{MARK_MEASURE1}, "45"), EXACT($V{MARK_MEASURE1}, "44"), EXACT($V{MARK_MEASURE1}, "40"), EXACT($V{MARK_MEASURE1}, "39"), EXACT($V{MARK_MEASURE1}, "38"), EXACT($V{MARK_MEASURE1}, "37"), EXACT($V{MARK_MEASURE1}, "36"), EXACT($V{MARK_MEASURE1}, "35")),OR( EXACT($V{MARK_MEASURE1}, "34"), EXACT($V{MARK_MEASURE1}, "33"), EXACT($V{MARK_MEASURE1}, "32"), EXACT($V{MARK_MEASURE1}, "31"), EXACT($V{MARK_MEASURE1}, "30"), EXACT($V{MARK_MEASURE1}, "29"), EXACT($V{MARK_MEASURE1}, "28"), EXACT($V{MARK_MEASURE1}, "27"), EXACT($V{MARK_MEASURE1}, "26"), EXACT($V{MARK_MEASURE1}, "25"), EXACT($V{MARK_MEASURE1}, "24")),OR( EXACT($V{MARK_MEASURE1}, "23"), EXACT($V{MARK_MEASURE1}, "22"), EXACT($V{MARK_MEASURE1}, "21"), EXACT($V{MARK_MEASURE1}, "20"), EXACT($V{MARK_MEASURE1}, "19"), EXACT($V{MARK_MEASURE1}, "18"), EXACT($V{MARK_MEASURE1}, "17"), EXACT($V{MARK_MEASURE1}, "16"), EXACT($V{MARK_MEASURE1}, "15"), EXACT($V{MARK_MEASURE1}, "14"), EXACT($V{MARK_MEASURE1}, "13")),OR( EXACT($V{MARK_MEASURE1}, "12"), EXACT($V{MARK_MEASURE1}, "11"), EXACT($V{MARK_MEASURE1}, "10"), EXACT($V{MARK_MEASURE1}, "09"), EXACT($V{MARK_MEASURE1}, "08"), EXACT($V{MARK_MEASURE1}, "07"), EXACT($V{MARK_MEASURE1}, "06"), EXACT($V{MARK_MEASURE1}, "05"), EXACT($V{MARK_MEASURE1}, "04"), EXACT($V{MARK_MEASURE1}, "03"), EXACT($V{MARK_MEASURE1}, "02")),OR(EXACT($V{MARK_MEASURE1}, "01"),EXACT($V{MARK_MEASURE1}, "00"),EXACT($V{MARK_MEASURE1}, "0"),EXACT($V{MARK_MEASURE1}, "PD")))]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E05A58" scaleImage="FillFrame"/>
 		</conditionalStyle>
 		<conditionalStyle>
@@ -27,7 +27,15 @@
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select SCHOOL_CODE, school_year, REPORT_PERIOD, SUBJECT_DESCRIPTION_F, MARK,
+		<![CDATA[select SCHOOL_CODE, school_year, REPORT_PERIOD, SUBJECT_DESCRIPTION_F, 
+
+	case when report_period = 'P' then 
+		case when MARK = '1' then 'PD'
+				when MARK = '2' then 'PB'
+				when MARK = '3' then 'PTB'
+		else MARK end
+	else MARK end as MARK,
+
        case when SUBJECT_DESCRIPTION_F = 'Anglais' then 1
             when SUBJECT_DESCRIPTION_F in ('Sciences et technologie', 'Études Technologiques') then 2
             when SUBJECT_DESCRIPTION_F in ('Art dramatique', 'Art dramatique et danse', 'Arts visuels', 'Danse', 'Musique') then 4
@@ -73,7 +81,7 @@ order by roworder, subject_description_f]]>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Légende pour le rapport de progrès: [1]-Progresse avec difficulté [2]-Progresse bien [3]-Progresse très bien]]></text>
+				<text><![CDATA[Légende pour le rapport de progrès: [PD]-Progresse avec difficulté [PB]-Progresse bien [PTB]-Progresse très bien]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="5" width="380" height="20" uuid="efa116c3-6405-49a6-9572-281e74dbc784"/>
@@ -155,8 +163,8 @@ order by roworder, subject_description_f]]>
 					</bucket>
 					<crosstabColumnHeader>
 						<cellContents mode="Opaque">
-							<textField>
-								<reportElement x="0" y="0" width="20" height="20" uuid="7a999892-93b4-423a-8c44-b8aa82368ffb"/>
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="20" height="20" uuid="7a999892-93b4-423a-8c44-b8aa82368ffb"/>
 								<box>
 									<topPen lineWidth="0.2"/>
 									<leftPen lineWidth="0.2"/>
@@ -246,8 +254,11 @@ order by roworder, subject_description_f]]>
 				</measure>
 				<crosstabCell width="20" height="20">
 					<cellContents mode="Opaque">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<textField isBlankWhenNull="true">
-							<reportElement style="Notes" stretchType="RelativeToBandHeight" x="0" y="0" width="20" height="20" uuid="85f6358a-2856-46b8-a81a-e2620f24c2e5"/>
+							<reportElement style="Notes" stretchType="RelativeToBandHeight" x="0" y="0" width="20" height="20" uuid="85f6358a-2856-46b8-a81a-e2620f24c2e5">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
 							<box>
 								<topPen lineWidth="0.2"/>
 								<leftPen lineWidth="0.2"/>

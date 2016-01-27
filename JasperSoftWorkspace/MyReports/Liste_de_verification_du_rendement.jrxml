@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-05T13:30:03 -->
+<!-- 2015-12-03T11:28:07 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_de_verification_du_rendement" pageWidth="842" pageHeight="595" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e6434a1e-8ba4-49f3-8298-dee3afc4d2a0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
@@ -57,8 +57,7 @@
           WHEN inner_mark = '2' THEN 'B'
           WHEN inner_mark = '3' THEN 'TB'
           ELSE inner_mark
-       END
-          AS inner_mark,
+       END AS inner_mark,
        inner_domaine,
        inner_matiere,
        student_course_achievement.class_code,
@@ -67,10 +66,9 @@
           WHEN student_course_achievement.report_period = 'I' THEN '1'
           WHEN student_course_achievement.report_period = 'F' THEN '2'
           ELSE student_course_achievement.report_period
-       END
-          AS report_period,
-         student_course_achievement.subject_status,
-         delivery_mode,
+       END AS report_period,
+         CONCAT(case when student_course_achievement.subject_status = 'NA' then 'SO' else student_course_achievement.subject_status end,
+          case when delivery_mode = 'NA' then 'SO' else delivery_mode end) as delivery_mode,
          CASE WHEN inner_pei = 1 THEN 'oui' ELSE '' END AS pei
     FROM student_course_achievement,
          (  SELECT student_course_strand_achieve.COURSE_CODE AS inner_course,
@@ -146,7 +144,6 @@ ORDER BY preferred_name_upper ASC,
 		<field name="CLASS_CODE" class="java.lang.String"/>
 		<field name="SUBJECT_COMMENT" class="java.lang.String"/>
 		<field name="REPORT_PERIOD" class="java.lang.String"/>
-		<field name="SUBJECT_STATUS" class="java.lang.String"/>
 		<field name="DELIVERY_MODE" class="java.lang.String"/>
 		<field name="PEI" class="java.lang.String"/>
 		<group name="TEACHER">
@@ -259,14 +256,14 @@ ORDER BY preferred_name_upper ASC,
 	<title>
 		<band height="51">
 			<textField>
-				<reportElement x="636" y="0" width="162" height="49" uuid="f7f4c2cd-3461-4a80-bfb3-9340dde64e2d"/>
+				<reportElement x="580" y="0" width="183" height="49" uuid="f7f4c2cd-3461-4a80-bfb3-9340dde64e2d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="20" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SCHOOL_YEAR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="6" y="0" width="792" height="49" uuid="768c4dc0-af8e-40de-a6e5-fcb24d1166c8">
+				<reportElement x="6" y="0" width="758" height="49" uuid="768c4dc0-af8e-40de-a6e5-fcb24d1166c8">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -281,9 +278,9 @@ ORDER BY preferred_name_upper ASC,
 		</band>
 	</title>
 	<summary>
-		<band height="4" splitType="Stretch">
+		<band height="9" splitType="Stretch">
 			<componentElement>
-				<reportElement x="9" y="0" width="785" height="1" uuid="b4fd19c1-f248-4c49-a069-77f1b997ae8f">
+				<reportElement x="9" y="0" width="755" height="9" uuid="b4fd19c1-f248-4c49-a069-77f1b997ae8f">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="Blank">
@@ -446,6 +443,30 @@ ORDER BY preferred_name_upper ASC,
 							</textField>
 						</jr:detailCell>
 					</jr:column>
+					<jr:column width="40" uuid="3781da21-5b39-4110-ac7a-8409bfb8e1eb">
+						<jr:columnHeader style="Table 2_CH" height="30">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="df7ae6af-83ee-4992-aeb1-86d55eab3edc">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="6"/>
+								</textElement>
+								<text><![CDATA[Mode d'ens.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="30" uuid="920e71a7-8f2e-401b-b919-774ffb047cba">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DELIVERY_MODE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 					<jr:column width="350" uuid="0a844fa9-a4fc-49e2-a518-bc7c27baf7d3">
 						<jr:columnHeader style="Table 2_CH" height="30">
 							<staticText>
@@ -470,32 +491,6 @@ ORDER BY preferred_name_upper ASC,
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="35" uuid="22525bc8-b73b-4f62-8765-d62ec4dbf312">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<jr:columnHeader style="Table 2_CH" height="30">
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="35" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="5997519d-1319-428b-8f40-80f0969c1438">
-									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								</reportElement>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="8"/>
-								</textElement>
-								<text><![CDATA[Mode ens.]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table 2_TD" height="30">
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="35" height="30" uuid="920e71a7-8f2e-401b-b919-774ffb047cba">
-									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-								</reportElement>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{DELIVERY_MODE}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
 					<jr:column width="35" uuid="53bb427b-9c53-48df-9312-199135abf1a6">
 						<jr:columnHeader style="Table 2_CH" height="30">
 							<staticText>
@@ -514,28 +509,6 @@ ORDER BY preferred_name_upper ASC,
 									<font fontName="Tahoma" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PEI}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="35" uuid="1f1fab32-3ad6-4f4e-9ca4-eabb528f22ee">
-						<jr:columnHeader style="Table 2_CH" height="30">
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="35" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="ed050785-2e9c-4164-9ef3-7903306edd79"/>
-								<box padding="2"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="6"/>
-								</textElement>
-								<text><![CDATA[Mode ens. mat.]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table 2_TD" height="30">
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="35" height="30" uuid="e7b0dfc1-9270-43e6-86de-525609e760bb"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{SUBJECT_STATUS}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

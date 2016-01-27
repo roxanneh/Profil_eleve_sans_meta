@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-12-15T16:28:19 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rendement_lit" pageWidth="350" pageHeight="400" orientation="Landscape" columnWidth="310" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="97050341-38e1-49b2-8d35-0a834ad10660">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString>
+		<![CDATA[select school_year, round(count(case when ecr > 70 then ecr end)/count(*)*100, 2) as count_ecr_gt70, round(count(case when lec > 70 then lec end)/count(*)*100, 2) as count_lec_gt70
+from (
+    SELECT person_id, school_year, (ROUND(avg(ECR/13*100), 2)) ecr, (ROUND(avg(LEC/13*100), 2)) lec, '1' as num
+        FROM (
+            SELECT distinct sr.person_id, report_period, sr.school_year,
+            case 
+            when PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ATTRIBUEE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, scsa.report_period,'002') not in ('!!', '?', 'I')
+            then PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ATTRIBUEE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, scsa.report_period,'002') end AS ECR,
+
+
+            case 
+            when PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ATTRIBUEE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, scsa.report_period,'001') not in ('!!', '?', 'I')
+            then PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ATTRIBUEE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, scsa.report_period,'001') end AS LEC
+
+            FROM STUDENT_REGISTRATIONS SR,
+            student_course_strand_achieve scsa
+
+            WHERE  SR.SCHOOL_YEAR = '20132014'
+            and sr.school_code = 'STJO'
+            AND sr.grade = '03'
+            AND SR.OSR_FLAG = 'x'
+            AND SR.STATUS_INDICATOR_CODE IN ('Active', 'Inactive')
+            and scsa.report_period <> 'P'
+            
+            and sr.school_year = scsa.school_year
+            and sr.school_code = scsa.school_code
+            and sr.person_id = scsa.person_id
+            and sr.grade = scsa.grade 
+            and scsa.strand_code in ('001', '002')
+            order by sr.person_id
+            )
+    group by person_id, school_year
+    ) group by num, school_year
+]]>
+	</queryString>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="COUNT_ECR_GT70" class="java.math.BigDecimal"/>
+	<field name="COUNT_LEC_GT70" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="310" height="90" uuid="5c335f8f-4c67-491a-8e10-83755f2fb76f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="33" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rendment français 3e]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="221" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="0" width="310" height="221" uuid="f8312ab4-17d0-4315-8eda-577b48e9ab3f">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Lecture"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{SCHOOL_YEAR}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{COUNT_LEC_GT70}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Écriture"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{SCHOOL_YEAR}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{COUNT_ECR_GT70}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot>
+						<seriesColor seriesOrder="0" color="#4A5C82"/>
+						<seriesColor seriesOrder="1" color="#F0D043"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelMask="#"/>
+					</valueAxisFormat>
+					<rangeAxisMinValueExpression><![CDATA[0]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[100]]></rangeAxisMaxValueExpression>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

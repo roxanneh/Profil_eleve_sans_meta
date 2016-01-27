@@ -1,0 +1,3175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-09-18T09:18:04 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SOMMAIRE_ELE_NUM_NOTE" pageWidth="1224" pageHeight="792" orientation="Landscape" columnWidth="1184" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a51d3c5c-14ac-4bac-b1bf-60858205d403">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN Tril"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.jasperserver.url" value="https://rapports.franco-nord.ca/trilliumReports/"/>
+	<property name="ireport.jasperserver.user" value="superuser|CSCFN"/>
+	<property name="ireport.jasperserver.report.resource" value="/organizations/organization_1/CSCFN/Rapports_de_rendement/Rapport_elementaire_etape_I_et_F/SOMMAIRE_ELE_NUM_NOTE_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/organizations/organization_1/CSCFN/Rapports_de_rendement/Rapport_elementaire_etape_I_et_F/SOMMAIRE_ELE_NUM_NOTE"/>
+	<parameter name="SCHOOL_YEAR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SCHOOL_CODE" class="java.util.List" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT SR.GRADE,
+SR.PERSON_ID,
+S.SCHOOL_NAME,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_REPORT_PEI2(SR.PERSON_ID, SR.SCHOOL_CODE, SR.SCHOOL_YEAR) AS PEI,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_REPORT_ANOMALIE2(SR.PERSON_ID, SR.SCHOOL_CODE, SR.SCHOOL_YEAR) AS ANOMALIE,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_REPORT_ALF2(SR.PERSON_ID, SR.SCHOOL_CODE, SR.SCHOOL_YEAR) AS ALF,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NATIVE_FLAG(SR.PERSON_ID) AS PNMI,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'I','020') AS NOTE_NUM_I,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'F','020') AS NOTE_NUM_F,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'I','021') AS NOTE_MES_I,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'F','021') AS NOTE_MES_F,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'I','022') AS NOTE_GEO_I,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'F','022') AS NOTE_GEO_F,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'I','023') AS NOTE_MOD_I,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'F','023') AS NOTE_MOD_F,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'I','024') AS NOTE_TRA_I,
+PKG_RAPPORT_DE_RENDEMENT_ELE.GET_NOTE_ELE(SR.PERSON_ID, SR.SCHOOL_YEAR, 'F','024') AS NOTE_TRA_F
+FROM STUDENT_REGISTRATIONS SR
+INNER JOIN SCHOOLS S
+ON SR.SCHOOL_CODE = S.SCHOOL_CODE
+INNER JOIN PERSONS P
+ON P.PERSON_ID = SR.PERSON_ID
+WHERE SR.SCHOOL_YEAR = $P{SCHOOL_YEAR}
+AND $X{IN, SR.SCHOOL_CODE, SCHOOL_CODE}
+AND SR.GRADE IN ('01','02','03','04','05','06','07','08')
+AND SR.OSR_FLAG = 'x'
+AND SR.STATUS_INDICATOR_CODE IN ('Active', 'Inactive')
+ORDER BY S.SCHOOL_NAME ASC, SR.GRADE ASC]]>
+	</queryString>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="PERSON_ID" class="java.lang.String"/>
+	<field name="SCHOOL_NAME" class="java.lang.String"/>
+	<field name="PEI" class="java.lang.String"/>
+	<field name="ANOMALIE" class="java.lang.String"/>
+	<field name="ALF" class="java.lang.String"/>
+	<field name="PNMI" class="java.lang.String"/>
+	<field name="NOTE_NUM_I" class="java.lang.String"/>
+	<field name="NOTE_NUM_F" class="java.lang.String"/>
+	<field name="NOTE_MES_I" class="java.lang.String"/>
+	<field name="NOTE_MES_F" class="java.lang.String"/>
+	<field name="NOTE_GEO_I" class="java.lang.String"/>
+	<field name="NOTE_GEO_F" class="java.lang.String"/>
+	<field name="NOTE_MOD_I" class="java.lang.String"/>
+	<field name="NOTE_MOD_F" class="java.lang.String"/>
+	<field name="NOTE_TRA_I" class="java.lang.String"/>
+	<field name="NOTE_TRA_F" class="java.lang.String"/>
+	<variable name="Nombre_Etudiants" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[$F{PERSON_ID}]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!$F{PEI}.equals( "x" ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Sans_Anomalies" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[$F{ALF}.equals( " " ) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{PNMI}.equals( "PN" ) || $F{PNMI}.equals( "M" ) || $F{PNMI}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_GEO_I}.equals( "?" ) || $F{NOTE_GEO_I}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_GEO_F}.equals( "?" ) || $F{NOTE_GEO_F}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_GEO_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_GEO_I}.equals( "?" ) || $F{NOTE_GEO_I}.equals( "!!" ) || $F{NOTE_GEO_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_GEO_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_GEO_F}.equals( "?" ) || $F{NOTE_GEO_F}.equals( "!!" ) || $F{NOTE_GEO_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_GEO_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_GEO_I}.equals( "?" ) || $F{NOTE_GEO_I}.equals( "!!" ) || $F{NOTE_GEO_I}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_GEO_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_GEO_F}.equals( "?" ) || $F{NOTE_GEO_F}.equals( "!!" ) || $F{NOTE_GEO_F}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_GEO_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_GEO_I}.equals( "?" ) || $F{NOTE_GEO_I}.equals( "!!" ) || $F{NOTE_GEO_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_GEO_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_GEO_F}.equals( "?" ) || $F{NOTE_GEO_F}.equals( "!!" ) || $F{NOTE_GEO_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_GEO_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_GEO_I}.equals( "?" ) || $F{NOTE_GEO_I}.equals( "!!" ) || $F{NOTE_GEO_I}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_GEO_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_GEO_F}.equals( "?" ) || $F{NOTE_GEO_F}.equals( "!!" ) || $F{NOTE_GEO_F}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_I_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_I}.equals( "1--" ) || $F{NOTE_GEO_I}.equals( "1-" ) || $F{NOTE_GEO_I}.equals( "1" ) || $F{NOTE_GEO_I}.equals( "1+" ) || $F{NOTE_GEO_I}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_F_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_F}.equals( "1--" ) || $F{NOTE_GEO_F}.equals( "1-" ) || $F{NOTE_GEO_F}.equals( "1" ) || $F{NOTE_GEO_F}.equals( "1+" ) || $F{NOTE_GEO_F}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_I_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_I}.equals( "2--" ) || $F{NOTE_GEO_I}.equals( "2-" ) || $F{NOTE_GEO_I}.equals( "2" ) || $F{NOTE_GEO_I}.equals( "2+" ) || $F{NOTE_GEO_I}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_F_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_F}.equals( "2--" ) || $F{NOTE_GEO_F}.equals( "2-" ) || $F{NOTE_GEO_F}.equals( "2" ) || $F{NOTE_GEO_F}.equals( "2+" ) || $F{NOTE_GEO_F}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_I_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_I}.equals( "3--" ) || $F{NOTE_GEO_I}.equals( "3-" ) || $F{NOTE_GEO_I}.equals( "3" ) || $F{NOTE_GEO_I}.equals( "3+" ) || $F{NOTE_GEO_I}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_F_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_F}.equals( "3--" ) || $F{NOTE_GEO_F}.equals( "3-" ) || $F{NOTE_GEO_F}.equals( "3" ) || $F{NOTE_GEO_F}.equals( "3+" ) || $F{NOTE_GEO_F}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_I_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_I}.equals( "4--" ) || $F{NOTE_GEO_I}.equals( "4-" ) || $F{NOTE_GEO_I}.equals( "4" ) || $F{NOTE_GEO_I}.equals( "4+" ) || $F{NOTE_GEO_I}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_GEO_F_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_GEO_F}.equals( "4--" ) || $F{NOTE_GEO_F}.equals( "4-" ) || $F{NOTE_GEO_F}.equals( "4" ) || $F{NOTE_GEO_F}.equals( "4+" ) || $F{NOTE_GEO_F}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MES_I}.equals( "?" ) || $F{NOTE_MES_I}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MES_F}.equals( "?" ) || $F{NOTE_MES_F}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_MES_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MES_I}.equals( "?" ) || $F{NOTE_MES_I}.equals( "!!" ) || $F{NOTE_MES_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_MES_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MES_F}.equals( "?" ) || $F{NOTE_MES_F}.equals( "!!" ) || $F{NOTE_MES_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_MES_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MES_I}.equals( "?" ) || $F{NOTE_MES_I}.equals( "!!" ) || $F{NOTE_MES_I}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_MES_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MES_F}.equals( "?" ) || $F{NOTE_MES_F}.equals( "!!" ) || $F{NOTE_MES_F}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_MES_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_MES_I}.equals( "?" ) || $F{NOTE_MES_I}.equals( "!!" ) || $F{NOTE_MES_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_MES_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_MES_F}.equals( "?" ) || $F{NOTE_MES_F}.equals( "!!" ) || $F{NOTE_MES_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_MES_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MES_I}.equals( "?" ) || $F{NOTE_MES_I}.equals( "!!" ) || $F{NOTE_MES_I}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_MES_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MES_F}.equals( "?" ) || $F{NOTE_MES_F}.equals( "!!" ) || $F{NOTE_MES_F}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_I_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_I}.equals( "1--" ) || $F{NOTE_MES_I}.equals( "1-" ) || $F{NOTE_MES_I}.equals( "1" ) || $F{NOTE_MES_I}.equals( "1+" ) || $F{NOTE_MES_I}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_F_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_F}.equals( "1--" ) || $F{NOTE_MES_F}.equals( "1-" ) || $F{NOTE_MES_F}.equals( "1" ) || $F{NOTE_MES_F}.equals( "1+" ) || $F{NOTE_MES_F}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_I_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_I}.equals( "2--" ) || $F{NOTE_MES_I}.equals( "2-" ) || $F{NOTE_MES_I}.equals( "2" ) || $F{NOTE_MES_I}.equals( "2+" ) || $F{NOTE_MES_I}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_F_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_F}.equals( "2--" ) || $F{NOTE_MES_F}.equals( "2-" ) || $F{NOTE_MES_F}.equals( "2" ) || $F{NOTE_MES_F}.equals( "2+" ) || $F{NOTE_MES_F}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_I_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_I}.equals( "3--" ) || $F{NOTE_MES_I}.equals( "3-" ) || $F{NOTE_MES_I}.equals( "3" ) || $F{NOTE_MES_I}.equals( "3+" ) || $F{NOTE_MES_I}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_F_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_F}.equals( "3--" ) || $F{NOTE_MES_F}.equals( "3-" ) || $F{NOTE_MES_F}.equals( "3" ) || $F{NOTE_MES_F}.equals( "3+" ) || $F{NOTE_MES_F}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_I_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_I}.equals( "4--" ) || $F{NOTE_MES_I}.equals( "4-" ) || $F{NOTE_MES_I}.equals( "4" ) || $F{NOTE_MES_I}.equals( "4+" ) || $F{NOTE_MES_I}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MES_F_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MES_F}.equals( "4--" ) || $F{NOTE_MES_F}.equals( "4-" ) || $F{NOTE_MES_F}.equals( "4" ) || $F{NOTE_MES_F}.equals( "4+" ) || $F{NOTE_MES_F}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MOD_I}.equals( "?" ) || $F{NOTE_MOD_I}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MOD_F}.equals( "?" ) || $F{NOTE_MOD_F}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_MOD_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MOD_I}.equals( "?" ) || $F{NOTE_MOD_I}.equals( "!!" ) || $F{NOTE_MOD_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_MOD_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MOD_F}.equals( "?" ) || $F{NOTE_MOD_F}.equals( "!!" ) || $F{NOTE_MOD_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_MOD_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MOD_I}.equals( "?" ) || $F{NOTE_MOD_I}.equals( "!!" ) || $F{NOTE_MOD_I}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_MOD_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_MOD_F}.equals( "?" ) || $F{NOTE_MOD_F}.equals( "!!" ) || $F{NOTE_MOD_F}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_MOD_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_MOD_I}.equals( "?" ) || $F{NOTE_MOD_I}.equals( "!!" ) || $F{NOTE_MOD_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_MOD_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_MOD_F}.equals( "?" ) || $F{NOTE_MOD_F}.equals( "!!" ) || $F{NOTE_MOD_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_MOD_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MOD_I}.equals( "?" ) || $F{NOTE_MOD_I}.equals( "!!" ) || $F{NOTE_MOD_I}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_MOD_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_MOD_F}.equals( "?" ) || $F{NOTE_MOD_F}.equals( "!!" ) || $F{NOTE_MOD_F}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_I_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_I}.equals( "1--" ) || $F{NOTE_MOD_I}.equals( "1-" ) || $F{NOTE_MOD_I}.equals( "1" ) || $F{NOTE_MOD_I}.equals( "1+" ) || $F{NOTE_MOD_I}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_F_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_F}.equals( "1--" ) || $F{NOTE_MOD_F}.equals( "1-" ) || $F{NOTE_MOD_F}.equals( "1" ) || $F{NOTE_MOD_F}.equals( "1+" ) || $F{NOTE_MOD_F}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_I_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_I}.equals( "2--" ) || $F{NOTE_MOD_I}.equals( "2-" ) || $F{NOTE_MOD_I}.equals( "2" ) || $F{NOTE_MOD_I}.equals( "2+" ) || $F{NOTE_MOD_I}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_F_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_F}.equals( "2--" ) || $F{NOTE_MOD_F}.equals( "2-" ) || $F{NOTE_MOD_F}.equals( "2" ) || $F{NOTE_MOD_F}.equals( "2+" ) || $F{NOTE_MOD_F}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_I_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_I}.equals( "3--" ) || $F{NOTE_MOD_I}.equals( "3-" ) || $F{NOTE_MOD_I}.equals( "3" ) || $F{NOTE_MOD_I}.equals( "3+" ) || $F{NOTE_MOD_I}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_F_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_F}.equals( "3--" ) || $F{NOTE_MOD_F}.equals( "3-" ) || $F{NOTE_MOD_F}.equals( "3" ) || $F{NOTE_MOD_F}.equals( "3+" ) || $F{NOTE_MOD_F}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_I_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_I}.equals( "4--" ) || $F{NOTE_MOD_I}.equals( "4-" ) || $F{NOTE_MOD_I}.equals( "4" ) || $F{NOTE_MOD_I}.equals( "4+" ) || $F{NOTE_MOD_I}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_MOD_F_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_MOD_F}.equals( "4--" ) || $F{NOTE_MOD_F}.equals( "4-" ) || $F{NOTE_MOD_F}.equals( "4" ) || $F{NOTE_MOD_F}.equals( "4+" ) || $F{NOTE_MOD_F}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_NUM_I}.equals( "?" ) || $F{NOTE_NUM_I}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_NUM_F}.equals( "?" ) || $F{NOTE_NUM_F}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_NUM_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_NUM_I}.equals( "?" ) || $F{NOTE_NUM_I}.equals( "!!" ) || $F{NOTE_NUM_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_NUM_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_NUM_F}.equals( "?" ) || $F{NOTE_NUM_F}.equals( "!!" ) || $F{NOTE_NUM_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_NUM_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_NUM_I}.equals( "?" ) || $F{NOTE_NUM_I}.equals( "!!" ) || $F{NOTE_NUM_I}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_NUM_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_NUM_F}.equals( "?" ) || $F{NOTE_NUM_F}.equals( "!!" ) || $F{NOTE_NUM_F}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_NUM_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_NUM_I}.equals( "?" ) || $F{NOTE_NUM_I}.equals( "!!" ) || $F{NOTE_NUM_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_NUM_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_NUM_F}.equals( "?" ) || $F{NOTE_NUM_F}.equals( "!!" ) || $F{NOTE_NUM_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_NUM_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_NUM_I}.equals( "?" ) || $F{NOTE_NUM_I}.equals( "!!" ) || $F{NOTE_NUM_I}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_NUM_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_NUM_F}.equals( "?" ) || $F{NOTE_NUM_F}.equals( "!!" ) || $F{NOTE_NUM_F}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_I_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_I}.equals( "1--" ) || $F{NOTE_NUM_I}.equals( "1-" ) || $F{NOTE_NUM_I}.equals( "1" ) || $F{NOTE_NUM_I}.equals( "1+" ) || $F{NOTE_NUM_I}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_F_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_F}.equals( "1--" ) || $F{NOTE_NUM_F}.equals( "1-" ) || $F{NOTE_NUM_F}.equals( "1" ) || $F{NOTE_NUM_F}.equals( "1+" ) || $F{NOTE_NUM_F}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_I_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_I}.equals( "2--" ) || $F{NOTE_NUM_I}.equals( "2-" ) || $F{NOTE_NUM_I}.equals( "2" ) || $F{NOTE_NUM_I}.equals( "2+" ) || $F{NOTE_NUM_I}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_F_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_F}.equals( "2--" ) || $F{NOTE_NUM_F}.equals( "2-" ) || $F{NOTE_NUM_F}.equals( "2" ) || $F{NOTE_NUM_F}.equals( "2+" ) || $F{NOTE_NUM_F}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_I_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_I}.equals( "3--" ) || $F{NOTE_NUM_I}.equals( "3-" ) || $F{NOTE_NUM_I}.equals( "3" ) || $F{NOTE_NUM_I}.equals( "3+" ) || $F{NOTE_NUM_I}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_F_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_F}.equals( "3--" ) || $F{NOTE_NUM_F}.equals( "3-" ) || $F{NOTE_NUM_F}.equals( "3" ) || $F{NOTE_NUM_F}.equals( "3+" ) || $F{NOTE_NUM_F}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_I_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_I}.equals( "4--" ) || $F{NOTE_NUM_I}.equals( "4-" ) || $F{NOTE_NUM_I}.equals( "4" ) || $F{NOTE_NUM_I}.equals( "4+" ) || $F{NOTE_NUM_I}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_NUM_F_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_NUM_F}.equals( "4--" ) || $F{NOTE_NUM_F}.equals( "4-" ) || $F{NOTE_NUM_F}.equals( "4" ) || $F{NOTE_NUM_F}.equals( "4+" ) || $F{NOTE_NUM_F}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_TRA_I}.equals( "?" ) || $F{NOTE_TRA_I}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_TRA_F}.equals( "?" ) || $F{NOTE_TRA_F}.equals( "!!" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_TRA_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_TRA_I}.equals( "?" ) || $F{NOTE_TRA_I}.equals( "!!" ) || $F{NOTE_TRA_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PEI_TRA_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_TRA_F}.equals( "?" ) || $F{NOTE_TRA_F}.equals( "!!" ) || $F{NOTE_TRA_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_TRA_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_TRA_I}.equals( "?" ) || $F{NOTE_TRA_I}.equals( "!!" ) || $F{NOTE_TRA_I}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Anomalies_TRA_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{PEI}.equals( "x" ) || $F{NOTE_TRA_F}.equals( "?" ) || $F{NOTE_TRA_F}.equals( "!!" ) || $F{NOTE_TRA_F}.equals( "I" ) || $F{ANOMALIE}.equals( "Aucune anomalie" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_TRA_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_TRA_I}.equals( "?" ) || $F{NOTE_TRA_I}.equals( "!!" ) || $F{NOTE_TRA_I}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_ALF_TRA_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[(!$F{ALF}.equals( "ALF" ) || $F{NOTE_TRA_F}.equals( "?" ) || $F{NOTE_TRA_F}.equals( "!!" ) || $F{NOTE_TRA_F}.equals( "I" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_TRA_I" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_TRA_I}.equals( "?" ) || $F{NOTE_TRA_I}.equals( "!!" ) || $F{NOTE_TRA_I}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_PNMI_TRA_F" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[($F{NOTE_TRA_F}.equals( "?" ) || $F{NOTE_TRA_F}.equals( "!!" ) || $F{NOTE_TRA_F}.equals( "I" ) || $F{PNMI}.equals( " " )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_I_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_I}.equals( "1--" ) || $F{NOTE_TRA_I}.equals( "1-" ) || $F{NOTE_TRA_I}.equals( "1" ) || $F{NOTE_TRA_I}.equals( "1+" ) || $F{NOTE_TRA_I}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_F_1" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_F}.equals( "1--" ) || $F{NOTE_TRA_F}.equals( "1-" ) || $F{NOTE_TRA_F}.equals( "1" ) || $F{NOTE_TRA_F}.equals( "1+" ) || $F{NOTE_TRA_F}.equals( "1++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_I_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_I}.equals( "2--" ) || $F{NOTE_TRA_I}.equals( "2-" ) || $F{NOTE_TRA_I}.equals( "2" ) || $F{NOTE_TRA_I}.equals( "2+" ) || $F{NOTE_TRA_I}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_F_2" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_F}.equals( "2--" ) || $F{NOTE_TRA_F}.equals( "2-" ) || $F{NOTE_TRA_F}.equals( "2" ) || $F{NOTE_TRA_F}.equals( "2+" ) || $F{NOTE_TRA_F}.equals( "2++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_I_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_I}.equals( "3--" ) || $F{NOTE_TRA_I}.equals( "3-" ) || $F{NOTE_TRA_I}.equals( "3" ) || $F{NOTE_TRA_I}.equals( "3+" ) || $F{NOTE_TRA_I}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_F_3" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_F}.equals( "3--" ) || $F{NOTE_TRA_F}.equals( "3-" ) || $F{NOTE_TRA_F}.equals( "3" ) || $F{NOTE_TRA_F}.equals( "3+" ) || $F{NOTE_TRA_F}.equals( "3++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_I_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_I}.equals( "4--" ) || $F{NOTE_TRA_I}.equals( "4-" ) || $F{NOTE_TRA_I}.equals( "4" ) || $F{NOTE_TRA_I}.equals( "4+" ) || $F{NOTE_TRA_I}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<variable name="Nombre_Etudiants_TRA_F_4" class="java.lang.Integer" resetType="Group" resetGroup="G_GRADE" calculation="Count">
+		<variableExpression><![CDATA[!($F{NOTE_TRA_F}.equals( "4--" ) || $F{NOTE_TRA_F}.equals( "4-" ) || $F{NOTE_TRA_F}.equals( "4" ) || $F{NOTE_TRA_F}.equals( "4+" ) || $F{NOTE_TRA_F}.equals( "4++" )) ? null : 1]]></variableExpression>
+	</variable>
+	<group name="G_SCHOOL_NAME" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{SCHOOL_NAME}]]></groupExpression>
+	</group>
+	<group name="G_GRADE" keepTogether="true">
+		<groupExpression><![CDATA[$F{GRADE}]]></groupExpression>
+		<groupHeader>
+			<band height="11">
+				<textField>
+					<reportElement x="0" y="0" width="130" height="11" uuid="6f422998-f537-4964-8399-30e8a09c0089">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["GRADE : " + $F{GRADE}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="540" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="897dcd30-3919-47e0-9ec8-b759b29652d6">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1105" y="0" width="1" height="11" backcolor="#666666" uuid="b735af2b-6fc4-4e36-995f-56f1e7b454b4"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="800" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="72a83145-8743-4152-9242-45c9ea74e775"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="775" y="0" width="1" height="11" backcolor="#666666" uuid="1a0a07f3-1cc2-418e-8e28-03b7b21d3586"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="465" y="0" width="1" height="11" backcolor="#666666" uuid="8dad0162-f7ea-494d-b79b-0bffd5e280ac">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="885" y="0" width="1" height="11" backcolor="#666666" uuid="d6b280c2-3740-4cca-a841-ed829123f785">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="590" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="6dcedc0d-d3bf-457a-bebf-0ed5cdee3389">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="330" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="dbbb81a3-eb27-47c5-97db-c5d2fab92495">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="c3aefd42-58ab-4944-8840-8c843d4f9b5f">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="515" y="0" width="1" height="11" backcolor="#666666" uuid="238f89b8-42aa-47c4-85a6-337b0c59750c"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1130" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="9e0c3794-cfc3-45ed-b219-e37d9ccc8f46"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1045" y="0" width="1" height="11" backcolor="#666666" uuid="69220db1-8286-40aa-9a3e-6196264b6577"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="957d76bc-db14-4230-9924-825cddcc1b2e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1020" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="ec1e3663-0652-4e2c-ae3b-a2279ece6d00"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1155" y="0" width="1" height="11" backcolor="#666666" uuid="dc3e89f9-8038-4eb6-acff-18492a06c451"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="640" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="2ba96dc1-5d7e-4b9f-bcfb-cc9a26fda2b6">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="935" y="0" width="1" height="11" backcolor="#666666" uuid="f95e4d9e-ed51-40b0-912d-fcaf012068ef"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="180" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="1baaef36-c7dd-49ce-94d9-135e4666e323">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="665" y="0" width="1" height="11" backcolor="#666666" uuid="8bbd8d50-84b6-4e99-a457-a94b276a3690"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="565" y="0" width="1" height="11" backcolor="#666666" uuid="f883fe67-30d4-4c68-9fef-8dc3ff307216"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="ddec9d64-d6eb-4598-98d4-1ab719921c86">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="70e95983-2693-40e6-910a-0da994c7f4f7">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="995" y="0" width="1" height="11" backcolor="#666666" uuid="78ab7e14-90d3-45de-9899-c88062c9e8e3"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="910" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="30e2714e-d385-4fa0-aaf7-27e763e73aa6"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="715" y="0" width="1" height="11" backcolor="#666666" uuid="c7c0e730-9854-400c-b50b-c8847365d991"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="825" y="0" width="1" height="11" backcolor="#666666" uuid="9690e0c1-816e-45c5-ba24-eade24c26485"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="615" y="0" width="1" height="11" backcolor="#666666" uuid="1ce61d82-1b32-4e38-a18a-0c14f46d5d71"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="690" y="0" width="1" height="11" backcolor="#2E2E2E" uuid="0d914bd5-4a1d-4d73-a9b5-084e4a756783">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="55">
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="44" width="1180" height="11" backcolor="#C0C0C0" uuid="32982d45-cb04-45ce-b34f-f0ce42bcbaf4"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="0" width="1180" height="11" backcolor="#C0C0C0" uuid="f92a23ed-6672-4b7a-a887-3fa8c4e10eb2"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="22" width="1180" height="11" backcolor="#C0C0C0" uuid="0498cd93-1e08-4dc3-8dfe-8488ea087645"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="33" width="130" height="11" uuid="dce295bd-c226-4ddb-b244-a322a1fe3c10">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Numération et suns du nombre :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="130" height="11" uuid="348bd110-c443-4699-8ddc-038ac257b884">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Géométrie:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="22" width="130" height="11" uuid="ef6036c1-5e77-4c6e-b368-84edeef38b6e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Modélisation et algèbre :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="44" width="130" height="11" uuid="3a3ea250-59b9-4142-9820-595c31af3e16">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Traitement des données]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="11" width="130" height="11" uuid="df298238-a340-4e66-8b4c-566d565a5cd0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Mesure:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="640" y="0" width="25" height="11" uuid="3749eb72-4f7d-4879-97b6-cdbea3bb7f32">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_GEO_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="440" y="0" width="25" height="11" uuid="9e041f2c-71cc-4b84-99fa-6ca1580eb120">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="690" y="0" width="25" height="11" uuid="1edd4c97-93ca-4e58-8ceb-ce353cc7a958">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_GEO_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="715" y="0" width="25" height="11" uuid="05b0d539-cd7b-4a0d-b517-acf81eef7497">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_GEO_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="0" width="25" height="11" uuid="e25fa878-45f7-4201-bb48-eb49b55272c2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_F}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G_GRADE">
+					<reportElement x="130" y="0" width="50" height="11" uuid="0b3cb775-fb1c-4d16-aa60-5202bc076f4a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="665" y="0" width="25" height="11" uuid="e93deeff-6fef-4fe6-8ccf-582b37ab89cd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_GEO_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="515" y="0" width="25" height="11" uuid="2566673f-14e3-40ff-bcce-81e60e221901">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_GEO_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="775" y="0" width="25" height="11" uuid="1f1c3b84-58a5-4046-b21e-5e4571382c57">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_I_4} / (double)$V{Nombre_Etudiants_GEO_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="0" width="25" height="11" uuid="3a57b511-5bf0-4509-bfa9-20c4c65770a0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_GEO_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="330" y="0" width="50" height="11" uuid="eefda96b-bbcf-4a4c-811a-bf217a0d03dc">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="750" y="0" width="25" height="11" uuid="75bf1d8c-a9b5-400b-8673-1e269b895d0c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_I_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="0" width="50" height="11" uuid="72d4a963-2b02-467e-a2fe-e6eade9d3976">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="800" y="0" width="25" height="11" uuid="8c086a65-52c6-4c3f-a347-48d23c1a29a9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_F_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="0" width="50" height="11" uuid="b320547d-5b8d-4244-8d8e-4a0e39b69b20">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="11" width="50" height="11" uuid="89a27d7b-06f1-4bb9-bd0d-8cdffeffe6dd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="330" y="11" width="50" height="11" uuid="4edd466d-5f8a-4c55-ba17-3fddbfa53215">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="11" width="50" height="11" uuid="7e16e53f-6c6f-497b-924f-7c8b23404722">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G_GRADE">
+					<reportElement x="130" y="11" width="50" height="11" uuid="56f457e0-fa0c-4e3a-ae88-c4183bd26ebb">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="33" width="50" height="11" uuid="34526ee7-d65c-4877-a762-3ee37f4b3ba0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="330" y="33" width="50" height="11" uuid="d0b1460e-1b8f-46df-b87f-4d9bcf933ce7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="33" width="50" height="11" uuid="0d0c6195-b8ba-47dd-a3c6-66efb168d068">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G_GRADE">
+					<reportElement x="130" y="33" width="50" height="11" uuid="b5242d31-220c-4e40-b5c5-dedb69a3e073">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G_GRADE">
+					<reportElement x="130" y="22" width="50" height="11" uuid="efce3f44-d590-414a-9245-d8ecd601c306">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="22" width="50" height="11" uuid="a2022493-3e4d-4a63-aa81-315559a3700b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="330" y="22" width="50" height="11" uuid="0522a77e-99ab-47af-aa30-472bdd94353f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="22" width="50" height="11" uuid="7a93718d-563f-4224-ae40-48ec1008186a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="44" width="50" height="11" uuid="d70a6fbf-363c-419a-abf7-225b93377c4e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="330" y="44" width="50" height="11" uuid="86b86880-48bb-4e1c-8e2e-49a4ac7ce4d3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="44" width="50" height="11" uuid="d3cf9725-5082-4d68-b1c9-e003cbf1c436">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G_GRADE">
+					<reportElement x="130" y="44" width="50" height="11" uuid="55148734-72d4-4956-9106-be49f2d9632e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="825" y="0" width="25" height="11" uuid="7acb9525-8af3-4cc9-92bc-d7678a508733">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_F_4} / (double)$V{Nombre_Etudiants_GEO_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="860" y="0" width="25" height="11" uuid="e59f1ec9-acf6-464d-a502-75085284538d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_I_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="885" y="0" width="25" height="11" uuid="2574bf3c-bcfa-49c0-a006-dd7e3bad75ab">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_I_3} / (double)$V{Nombre_Etudiants_GEO_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="910" y="0" width="25" height="11" uuid="74cdf6fd-7e98-433f-8047-dd9eb04230c4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_F_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="935" y="0" width="25" height="11" uuid="538b5e19-60ed-4c85-baa0-926749346372">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_F_3} / (double)$V{Nombre_Etudiants_GEO_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="970" y="0" width="25" height="11" uuid="7ef574e8-e9cc-494d-8ee3-2b754c502e8f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_I_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="995" y="0" width="25" height="11" uuid="e64b6341-0fde-4910-affb-23d7792fa4a4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_I_2} / (double)$V{Nombre_Etudiants_GEO_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1020" y="0" width="25" height="11" uuid="8a0bbd58-d4ed-4b34-8501-1ac1af955993">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_F_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1045" y="0" width="25" height="11" uuid="440b92d5-b04a-4584-b01a-cac30f91e836">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_F_2} / (double)$V{Nombre_Etudiants_GEO_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1080" y="0" width="25" height="11" uuid="d2ade1ef-7f4f-4611-bc49-f071095857bf">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_I_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1105" y="0" width="25" height="11" uuid="733174e9-12dd-4cfe-914b-d87d0a13b145">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_I_1} / (double)$V{Nombre_Etudiants_GEO_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1130" y="0" width="25" height="11" uuid="b93e6987-17a9-40f7-9570-18ff262cc6bf">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_GEO_F_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1155" y="0" width="25" height="11" uuid="3b0dc57a-ed4d-4ee9-80a1-35e464b507e0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_GEO_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_GEO_F_1} / (double)$V{Nombre_Etudiants_GEO_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1105" y="11" width="25" height="11" uuid="31282b74-8d9f-4c35-ad31-f0abea88a5ea">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_I_1} / (double)$V{Nombre_Etudiants_MES_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="640" y="11" width="25" height="11" uuid="562e7e2d-66ae-43d0-ab88-bff93f4d0716">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_MES_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="825" y="11" width="25" height="11" uuid="bdb29cf5-a8a2-4f0c-b6f1-8c12eb56a0ca">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_F_4} / (double)$V{Nombre_Etudiants_MES_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="515" y="11" width="25" height="11" uuid="6ec39b38-eaa9-4f48-ace3-da4d56b586ea">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_MES_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="970" y="11" width="25" height="11" uuid="7c5ee36c-9bfe-4330-9345-a1c1242f8ca8">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_I_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="750" y="11" width="25" height="11" uuid="474d516c-5b8e-41cf-9743-9f968a9f5fd7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_I_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1080" y="11" width="25" height="11" uuid="f8ea230b-b98a-4bc0-95ce-3139acc47ac9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_I_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="775" y="11" width="25" height="11" uuid="c5d34646-3bdc-4ff6-9bb5-0e9d1ef3e175">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_I_4} / (double)$V{Nombre_Etudiants_MES_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="715" y="11" width="25" height="11" uuid="8d85be35-6d5f-4c45-b22a-c4c5692f90ca">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_MES_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="440" y="11" width="25" height="11" uuid="770103e4-a59a-4740-ad08-fe2d4ed69c8b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="885" y="11" width="25" height="11" uuid="9180e3e8-b6ec-4bea-908e-c4ccc14e08c7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_I_3} / (double)$V{Nombre_Etudiants_MES_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="665" y="11" width="25" height="11" uuid="993d0cfa-c125-4490-9231-3efdf14ed88c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_MES_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="690" y="11" width="25" height="11" uuid="f52d23b3-74c6-45be-b9cd-e6f64be45179">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_MES_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="910" y="11" width="25" height="11" uuid="85f926dc-eeef-49a1-b0b4-dcc0843a60e0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_F_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="800" y="11" width="25" height="11" uuid="774258d3-a5b8-439c-8915-81b5d3026daf">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_F_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1020" y="11" width="25" height="11" uuid="3034635a-b719-471c-8183-dad8290c5f6a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_F_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1130" y="11" width="25" height="11" uuid="cef25b34-2b44-4e7a-9d68-f9c56fd3bf19">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_F_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1045" y="11" width="25" height="11" uuid="f98c9807-c0ce-4410-b0b5-3ef9c5d5cc0f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_F_2} / (double)$V{Nombre_Etudiants_MES_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1155" y="11" width="25" height="11" uuid="613706c2-89f1-443c-adb1-24c00c61277d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_F_1} / (double)$V{Nombre_Etudiants_MES_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="11" width="25" height="11" uuid="7df6eba3-2140-4efd-a9d4-34bfe8387de4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_MES_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="11" width="25" height="11" uuid="d05431c0-553e-4639-87d1-a7bf706b6d68">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="935" y="11" width="25" height="11" uuid="33d35c0f-3e24-4e0d-814b-f25722baa9eb">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_F_3} / (double)$V{Nombre_Etudiants_MES_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="860" y="11" width="25" height="11" uuid="2c6dcef8-51ba-4cc7-b1e7-1af4a3d04db0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MES_I_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="995" y="11" width="25" height="11" uuid="88b4deb4-2e98-418e-a4d1-3c5b0ef42a06">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MES_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MES_I_2} / (double)$V{Nombre_Etudiants_MES_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="910" y="22" width="25" height="11" uuid="d167a25a-48d6-4a9e-8acd-3d62b047bcb9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_F_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1020" y="22" width="25" height="11" uuid="76f8136e-a603-4072-b099-920276c16360">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_F_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1155" y="22" width="25" height="11" uuid="81ac5f99-cfb1-4279-9710-2c6f3de1ff96">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_F_1} / (double)$V{Nombre_Etudiants_MOD_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="515" y="22" width="25" height="11" uuid="186c690f-363d-41b9-9a17-7115cb9fde86">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_MOD_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="22" width="25" height="11" uuid="00a57ca9-bf88-4ded-ad29-00f0a2d176bd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="22" width="25" height="11" uuid="e6db4968-6fca-4c58-af96-c0dbbcaf7815">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_MOD_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="640" y="22" width="25" height="11" uuid="2817c30b-54ef-498d-ae76-59c3598377ab">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_MOD_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="885" y="22" width="25" height="11" uuid="76c46eba-4738-4f21-a670-c623ba6fbc0b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_I_3} / (double)$V{Nombre_Etudiants_MOD_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="800" y="22" width="25" height="11" uuid="045760ac-9ff8-4851-937b-d0072b6fa26a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_F_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="715" y="22" width="25" height="11" uuid="5e6d8cb8-0420-4bb0-8649-549ab6a42289">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_MOD_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1130" y="22" width="25" height="11" uuid="c7e10755-12e3-46ff-8f07-eb24b296b88b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_F_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="750" y="22" width="25" height="11" uuid="5cc3889d-aff6-4945-aafa-109e3d477084">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_I_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="825" y="22" width="25" height="11" uuid="7e022996-e1b3-4ab0-8675-c32430161d83">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_F_4} / (double)$V{Nombre_Etudiants_MOD_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1080" y="22" width="25" height="11" uuid="54b5a42c-4c17-4758-8c6d-73af9b3213c6">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_I_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="775" y="22" width="25" height="11" uuid="fee5621b-10a9-427e-b25c-7e2ff811290e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_I_4} / (double)$V{Nombre_Etudiants_MOD_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="935" y="22" width="25" height="11" uuid="498f74c8-23b8-4365-b9b4-e35301be825f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_F_3} / (double)$V{Nombre_Etudiants_MOD_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1045" y="22" width="25" height="11" uuid="2a374fdf-f4dc-4361-b838-451c43ef76db">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_F_2} / (double)$V{Nombre_Etudiants_MOD_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="860" y="22" width="25" height="11" uuid="6338fcf4-37c7-461a-bd3c-0d6d7c7cb226">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_I_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="690" y="22" width="25" height="11" uuid="c32cd020-f79d-472d-8a9f-7272b7598762">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_MOD_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="970" y="22" width="25" height="11" uuid="a0feae8f-9502-4f3d-b841-a7445206842b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_I_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1105" y="22" width="25" height="11" uuid="92e1c235-272e-40ee-82af-5a72a21cc65e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_I_1} / (double)$V{Nombre_Etudiants_MOD_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="995" y="22" width="25" height="11" uuid="dd5a827d-f198-41d3-9926-1c86ee324324">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_MOD_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_MOD_I_2} / (double)$V{Nombre_Etudiants_MOD_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="440" y="22" width="25" height="11" uuid="98e5feda-300b-466d-9cec-281600bf977e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_MOD_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="665" y="22" width="25" height="11" uuid="4e42ee92-f9bd-4489-ab56-6d2102a34a97">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_MOD_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="825" y="33" width="25" height="11" uuid="667692d2-45a6-4dcd-b947-d5262c1babc5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_F_4} / (double)$V{Nombre_Etudiants_NUM_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1105" y="44" width="25" height="11" uuid="66c9a1fd-35e1-4ec1-bf50-ce07fc927f23">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_I_1} / (double)$V{Nombre_Etudiants_TRA_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="860" y="33" width="25" height="11" uuid="26d3917c-e2aa-410b-a155-f118559ae566">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_I_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1045" y="44" width="25" height="11" uuid="52318f9c-2425-497e-80e3-6a4bda3f946f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_F_2} / (double)$V{Nombre_Etudiants_TRA_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1020" y="33" width="25" height="11" uuid="cdd27a86-72f9-4cb8-8574-de8d6d0e9c32">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_F_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1130" y="33" width="25" height="11" uuid="3b5df7ad-8741-426a-89fc-819e3b35a48f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_F_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="33" width="25" height="11" uuid="ee83563d-63fe-425c-b31d-91a0b3bc7ff3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="935" y="33" width="25" height="11" uuid="a00cc957-e1f8-409d-9a29-c33ab7cd3981">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_F_3} / (double)$V{Nombre_Etudiants_NUM_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1045" y="33" width="25" height="11" uuid="d21f6885-0154-4876-93aa-40f151ae1c04">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_F_2} / (double)$V{Nombre_Etudiants_NUM_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1155" y="33" width="25" height="11" uuid="c6f0508b-0e8b-47eb-8708-44e1b8c62431">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_F_1} / (double)$V{Nombre_Etudiants_NUM_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="640" y="33" width="25" height="11" uuid="be396a3a-9aae-4bc4-bc46-4d68b0f39e80">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_NUM_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="910" y="44" width="25" height="11" uuid="c015f36a-a4f5-43a0-ad02-fdf0273bff10">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_F_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1130" y="44" width="25" height="11" uuid="b73f0174-e56b-42c9-87e8-9fcc54944241">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_F_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="33" width="25" height="11" uuid="ec4aa3af-095f-4150-969c-240e68e4dbaa">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_NUM_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="910" y="33" width="25" height="11" uuid="265fd55a-8583-4b86-bdad-186b3b15537c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_F_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="750" y="33" width="25" height="11" uuid="bec8ada5-f8c2-40f6-82bb-9c8a00920abf">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_I_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="885" y="44" width="25" height="11" uuid="fa3fa53a-5373-438a-88d6-c1c358d48690">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_I_3} / (double)$V{Nombre_Etudiants_TRA_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="825" y="44" width="25" height="11" uuid="9feed6ca-bb29-4203-8dc0-7202d61c63fa">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_F_4} / (double)$V{Nombre_Etudiants_TRA_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1155" y="44" width="25" height="11" uuid="bb4a1bb7-a0ac-4b80-aa5f-7d5a83582cc4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_F_1} / (double)$V{Nombre_Etudiants_TRA_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="775" y="33" width="25" height="11" uuid="c0b17f8c-a221-428a-a660-a9975c3f61d9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_I_4} / (double)$V{Nombre_Etudiants_NUM_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="775" y="44" width="25" height="11" uuid="da2a58da-722a-4fc3-b892-08b5b4abe49f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_I_4} / (double)$V{Nombre_Etudiants_TRA_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="800" y="44" width="25" height="11" uuid="976e783e-1a02-407b-9243-86de9fd7a36d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_F_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="715" y="44" width="25" height="11" uuid="37b4f6c2-725c-4ed6-ac42-2d0ec8a06f39">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_TRA_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="995" y="44" width="25" height="11" uuid="ae659609-f2b4-4927-ab47-deaae15e082b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_I_2} / (double)$V{Nombre_Etudiants_TRA_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="800" y="33" width="25" height="11" uuid="f20da8b8-627d-45a3-a5a1-702fcaf13b9d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_F_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="935" y="44" width="25" height="11" uuid="50bc4e21-6ff8-4f81-a813-e19066112c4b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_TRA_F} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_TRA_F_3} / (double)$V{Nombre_Etudiants_TRA_F} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="665" y="33" width="25" height="11" uuid="2157a5df-4f8e-446c-bde3-5aa4586a9da6">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_NUM_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="440" y="44" width="25" height="11" uuid="f1a0415c-b434-4920-a18a-e1af52db01d6">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="860" y="44" width="25" height="11" uuid="15a609e0-e08b-4392-97b3-eae4555251a0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_I_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="690" y="44" width="25" height="11" uuid="dba14f62-7d8b-4bf7-af33-83aa4a1aa0ce">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_TRA_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="515" y="33" width="25" height="11" uuid="c78121c6-39d3-4426-b796-9cdee198a282">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_NUM_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="440" y="33" width="25" height="11" uuid="c7100962-f468-40b7-9af0-12047ef4ede6">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="665" y="44" width="25" height="11" uuid="f533778c-333c-4ce8-8467-3d560e4ff3c4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_TRA_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="750" y="44" width="25" height="11" uuid="2e36f0a7-57af-464f-ac5f-5f45ae31c712">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_I_4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="44" width="25" height="11" uuid="ffa894f2-280b-463e-8f02-6863c064b045">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="885" y="33" width="25" height="11" uuid="f4dec46d-67d4-4211-a16e-278791ecc5a4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_I_3} / (double)$V{Nombre_Etudiants_NUM_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="690" y="33" width="25" height="11" uuid="794320a4-144b-48c3-b03e-9315689331be">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_NUM_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1105" y="33" width="25" height="11" uuid="81e49dae-f6ef-4321-80e1-5e28e48622ba">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_I_1} / (double)$V{Nombre_Etudiants_NUM_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="995" y="33" width="25" height="11" uuid="22cb8586-86fb-46bc-ba08-53ac2c673849">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Nombre_Etudiants_NUM_I} == 0 ? "-" : String.valueOf((int)((double)$V{Nombre_Etudiants_NUM_I_2} / (double)$V{Nombre_Etudiants_NUM_I} * 100.0 + 0.5)) + "%")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1080" y="33" width="25" height="11" uuid="18b0e83a-2a73-42fd-b894-798b970e8b96">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_I_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1020" y="44" width="25" height="11" uuid="a299a915-6559-44c6-930b-8658e0ed97cd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_F_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="715" y="33" width="25" height="11" uuid="931f8022-a6ce-466e-ae6e-8de722db5c04">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PNMI_NUM_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1080" y="44" width="25" height="11" uuid="bb0a5ed0-c573-447c-a092-db310350d3bd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_I_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="970" y="44" width="25" height="11" uuid="62eadbc8-6204-46f5-9e94-91b7564c38d4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_TRA_I_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="970" y="33" width="25" height="11" uuid="9168024a-b818-4728-83ab-59882f962f43">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_Etudiants_NUM_I_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="44" width="25" height="11" uuid="3e508d99-edff-4d88-a61a-c4c1fe9a51ae">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_TRA_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="515" y="44" width="25" height="11" uuid="753ad45e-ba3b-4dbb-b661-6b96ad9c988d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_PEI_TRA_F}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="640" y="44" width="25" height="11" uuid="eabbd336-9282-49c6-a0a9-3b832536ac0f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Nombre_ALF_TRA_I}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="615" y="11" width="25" height="11" uuid="82fca455-35f4-40cb-8b11-746afcc35763">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_MES_F} - $V{Nombre_Anomalies_MES_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="590" y="33" width="25" height="11" uuid="7aeb1da3-01d0-498e-8f00-261a1cc2d9df">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_NUM_I} - $V{Nombre_Anomalies_NUM_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="565" y="0" width="25" height="11" uuid="1a290b6b-c8af-4c71-8a19-fffb02e52be4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_GEO_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="565" y="22" width="25" height="11" uuid="e58370f1-8861-413c-8b4d-17ab113cdc9d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_MOD_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="565" y="44" width="25" height="11" uuid="fc72a0aa-aa72-4cd4-8df3-95dd3e123a64">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_TRA_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="615" y="22" width="25" height="11" uuid="8cb84d51-377c-4081-87e4-4609b95f72c7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_MOD_F} - $V{Nombre_Anomalies_MOD_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="540" y="22" width="25" height="11" uuid="071545ca-9253-4e72-81c5-0bf024c94fe5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_MOD_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="540" y="33" width="25" height="11" uuid="8843db86-6700-40b8-b85b-ba7ff01ca93b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_NUM_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="590" y="0" width="25" height="11" uuid="47b9256a-0ad6-472f-a89d-bf0fc4df62e9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_GEO_I} - $V{Nombre_Anomalies_GEO_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="590" y="22" width="25" height="11" uuid="94996190-1a2b-45f1-b308-e0b906f40336">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_MOD_I} - $V{Nombre_Anomalies_MOD_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="615" y="0" width="25" height="11" uuid="25f938ff-cf1e-4ad0-8c0a-88a58a3747a1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_GEO_F} - $V{Nombre_Anomalies_GEO_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="540" y="44" width="25" height="11" uuid="54666e7c-5f4f-4590-b715-22b9e31d1695">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_TRA_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="615" y="33" width="25" height="11" uuid="86005f41-388c-47ed-b606-989c777eda21">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_NUM_F} - $V{Nombre_Anomalies_NUM_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="590" y="11" width="25" height="11" uuid="3faf733b-4f88-40a6-883f-6de2f99160a3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_MES_I} - $V{Nombre_Anomalies_MES_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="590" y="44" width="25" height="11" uuid="2e75e71a-0010-4988-93fa-5c7b1242e730">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_TRA_I} - $V{Nombre_Anomalies_TRA_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="540" y="11" width="25" height="11" uuid="e8063f76-e471-4522-a616-ddc3a71bb6d4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_MES_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="615" y="44" width="25" height="11" uuid="96246362-3c65-46d4-95ca-7ff5e95cf110">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI_TRA_F} - $V{Nombre_Anomalies_TRA_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="565" y="11" width="25" height="11" uuid="24ad444d-04a3-425a-bf5c-4c90fab2f966">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_MES_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="565" y="33" width="25" height="11" uuid="26e78d64-f8c0-4052-be15-de55744bd472">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_NUM_F}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="540" y="0" width="25" height="11" uuid="e5d38c9d-50c2-4724-969d-19c9225a764d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Anomalies_GEO_I}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="33" width="50" height="11" uuid="392b6e2d-d982-4bdb-bc3c-43694d26611b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="0" width="50" height="11" uuid="ba3e92e3-21c9-4ccc-a08c-1b47ec684950">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="230" y="0" width="50" height="11" uuid="cd681ffc-d269-4ff3-be66-1ba0894755b5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI} - $V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="230" y="11" width="50" height="11" uuid="1f42b0ef-19dc-409a-bae7-73f5e1f50331">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI} - $V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="230" y="44" width="50" height="11" uuid="f9616cb5-648f-4973-ab44-e06d8b8c54b2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI} - $V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="11" width="50" height="11" uuid="bd8aaf7c-4595-490a-b8ca-9e9b48dfbc9e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="230" y="22" width="50" height="11" uuid="4e91c6b9-a9cb-4fce-9de3-74c8c351b6d2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI} - $V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="230" y="33" width="50" height="11" uuid="bd984418-27fc-434d-9864-35f0ffebc271">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_PEI} - $V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="44" width="50" height="11" uuid="8e739467-cb38-4d25-ae10-40c5eb927344">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="22" width="50" height="11" uuid="142529ec-5f1f-4b56-90f8-19df400f1357">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{SCHOOL_YEAR}.compareTo("20142015") < 0 ? "-" : Integer.valueOf($V{Nombre_Sans_Anomalies}).toString()]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="1105" y="0" width="1" height="55" backcolor="#666666" uuid="45f5f069-85d6-420e-94a7-e36c513c846a"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="800" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="e924646d-04f5-4951-910e-aded66bd0800"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="775" y="0" width="1" height="55" backcolor="#666666" uuid="34eba073-f071-4a90-ab0d-a920b4342db6"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="465" y="0" width="1" height="55" backcolor="#666666" uuid="93803e9b-d57b-4d8b-a58c-735d1d2b58c9">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="885" y="0" width="1" height="55" backcolor="#666666" uuid="b763309e-cf12-407d-a883-3a3e7d261cfe">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="515" y="0" width="1" height="55" backcolor="#666666" uuid="77bead6f-6c2a-49b6-b9c7-cb9f6db6a94c"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1045" y="0" width="1" height="55" backcolor="#666666" uuid="67cc6967-6046-4738-b6b1-3a7e12c344cc"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1130" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="b55829e8-c992-40a9-b515-a6a674fd8394"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="f4eaf3c9-afff-42f8-b0a9-05069c7c8060">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1020" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="63ec51f9-3f7e-410c-a862-5504fd627254"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="1155" y="0" width="1" height="55" backcolor="#666666" uuid="3feb4283-c7b3-45fa-b6b8-8fd9ff8b121b"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="935" y="0" width="1" height="55" backcolor="#666666" uuid="94520208-9f09-41ff-85da-428f0e1935b5"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="180" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="03284ac5-4e7a-496f-9c4f-cc6582bc80f6">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="665" y="0" width="1" height="55" backcolor="#666666" uuid="d9fea5c7-1796-4cf6-bad5-c48ea48726bd"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="d6b0808a-5086-4b33-88c4-39e9389e7761">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="995" y="0" width="1" height="55" backcolor="#666666" uuid="c49e9115-49ec-4e18-a112-c2f19c0073ee"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="910" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="26078af7-fa8a-4863-ae05-96cd250b8d4f"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="715" y="0" width="1" height="55" backcolor="#666666" uuid="1917645d-38fb-491b-8f4d-1cd856351177"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="825" y="0" width="1" height="55" backcolor="#666666" uuid="3bee2c62-683f-4f5f-8788-7483a7263789"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="690" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="9a39f60e-fc13-4db2-9116-f3368263f754">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="615" y="0" width="1" height="55" backcolor="#666666" uuid="e7399ead-f21a-4652-9897-c664d1e8c6d7"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="640" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="1ee95c48-3f99-46fb-9d7b-3f514d4fdc85">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="565" y="0" width="1" height="55" backcolor="#666666" uuid="320dbfd5-3b53-4d90-97b5-aa35a6584337"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="540" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="fc63f862-d220-404a-8e10-8390a21e8453">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="590" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="e1d124bc-67bb-484a-94ca-c4b6375afcfb">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="7c91003e-c0af-4372-9443-c0eae8802eb3">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="330" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="725acee8-2601-4b9f-a3db-ee8c2d0df602">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="1" height="55" backcolor="#2E2E2E" uuid="c1cd12c2-343a-4c54-88c9-82c6e6a0a748">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="79" y="0" width="1105" height="32" uuid="01439a65-ea7d-414e-a22f-47e4853ecece"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sommaire Élémentaire - Numératie - Notes - " + $F{SCHOOL_NAME} + " - " + $P{SCHOOL_YEAR}.substring( 0, 4 ) + "/" + $P{SCHOOL_YEAR}.substring( 4, 8 )]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="-10" width="79" height="55" uuid="efcc4b99-2d72-4df2-b892-0dbe74f96f14"/>
+				<imageExpression><![CDATA["\\\\TINTINV1\\photosdeseleves\\CSCFN_LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="130" y="20" width="50" height="22" backcolor="#C0C0C0" uuid="b721597e-68e2-4947-be07-2848ecad5a46">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# d'élèves total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="20" width="50" height="22" backcolor="#FFCB97" uuid="478fc0db-f8d9-45a4-92e8-80f61c6d8009">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# PEI
+total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="230" y="20" width="50" height="22" backcolor="#FFCB97" uuid="8414af39-e0b0-4534-b353-ecb3b928bff9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# anomalie
+total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="20" width="50" height="22" backcolor="#FFCB97" uuid="35a00117-f4c2-43b0-b854-de3a8426ed04">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PEI sans anomalie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="330" y="20" width="50" height="22" backcolor="#73D1FF" uuid="69a10787-3719-4474-8b52-154e0113bee2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# ALF total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="440" y="0" width="50" height="31" backcolor="#C0C0C0" uuid="a98b12da-17ab-4ee3-8b75-31e62143f518">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# d'élèves évalué]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="31" width="25" height="11" uuid="61c45b76-b5a7-4834-98c4-99d937f41f06"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="31" width="25" height="11" uuid="bc0cccc1-ab21-44a5-a9d8-dff73e54d5e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="515" y="31" width="25" height="11" uuid="c85d8683-9987-4109-9300-671bbd27fb5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="490" y="0" width="50" height="31" backcolor="#FFCB97" uuid="20752294-f62a-44fa-a76f-f0c6119a060f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# PEI
+évalué]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="31" width="25" height="11" uuid="d9f7396f-1776-407a-8891-c87fafa64960"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="540" y="0" width="50" height="31" backcolor="#FFCB97" uuid="1e8292fd-f76e-4a7a-9767-4a8b617b3c1c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# anomalie évalué]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="565" y="31" width="25" height="11" uuid="eb95ff59-eecc-4b0d-94f9-d514bdce56ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="31" width="25" height="11" uuid="f425dfd0-a7ee-49c3-bbc0-c2705214263e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="590" y="0" width="50" height="31" backcolor="#FFCB97" uuid="2e1803ce-5045-4998-b498-09e2035d5796">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PEI sans anomalie évalué]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="31" width="25" height="11" uuid="7f647f6e-3e89-4883-bcd3-e42e9397bb34"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="615" y="31" width="25" height="11" uuid="8016d7b1-b08b-4b6d-aff7-e24b9b0f557b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="640" y="0" width="50" height="31" backcolor="#73D1FF" uuid="b9dc5d25-d5ae-4b90-84e9-c45459b29312">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# ALF
+évalué]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="640" y="31" width="25" height="11" uuid="9c3f35f2-c5ce-4519-88b2-03c6535f8bd9"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="665" y="31" width="25" height="11" uuid="52cacf21-1618-438f-9263-0bcc2214fd5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="715" y="31" width="25" height="11" uuid="df8c8b4f-252a-4579-91aa-3989eaff7a93"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="690" y="31" width="25" height="11" uuid="86764545-c304-4c6e-92de-a740584a0bff"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="690" y="0" width="50" height="31" backcolor="#FFB7B7" uuid="22dc23ed-d7b9-49c4-a1a7-bc8be6350517">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# PNMI
+évalué]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="750" y="9" width="100" height="11" backcolor="#00B95C" uuid="1c505201-7dca-4e3d-aef0-a28ac50f06ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Niveau 4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="20" width="50" height="11" uuid="5d10cf23-3887-4095-8ab5-d5a0bbd4721d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Intermédiaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="20" width="50" height="11" uuid="cd82e30b-19f5-43dd-8722-977d82e89b85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="31" width="25" height="11" uuid="05a80287-3084-4b93-ac3c-bb2eef3bbd59"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="775" y="31" width="25" height="11" uuid="046bceea-f052-4456-a55b-3f72a6c20f2f"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="825" y="31" width="25" height="11" uuid="369c06c2-15f3-45c7-abc3-69dcee56037b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="31" width="25" height="11" uuid="8d9f670f-710d-4309-8d7c-62b2dcce2fa1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="860" y="9" width="100" height="11" backcolor="#FF9664" uuid="30b54483-7e52-4e9c-8d5e-fd18214187ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Niveau 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="910" y="31" width="25" height="11" uuid="16e6b84c-9ecb-4c15-b4cf-d9d31956deca"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="885" y="31" width="25" height="11" uuid="cf91b23c-c2bc-4a3c-a049-e19dcb2e6c87"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="910" y="20" width="50" height="11" uuid="b6a7aa73-837a-4740-becb-32a9c981c985"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="860" y="31" width="25" height="11" uuid="7c6ebd8f-0840-4a34-be5c-b32db30c60d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="860" y="20" width="50" height="11" uuid="f090dbad-8338-4744-af9b-c18e209f32ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Intermédiaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="935" y="31" width="25" height="11" uuid="0334b07f-d575-46ae-8704-77828cb0f21e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="970" y="9" width="100" height="11" backcolor="#FF8080" uuid="bc27ff80-0695-4978-a855-c17088e5be86"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Niveau 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1020" y="31" width="25" height="11" uuid="aca7b7a4-0b22-4dea-b7ca-83dacd7ac7d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="995" y="31" width="25" height="11" uuid="67cdc68c-b251-4791-96b3-be7ce4f37a2b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1020" y="20" width="50" height="11" uuid="73d067a2-4053-4cfe-a200-00946c2b00af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="970" y="31" width="25" height="11" uuid="ace16460-21a7-4ed3-8bf4-60f53f2f8722"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="970" y="20" width="50" height="11" uuid="f05cf775-20cc-496b-8bbc-20d2f431d1f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Intermédiaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1045" y="31" width="25" height="11" uuid="e50f1430-477d-49eb-8839-75fc9d4f1cc4"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1080" y="9" width="100" height="11" backcolor="#FF80FF" uuid="b70163e6-a3fb-4dd5-8294-3c321730b6d8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Niveau 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1130" y="31" width="25" height="11" uuid="6a50e11d-f142-48d6-8ec9-40447794f439"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1105" y="31" width="25" height="11" uuid="a5188e80-a5e3-44f2-aacb-6904243c6e7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1130" y="20" width="50" height="11" uuid="a2c6a49e-6843-4b71-a6f7-fd838366656c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1080" y="31" width="25" height="11" uuid="f6b2a259-b6f3-4856-9ca6-6b9dc50fac02"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1080" y="20" width="50" height="11" uuid="e9ec5cc6-5e8f-4fe3-b442-357e6e7dd075"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Intermédiaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1155" y="31" width="25" height="11" uuid="b0578392-2776-41e5-aeea-1a839beb8815"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="380" y="20" width="50" height="22" backcolor="#FFB7B7" uuid="fd68086e-31f7-43f4-9dff-b4099d896c59">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[# PNMI total]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="465" y="31" width="1" height="11" backcolor="#666666" uuid="6876cfcc-fffb-4268-8b00-77bfabafdca9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="515" y="31" width="1" height="11" backcolor="#666666" uuid="9da51fb9-7203-4e9c-9726-b5c8eba30474">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="565" y="31" width="1" height="11" backcolor="#666666" uuid="1ea5a61f-c0b3-43d9-991c-16e96333aa31">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="615" y="31" width="1" height="11" backcolor="#666666" uuid="5def79fe-f951-4bdd-88dc-a9eb394990c6">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="665" y="31" width="1" height="11" backcolor="#666666" uuid="5d4c436b-0d36-491c-a1c2-3a4989201d7c">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="715" y="31" width="1" height="11" backcolor="#666666" uuid="91a6e608-58a6-42e2-9a29-544a036d1e88">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="825" y="31" width="1" height="11" backcolor="#666666" uuid="eedadfbe-e90c-4c3d-948a-a267134eb9ea">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="775" y="31" width="1" height="11" backcolor="#666666" uuid="d7f91409-f194-4f0a-af5c-379647deb4bb">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="935" y="31" width="1" height="11" backcolor="#666666" uuid="db2dad47-5e3b-4709-a207-f1dbe9233558">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="885" y="31" width="1" height="11" backcolor="#666666" uuid="28ec745a-fa33-4e4c-ac13-8147db806ac1">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1045" y="31" width="1" height="11" backcolor="#666666" uuid="40b8472c-4b07-4fd3-9486-ad682986b87f">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="995" y="31" width="1" height="11" backcolor="#666666" uuid="eec5e4d6-3bb6-4dd9-b2f3-c897b3c1f4db">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1155" y="31" width="1" height="11" backcolor="#666666" uuid="e4e7de81-41e2-4633-8b53-861f4a4e436d">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1105" y="31" width="1" height="11" backcolor="#666666" uuid="2d948931-a271-4317-a494-b5f8435366f6">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="1" height="42" backcolor="#2E2E2E" uuid="9b386b3f-f390-4ada-aa2e-12f0f1ad3cf4">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="540" y="0" width="1" height="42" backcolor="#2E2E2E" uuid="fa109f4f-abe6-4028-a113-09287dbc190e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="590" y="0" width="1" height="42" backcolor="#2E2E2E" uuid="53036b97-50a8-4f6c-ba7f-dbf297199be8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="690" y="0" width="1" height="42" backcolor="#2E2E2E" uuid="6fe1bf00-7e59-4ecc-914f-12fb46a0a1d7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="640" y="0" width="1" height="42" backcolor="#2E2E2E" uuid="21a4b0be-f731-4737-96f0-d5a5d7aa207f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="800" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="9ac2cf64-0b5e-42e4-b52d-31ad49a648de"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="910" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="8e0d101e-facb-4d61-8793-99800aec45df">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1020" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="8b124e17-15cf-4289-921d-eb9abcd60f2b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1130" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="1bf18a26-26c6-49c0-8246-cc6822e755b3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="09a0ec6c-8f67-48d9-99fc-cd699e81fbbb">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="230" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="129b8a59-38ea-451e-b653-ea6c3f87cfb5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="180" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="87cd4dd6-b28f-4c8c-846b-d5435bb55c59">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="280" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="de913906-562a-454a-856a-3503a37a5a16">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="330" y="20" width="1" height="22" backcolor="#2E2E2E" uuid="dcd61e55-9d3b-4933-9d5b-b7203b3a187b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+</jasperReport>

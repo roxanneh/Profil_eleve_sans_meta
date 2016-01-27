@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2016-01-07T09:31:49 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resultats_OQRE9" pageWidth="200" pageHeight="150" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="84ba273c-3801-4788-a505-9581a56c1a14">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select P.PREFERRED_NAME_UPPER, oqre9.school_year, sr.school_code, sr.grade,
+overalloutcomelevel
+
+from oqre_9 oqre9, student_registrations sr, persons p
+
+where sr.school_year = oqre9.school_year
+  and sr.person_id = p.person_id 
+  and p.oen_number = oqre9.studentoen
+  and sr.school_bsid = oqre9.schoolmident
+  and p.person_id =  $P{ACCOUNT_ID} 
+
+  order by school_year desc]]>
+	</queryString>
+	<field name="PREFERRED_NAME_UPPER" class="java.lang.String"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="SCHOOL_CODE" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<field name="OVERALLOUTCOMELEVEL" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="200" height="20" uuid="9ceb7147-2bad-4577-a6e9-fd4a98d2aa52"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Résultats OQRE 9e]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="3d2742d1-1bb5-40ab-85c2-4fb20ef2f920">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Année]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="0" width="50" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="da6841c5-1c90-4a48-806e-70cc2750c200"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[École]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="50" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="2bdb9d46-dfda-4f1c-be15-1bce9389b90b"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Niveau]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="150" y="0" width="50" height="30" forecolor="#FFFFFF" backcolor="#149966" uuid="4123ec6f-c68a-4731-a870-ac0b8888b764"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Note]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="30" uuid="d32d9f8a-0a22-46ef-91ac-828f10395d4e"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SCHOOL_YEAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="50" height="30" uuid="68b7799a-45ae-418a-9833-99d6812a97e5"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SCHOOL_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="50" height="30" uuid="30aca9b3-ede3-4125-889a-579e9cb1a7cb"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="50" height="30" uuid="05cb0693-7bea-49d8-bd66-473003e92d2b"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<leftPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<bottomPen lineWidth="0.5" lineColor="#A3A3A3"/>
+					<rightPen lineWidth="0.5" lineColor="#A3A3A3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{OVERALLOUTCOMELEVEL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

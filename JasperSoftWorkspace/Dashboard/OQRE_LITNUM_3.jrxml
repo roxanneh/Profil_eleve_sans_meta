@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-12-03T15:41:15 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OQRE)LIT" pageWidth="350" pageHeight="400" orientation="Landscape" columnWidth="310" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e399ee1-5389-40a6-ae20-f751eb823518">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="TEST CSCFN TRILL"/>
+	<parameter name="SCHOOL_YEAR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 
+
+    round(avg(case when roveralllevel in ('1','2','3','4') then to_number(roveralllevel) end), 2) as roveralllevel,
+    
+    round(avg(case when woveralllevel in ('1','2','3','4') then to_number(woveralllevel) end), 2) as woveralllevel,
+    
+    round(avg(case when moveralllevel in ('1','2','3','4') then to_number(moveralllevel) end), 2) as moveralllevel,
+    
+    school_year, grade
+
+from OQRE_3_6
+
+where school_year =  $P{SCHOOL_YEAR} 
+and grade = '3'
+
+group by school_year, grade]]>
+	</queryString>
+	<field name="ROVERALLLEVEL" class="java.math.BigDecimal"/>
+	<field name="WOVERALLLEVEL" class="java.math.BigDecimal"/>
+	<field name="MOVERALLLEVEL" class="java.math.BigDecimal"/>
+	<field name="SCHOOL_YEAR" class="java.lang.String"/>
+	<field name="GRADE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="310" height="90" uuid="c9823c20-97d9-43a9-abd5-c3b9aa06eda6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="33" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rendment OQRE 3e]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="241" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="20" width="310" height="221" uuid="7c444d1b-d36e-4359-a7f8-40d51c47e7a2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend textColor="#000000" position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Lecture"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{SCHOOL_YEAR}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ROVERALLLEVEL}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Écriture"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{SCHOOL_YEAR}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{WOVERALLLEVEL}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Mathématiques"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{SCHOOL_YEAR}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{MOVERALLLEVEL}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot>
+						<seriesColor seriesOrder="0" color="#4A5C82"/>
+						<seriesColor seriesOrder="1" color="#F0D043"/>
+						<seriesColor seriesOrder="2" color="#3EB06D"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+					<rangeAxisMaxValueExpression><![CDATA[4]]></rangeAxisMaxValueExpression>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

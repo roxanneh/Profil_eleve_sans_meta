@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-16T10:16:34 -->
+<!-- 2015-12-04T12:10:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="COMPETANCES" pageWidth="320" pageHeight="802" columnWidth="320" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a347432e-175b-4753-b578-d19c0bda5c45">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -227,25 +227,20 @@
 	</style>
 	<parameter name="ACCOUNT_ID" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT M_MEMBRE_ID, M_ECOLE, regexp_replace(M_ANNEESCOLAIRE, '(\w{4})(\w{4})', '\1-\2') M_ANNEESCOLAIRE, M_PERIODE_REF, M_STRAND_CODE, GRADE, STRAND_DESCRIPTION_F,
+		<![CDATA[/********Select * from afin de pouvoir mettre les strands en ordre********/
+select * from ((SELECT DISTINCT M_MEMBRE_ID, M_ECOLE, regexp_replace(M_ANNEESCOLAIRE, '(\w{4})(\w{4})', '\1-\2') M_ANNEESCOLAIRE, 
+
+M_PERIODE_REF, GRADE, STRAND_DESCRIPTION_F,
+
 PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 1, M_STRAND_CODE, GRADE) AS MOY_CC,
 PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 2, M_STRAND_CODE, GRADE) AS MOY_HP,
 PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 3, M_STRAND_CODE, GRADE) AS MOY_COM,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 4, M_STRAND_CODE, GRADE) AS MOY_MA,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, M_PERIODE_REF, M_SUBJECT_CODE, 4, M_STRAND_CODE, GRADE) AS MOY_MA
 
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 1) AS CC_fr,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 2) AS HP_fr,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 3) AS COM_fr,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 4) AS MA_fr,
 
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 1) AS CC_math,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 2) AS HP_math,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 3) AS COM_math,
-PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 4) AS MA_math
+FROM ATELIER.SP_ELEVES_RESULTATS, STUDENT_REGISTRATIONS, STRAND, ATELIER.SP_EVALUATIONS
 
-FROM ATELIER.SP_ELEVES_RESULTATS, STUDENT_REGISTRATIONS, STRAND
-
-WHERE M_MEMBRE_ID =   $P{ACCOUNT_ID} 
+WHERE M_MEMBRE_ID =  $P{ACCOUNT_ID} 
 AND PERSON_ID = M_MEMBRE_ID
 AND M_ECOLE = SCHOOL_CODE
 AND M_ANNEESCOLAIRE = SCHOOL_YEAR
@@ -254,14 +249,82 @@ AND M_STRAND_CODE IN ('001', '002', '003', '013', '015', '020', '021', '022', '0
 AND M_ECOLE NOT IN ('ESA', 'ESF', 'ESE')
 AND SCHOOL_CODE NOT IN ('ESA', 'ESF', 'ESE')
 AND M_A_QUITTE != 'O' 
-ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('Communication orale') then 0
-                                                                    when STRAND_DESCRIPTION_F IN ('Écriture') then 1
-                                                                    when STRAND_DESCRIPTION_F IN ('Lecture') then 2
-                                                                    when STRAND_DESCRIPTION_F IN (q'[Géométrie et sens de l'espace]') then 3
-                                                                    when STRAND_DESCRIPTION_F IN ('Mesure') then 4
-                                                                    when STRAND_DESCRIPTION_F IN ('Modélisation et algèbre') then 5
-                                                                    when STRAND_DESCRIPTION_F IN ('Numération et sens du nombre') then 6
-                                                                    when STRAND_DESCRIPTION_F IN ('Traitement des données et probabilités') then 7
+
+/****  Ne pas inclure les périodes des rapports qui n'ont pas encore d'évaluations *****/
+AND E_ECOLE = M_ECOLE
+AND E_ANNEESCOLAIRE = M_ANNEESCOLAIRE
+AND E_CLASSE_CODE = M_CLASSE_CODE
+AND E_CODECOURS = M_CODECOURS
+AND E_PERIODE_REF = M_PERIODE_REF
+AND E_SUBJECT_CODE = M_SUBJECT_CODE
+AND E_STRAND_CODE = M_STRAND_CODE
+AND E_STRAND_CODE IN ('001', '002', '003', '013', '015', '020', '021', '022', '023', '024', '')
+)
+
+/*******UNION SUR LA TABLES DES PÉRIODES 'P' POUR LE FRANÇAIS**********/
+union
+
+(select  M_MEMBRE_ID, M_ECOLE, regexp_replace(M_ANNEESCOLAIRE, '(\w{4})(\w{4})', '\1-\2') M_ANNEESCOLAIRE, CASE when M_periode_ref in ('I', 'F') then 'P' end as M_periode_ref, GRADE,
+case when STRAND_DESCRIPTION_F IN ('Communication orale') 
+                                OR STRAND_DESCRIPTION_F IN ('Écriture') 
+                                OR STRAND_DESCRIPTION_F IN ('Lecture') 
+                               THEN 'Français' end as STRAND_DESCRIPTION_F,
+
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 1) AS MOY_CC,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 2) AS MOY_HP,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 3) AS MOY_COM,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '009', 4) AS MOY_MA
+
+FROM ATELIER.SP_ELEVES_RESULTATS, STUDENT_REGISTRATIONS, STRAND
+
+WHERE M_MEMBRE_ID = $P{ACCOUNT_ID} 
+AND PERSON_ID = M_MEMBRE_ID
+AND M_ECOLE = SCHOOL_CODE
+AND M_ANNEESCOLAIRE = SCHOOL_YEAR
+AND M_STRAND_CODE = STRAND_CODE
+AND M_STRAND_CODE IN ('001', '002', '003')
+AND M_ECOLE NOT IN ('ESA', 'ESF', 'ESE')
+AND SCHOOL_CODE NOT IN ('ESA', 'ESF', 'ESE')
+AND M_A_QUITTE != 'O' 
+
+/*******UNION SUR LA TABLES DES PÉRIODES 'P' POUR MATHS**********/
+union
+
+select DISTINCT  M_MEMBRE_ID, M_ECOLE, regexp_replace(M_ANNEESCOLAIRE, '(\w{4})(\w{4})', '\1-\2') M_ANNEESCOLAIRE, CASE when M_periode_ref in ('I', 'F') then 'P' end as M_periode_ref, GRADE,
+case when STRAND_DESCRIPTION_F IN (q'[Géométrie et sens de l'espace]') 
+                                OR STRAND_DESCRIPTION_F IN ('Mesure')  
+                                OR STRAND_DESCRIPTION_F IN ('Modélisation et algèbre')
+                                OR STRAND_DESCRIPTION_F IN ('Numération et sens du nombre')
+                                OR STRAND_DESCRIPTION_F IN ('Traitement des données et probabilités')
+                               THEN 'Mathématiques' end as STRAND_DESCRIPTION_F,
+
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 1) AS MOY_CC,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 2) AS MOY_HP,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 3) AS MOY_COM,
+PKG_PROFILE_ÉLÈVE.GET_MOY_COMP_ELE_P(M_MEMBRE_ID, M_ECOLE, M_ANNEESCOLAIRE, '9999000000030', 4) AS MOY_MA
+
+FROM ATELIER.SP_ELEVES_RESULTATS, STUDENT_REGISTRATIONS, STRAND
+
+WHERE M_MEMBRE_ID = $P{ACCOUNT_ID} 
+AND PERSON_ID = M_MEMBRE_ID
+AND M_ECOLE = SCHOOL_CODE
+AND M_ANNEESCOLAIRE = SCHOOL_YEAR
+AND M_STRAND_CODE = STRAND_CODE
+AND M_STRAND_CODE IN ('020', '021', '022', '023', '019')
+AND M_ECOLE NOT IN ('ESA', 'ESF', 'ESE')
+AND SCHOOL_CODE NOT IN ('ESA', 'ESF', 'ESE')
+AND M_A_QUITTE != 'O' 
+))
+order by m_anneescolaire desc, case when STRAND_DESCRIPTION_F IN ('Français') then 0
+                        when STRAND_DESCRIPTION_F IN ('Communication orale') then 1
+                                                                    when STRAND_DESCRIPTION_F IN ('Écriture') then 2
+                                                                    when STRAND_DESCRIPTION_F IN ('Lecture') then 3
+                                                                    when STRAND_DESCRIPTION_F IN ('Mathématiques') then 4
+                                                                    when STRAND_DESCRIPTION_F IN (q'[Géométrie et sens de l'espace]') then 5
+                                                                    when STRAND_DESCRIPTION_F IN ('Mesure') then 6
+                                                                    when STRAND_DESCRIPTION_F IN ('Modélisation et algèbre') then 7
+                                                                    when STRAND_DESCRIPTION_F IN ('Numération et sens du nombre') then 8
+                                                                    when STRAND_DESCRIPTION_F IN ('Traitement des données et probabilités') then 9
                                                                     else 8
                                                                 end asc, M_PERIODE_REF desc]]>
 	</queryString>
@@ -269,21 +332,12 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 	<field name="M_ECOLE" class="java.lang.String"/>
 	<field name="M_ANNEESCOLAIRE" class="java.lang.String"/>
 	<field name="M_PERIODE_REF" class="java.lang.String"/>
-	<field name="M_STRAND_CODE" class="java.lang.String"/>
 	<field name="GRADE" class="java.lang.String"/>
 	<field name="STRAND_DESCRIPTION_F" class="java.lang.String"/>
 	<field name="MOY_CC" class="java.lang.String"/>
 	<field name="MOY_HP" class="java.lang.String"/>
 	<field name="MOY_COM" class="java.lang.String"/>
 	<field name="MOY_MA" class="java.lang.String"/>
-	<field name="CC_FR" class="java.lang.String"/>
-	<field name="HP_FR" class="java.lang.String"/>
-	<field name="COM_FR" class="java.lang.String"/>
-	<field name="MA_FR" class="java.lang.String"/>
-	<field name="CC_MATH" class="java.lang.String"/>
-	<field name="HP_MATH" class="java.lang.String"/>
-	<field name="COM_MATH" class="java.lang.String"/>
-	<field name="MA_MATH" class="java.lang.String"/>
 	<group name="Group1" keepTogether="true">
 		<groupExpression><![CDATA[$F{M_ANNEESCOLAIRE}]]></groupExpression>
 		<groupHeader>
@@ -326,7 +380,7 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Cliquez ici pour voir ce tableau en format horizontal."]]></textFieldExpression>
 				<hyperlinkParameter name="_report">
-					<hyperlinkParameterExpression><![CDATA["repo:/CSCFN/Rox/Tests/Moyenne_comp_parannee"]]></hyperlinkParameterExpression>
+					<hyperlinkParameterExpression><![CDATA["repo:/Ressources_CSCFN/Drilldowns/Rox/Moyenne_comp_parannee"]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 				<hyperlinkParameter name="ACCOUNT_ID">
 					<hyperlinkParameterExpression><![CDATA[$P{ACCOUNT_ID}]]></hyperlinkParameterExpression>
@@ -417,168 +471,6 @@ ORDER BY M_ANNEESCOLAIRE DESC, M_ECOLE ASC, case when STRAND_DESCRIPTION_F IN ('
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
-			<printWhenExpression><![CDATA[AND(EXACT($F{STRAND_DESCRIPTION_F}, "Communication orale"), EXACT($F{M_PERIODE_REF}, "I"))]]></printWhenExpression>
-			<staticText>
-				<reportElement style="Everything else" x="0" y="0" width="90" height="20" uuid="23a6553f-86b8-40b2-a5f7-be59d1e72312"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<text><![CDATA[Francais]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Everything else" x="90" y="0" width="30" height="20" uuid="2cd61cab-6673-4467-a150-d79b78bb4332"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<text><![CDATA[P]]></text>
-			</staticText>
-			<textField>
-				<reportElement style="CCFR" x="120" y="0" width="50" height="20" uuid="af32d751-8dd0-4f0f-a79e-a52219ba9ede"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{CC_FR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="HPFR" x="170" y="0" width="50" height="20" uuid="fb0612bd-5b70-4919-b43d-5d70b2f99ff8"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{HP_FR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="COMFR" x="220" y="0" width="50" height="20" uuid="ac1b68e2-ace4-453f-b20d-8a3a4b95e9bc"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COM_FR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="MAFR" x="270" y="0" width="50" height="20" uuid="5b1f650f-14c3-4649-826f-64c3821e7f7b"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COM_FR}]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="20">
-			<printWhenExpression><![CDATA[AND(EXACT($F{STRAND_DESCRIPTION_F}, "Géométrie et sens de l'espace"), EXACT($F{M_PERIODE_REF}, "I"))]]></printWhenExpression>
-			<textField>
-				<reportElement style="COMMATH" x="220" y="0" width="50" height="20" uuid="f3ff3e56-c90d-4aca-aa4d-b77f88a7e5e8"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COM_MATH}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="Everything else" x="90" y="0" width="30" height="20" uuid="bf04bbc9-d861-4538-8832-cc0df15c557f"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<text><![CDATA[P]]></text>
-			</staticText>
-			<textField>
-				<reportElement style="HPMATH" x="170" y="0" width="50" height="20" uuid="38e92563-8a7e-4989-9a50-deb01879538c"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{HP_MATH}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="Everything else" x="0" y="0" width="90" height="20" uuid="0ae327ba-de3e-4a80-abe3-b6e13a40b621"/>
-				<box>
-					<topPen lineWidth="0.2"/>
-					<leftPen lineWidth="0.2"/>
-					<bottomPen lineWidth="0.2"/>
-					<rightPen lineWidth="0.2"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<text><![CDATA[Mathématiques]]></text>
-			</staticText>
-			<textField>
-				<reportElement style="CCMATH" x="120" y="0" width="50" height="20" uuid="6546a1f6-4a16-4533-add0-a95c9271b2c2"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{CC_MATH}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="MAMATH" x="270" y="0" width="50" height="20" uuid="5891ddfc-a1f5-4e30-b641-582b920e9ee0"/>
-				<box>
-					<topPen lineWidth="0.1"/>
-					<leftPen lineWidth="0.1"/>
-					<bottomPen lineWidth="0.1"/>
-					<rightPen lineWidth="0.1"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{MA_MATH}]]></textFieldExpression>
-			</textField>
-		</band>
 		<band height="20" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement style="cc" x="120" y="0" width="50" height="20" uuid="732db98a-e86a-473d-9a9e-feb0286af657"/>

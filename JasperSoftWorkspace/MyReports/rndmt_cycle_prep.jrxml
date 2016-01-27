@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-10-16T11:45:56 -->
+<!-- 2015-12-02T10:16:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rndmt_cycle_prep" pageWidth="576" pageHeight="802" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="62debd10-66bc-4e44-941f-c87ef28c56d9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CSCFN TRIL"/>
 	<style name="Everything else">
@@ -864,7 +864,7 @@ ORDER BY S.SCHOOL_NAME ASC, GRADE DESC, NOM_ELEVE ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="40" splitType="Stretch">
+		<band height="111" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<staticText>
 				<reportElement x="0" y="10" width="380" height="20" uuid="4925b8f6-69b7-4a17-ada7-7dc7ea8bfae8">
@@ -875,6 +875,57 @@ ORDER BY S.SCHOOL_NAME ASC, GRADE DESC, NOM_ELEVE ASC]]>
 				</textElement>
 				<text><![CDATA[Rendement au cycle préparatoire]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="182" y="63" width="186" height="20" uuid="2f112e11-af07-4ba8-ac40-ab2b28ace744">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<p> FRA1 - J'aime parler en français.</p> </br>" + 
+"<p> FRA2 - J'écoute, je parle et je réagis de façon appropriée.</p> </br>" + 
+"<p> FRA3 - J'utilise des indices et des moyens appropriés pour comprendre l'écrit.</p> </br>" +
+"<p> FRA4 - Je distingue, j'identifie et je manipule les son (phonèmes) à l'oral.</p> </br>" + 
+"<p> FRA5 - J'utilise des indices et des moyens appropriés pour développer des habiletés de lecteur émergent.</p> </br>" + 
+"<p> FRA6 - J'utilise des indices et des moyens appropriés pour communiquer mon message à l'écrit.</p> </br>" + 
+"<p> FRA7 - J'utilise des produits médiatiques et je donne mon appréciation.</p> </br>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="379" y="63" width="186" height="20" uuid="b0b6b1bd-e270-46fe-a21a-0a3fa5daff34">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<p> MAT1 - J'utilise des indices et des moyens appropriés pour comprendre la numération et le sens du nombre.</p> </br>" + 
+"<p> MAT2 - Je mesure et compare les objets.</p> </br>" + 
+"<p> MAT3 - Je reconnais les figures planes et solides.</p> </br>" +
+"<p> MAT4 - Je reconnais la position d'un objet dans l'espace.</p> </br>" + 
+"<p> MAT5 - Je reconnais des régularités dans mon environnement et dans des suites non numériques.</p> </br>" + 
+"<p> MAT6 - Je recueille, représente et interprète des données.</p> </br>" +
+"<p> MAT7 - J'utilise les mots justes pour décrire la probabilité.</p> </br>"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement positionType="FixRelativeToBottom" x="5" y="97" width="562" height="1" uuid="a2800da9-94a8-4072-a5b1-a354adaa83ce"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" x="7" y="47" width="561" height="1" uuid="67d1e35a-e74f-4ac5-be83-63e81e90254f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="11" y="63" width="160" height="20" uuid="a4726326-7fa1-41df-b1fd-4ee3ed7aa5a4"/>
+				<textElement markup="html">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<p> DPS1 - Je fais preuve d'autonomie et de confiance en soi.</p> </br>" + 
+"<p> DPS2 - Je reconnais mes caractéristiques et mes préférences.</p> </br>" + 
+"<p> DPS3 - Je collabore et je respecte les autres.</p> </br>"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>
